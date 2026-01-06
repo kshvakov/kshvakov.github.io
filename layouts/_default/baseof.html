@@ -10,6 +10,7 @@
     {{ if .Site.Params.google_verification }}
     <meta name="google-site-verification" content="{{ .Site.Params.google_verification }}" />
     {{ end }}
+    <meta name="msvalidate.01" content="2FC39AA2ABD34A82DA09CE43C3049984" />
     <title>{{ if and .Title (not .IsHome) }}{{ .Title }} — {{ end }}{{ if or (eq .Site.Language.Lang "en") (hasPrefix .RelPermalink "/en/") }}Kirill Shvakov{{ else }}{{ .Site.Title }}{{ end }}</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="stylesheet" href="/assets/site.css">
