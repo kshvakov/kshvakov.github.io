@@ -152,8 +152,8 @@ h1 {
     animation: fadeIn 0.2s ease;
 }
 
-.content-section.hidden {
-    display: none;
+.hidden {
+    display: none !important;
 }
 
 @keyframes fadeIn {

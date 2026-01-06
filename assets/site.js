@@ -10,17 +10,23 @@
     const contentRu = document.getElementById('content-ru');
     const btnEn = document.getElementById('lang-en');
     const btnRu = document.getElementById('lang-ru');
+    const titleEn = document.getElementById('title-en');
+    const titleRu = document.getElementById('title-ru');
 
     function setLanguage(lang) {
         // Update visibility
         if (lang === LANG_RU) {
             contentEn.classList.add('hidden');
             contentRu.classList.remove('hidden');
+            titleEn.classList.add('hidden');
+            titleRu.classList.remove('hidden');
             btnEn.classList.remove('active');
             btnRu.classList.add('active');
         } else {
             contentEn.classList.remove('hidden');
             contentRu.classList.add('hidden');
+            titleEn.classList.remove('hidden');
+            titleRu.classList.add('hidden');
             btnEn.classList.add('active');
             btnRu.classList.remove('active');
         }
