@@ -2,23 +2,30 @@
 title: "ClickHouse is Slow"
 date: 2018-11-09
 description: "Practical ClickHouse optimization experience: from performance bottlenecks to solutions using arrays and data structures. Scaling statistics system."
+tags: ["clickhouse", "optimization", "performance", "databases", "analytics", "scaling"]
 ---
 
-In this talk, I share our experience working with ClickHouse at TrafficStars. 
-We faced performance issues when scaling our statistics system, which processes 
-up to 70,000 requests per second and stores about 50 terabytes of data.
+In this talk, I share our experience working with ClickHouse at TrafficStars. We faced performance issues when scaling our statistics system, which processes up to 70,000 requests per second and stores about 50 terabytes of data.
 
-The talk covers the evolution of our architecture: from the initial schema with Vertica 
-and Citus to migrating to ClickHouse, issues with materialized views, index optimization, 
-and the final solution using arrays and data structures.
+The talk covers the evolution of our architecture: from the initial schema with Vertica and Citus to migrating to ClickHouse, issues with materialized views, index optimization, and the final solution using arrays and data structures.
 
 {{< youtube id="efRryvtKlq0" title="ClickHouse is Slow" >}}
+
+## TL;DR
+
+When scaling our statistics system at TrafficStars, we encountered ClickHouse performance issues. Key takeaways:
+
+- **Materialized views can make problems worse** — 30 materialized views turned one write problem into 30
+- **Arrays and data structures are a powerful solution** — allowed us to reduce the number of tables from 30 to 5 without losing functionality
+- **Index granularity is critical** — reducing granularity helped solve memory issues
+- **Query optimizer delivers results** — up to 30% of queries are optimized automatically, average time dropped from 200–250 ms to 55 ms
+- **Maintainability matters more than performance** — a simple system is important not only for developers but for business too
 
 ## Context: Statistics System Requirements
 
 At TrafficStars, we work with an advertising network that processes up to 70,000 requests per second for our brands. We have two data centers in Europe and the US, multiple delivery servers, events are written to Kafka, and data storage is handled by ClickHouse. At the time of this talk (2018), we had approximately 500 statistics requests at peak, about 50 terabytes of data, and this doesn't include analytics work and analytical dashboards for managers.
 
-Characteristics of our data:
+### Characteristics of our data
 
 - **Large clients** can account for up to 40% of traffic, creating uneven load distribution
 - **Sudden traffic spikes** when new publishers are onboarded (easily increases by 5–10 thousand requests per second)
@@ -66,6 +73,7 @@ Plus one large wide table remained for custom reports. This helped: basic report
 ### Why ClickHouse?
 
 Requirements were simple:
+
 - Horizontal scalability
 - Fault tolerance
 - Low cost of ownership
@@ -86,6 +94,7 @@ For example, if our index was on `publisher_id`, but we need to query by `campai
 ### Solution: Separate Tables for Different Entities
 
 We have two large categories of entities:
+
 - **Advertisers** — advertising campaigns
 - **Publishers** — only one (Yandex)
 
@@ -124,6 +133,7 @@ We decided to reduce the number of tables, but didn't want to lose functionality
 ### How It Works
 
 Instead of many separate tables, we store data in arrays:
+
 - One array—column identifiers (e.g., browsers)
 - Another array—values for them (clicks, impressions, etc.)
 
@@ -146,6 +156,7 @@ We use the `ReplacingMergeTree` engine with `-MergeTree` aggregation. This allow
 ### Optimization: Reducing the Number of Tables
 
 In the end, we got:
+
 - **5 report tables** instead of 30
 - Two categories: publishers and advertisers
 - Plus one table where we store data almost as-is (practically without aggregation), but we don't write to it in real-time
