@@ -1,7 +1,7 @@
 ---
 title: "ClickHouse is Slow"
 date: 2018-11-09
-description: "Practical ClickHouse optimization experience: from performance bottlenecks to solutions using arrays and data structures. Scaling statistics system to 500K requests/sec and 50TB of data."
+description: "Practical ClickHouse optimization experience: from performance bottlenecks to solutions using arrays and data structures. Scaling statistics system."
 ---
 
 In this talk, I share our experience working with ClickHouse at TrafficStars. 
@@ -16,7 +16,7 @@ and the final solution using arrays and data structures.
 
 ## Context: Statistics System Requirements
 
-At TrafficStars, we work with an advertising network that processes up to 70,000 requests per second for our brands. We have two data centers in Europe and the US, multiple delivery servers, events are written to Kafka, and data storage is handled by ClickHouse. At the time of this talk (2018), we had approximately 500,000 statistics requests at peak, about 50 terabytes of data, and this doesn't include analytics work and analytical dashboards for managers.
+At TrafficStars, we work with an advertising network that processes up to 70,000 requests per second for our brands. We have two data centers in Europe and the US, multiple delivery servers, events are written to Kafka, and data storage is handled by ClickHouse. At the time of this talk (2018), we had approximately 500 statistics requests at peak, about 50 terabytes of data, and this doesn't include analytics work and analytical dashboards for managers.
 
 Characteristics of our data:
 
@@ -73,15 +73,15 @@ Requirements were simple:
 
 ClickHouse promised everything would be fast, and we adopted it relatively quickly. The cost of ownership is indeed low—even I could deploy it. We managed to load data, even wrote a driver for the native protocol (because we don't have money for many servers, this was simpler).
 
-We removed Vertica, removed Citus, and left everything to be stored in ClickHouse.
+We removed Vertica, removed Citus, and started storing everything in ClickHouse.
 
 ### First Data Model: Copying Schema from Citus
 
-We created a prototype—took the schema that was in Citus and put it in ClickHouse. Several queries worked great! But when we started checking other queries, everything was bad.
+We created a prototype—took the schema that was in Citus and moved it to ClickHouse. Several queries worked great! But when we started checking other queries, everything was bad.
 
 The problem was data access. In ClickHouse, there's one index—the primary key (clustered index). It takes data and sorts it according to the `ORDER BY` specified in the schema. Data is sorted by the primary key, and data access happens through it.
 
-For example, if our index was on `publisher_id`, but we need to query by `campaign_id`, we have to scan a large amount of data—works slowly.
+For example, if our index was on `publisher_id`, but we need to query by `campaign_id`, we have to scan a large amount of data—which works slowly.
 
 ### Solution: Separate Tables for Different Entities
 
@@ -105,7 +105,7 @@ Materialized views in ClickHouse work very well, but there's a nuance: they crea
 
 As a result, we're writing not to one table, but plus 30 more (by the number of materialized views). The problem was sequential writes—ClickHouse applies queries to the data block sequentially for each table.
 
-During writes, time is also spent sorting data—all tables under materialized views have different sort keys, need to sort data for each table separately.
+During writes, time is also spent sorting data—all tables under materialized views have different sort keys, so we need to sort data for each table separately.
 
 **Result**: we made the problem worse ourselves. We had one problem, we multiplied it by 30.
 
@@ -127,13 +127,13 @@ Instead of many separate tables, we store data in arrays:
 - One array—column identifiers (e.g., browsers)
 - Another array—values for them (clicks, impressions, etc.)
 
-We can do `arrayJoin`, and in the end we get: there's a row, and we store a set of rows as arrays. If we join by arrays, we get a table from one row.
+We can do `arrayJoin`, and in the end we get: there's a row, and we store a set of rows as arrays. When we join arrays, we get a table from one row.
 
 In one table, we can store a large number of reports at once—all those small reports we had (by operating systems, browsers, languages, etc.).
 
 ### Data Structures (Map)
 
-Then we came to structures—`Map`. This is a very convenient thing. For example, we have a structure `browser_id` → `browser_count`, `clicks`, and anything can be—`price`, these are columns for it.
+Then we came to structures—`Map`. This is a very convenient thing. For example, we have a structure `browser_id` → `browser_count`, `clicks`, and anything else can be added—`price`, these are columns for it.
 
 Important: all column lengths in the structure must be the same. It turns out, for each indicator we have some value with the same index.
 
@@ -141,7 +141,7 @@ Important: all column lengths in the structure must be the same. It turns out, f
 
 We use the `ReplacingMergeTree` engine with `-MergeTree` aggregation. This allows us in some cases not to store redundant aggregates. For example, for a sum we can store just a number, not an aggregate—this will work faster.
 
-**Merge magic**: when we write data, it goes into a data block that goes to disk. There a merge happens, and here optimization occurs—magic happens. For rows that are sorted sequentially in blocks, we can sum them, we can remove duplicates. But this only happens during merge, not immediately on write.
+**Merge magic**: when we write data, it goes into a data block that is written to disk. There a merge happens, and here optimization occurs—magic happens. For rows that are sorted sequentially in blocks, we can sum them, we can remove duplicates. But this only happens during merge, not immediately on write.
 
 ### Optimization: Reducing the Number of Tables
 
@@ -156,17 +156,17 @@ In the end, we got:
 
 The number 8192—this is the default index granularity in ClickHouse. ClickHouse indexes not every row, but every 8192 rows (by default)—stores min/max values for the granule.
 
-When we read data from disk, we need to unpack it into memory, read all other blocks additionally (in the worst case twice as much as the index size), and then apply a filter.
+When we read data from disk, we need to unpack it into memory, read all remaining blocks additionally (in the worst case twice as much as the index size), and then apply a filter.
 
 **Problem**: we had a client with large arrays (tens of millions of values instead of several thousand). When we read data for a client with a small amount of data, ClickHouse read all neighboring blocks, unpacked into memory, and there wasn't enough memory—queries failed.
 
-**Solution**: we reduced index granularity. This didn't significantly affect memory usage, but queries started working really faster, and they started fitting in memory.
+**Solution**: we reduced index granularity. This didn't significantly affect memory usage, but queries started working much faster, and they started fitting in memory.
 
 ### Query Optimizer
 
 Not all queries worked fast. We looked and understood: the problem is in indexes. One index—not always optimal. Data is sorted by one key, but queries go by another.
 
-**Solution**: we wrote a query optimizer. It keeps relationships between objects in memory, periodically loads reference data. If we have some object in the condition, but we understand that there's an index for it too, we add this field to the filtering conditions.
+**Solution**: we wrote a query optimizer. It keeps relationships between objects in memory and periodically loads reference data. If we have some object in the condition, but we understand that there's an index for it too, we add this field to the filtering conditions.
 
 Up to 30% of queries are optimized automatically. Average query time dropped from 200–250 milliseconds to 55 milliseconds.
 
@@ -176,7 +176,7 @@ Up to 30% of queries are optimized automatically. Average query time dropped fro
 
 1. **Simpler, more maintainable system**—this is the biggest advantage. For any system written by people, maintainability is important not only for programmers, but for business too.
 
-2. **More data on the same hardware**—we can store and process more data, which is a very good advantage for us.
+2. **More data on the same hardware**—we can store and process more data, which is a significant advantage for us.
 
 3. **Performance**: 
    - 2 parallel merges instead of constantly 16
@@ -187,7 +187,7 @@ Up to 30% of queries are optimized automatically. Average query time dropped fro
 
 1. **Transactions**—we have several tables, and this threatens data consistency. Tables can differ because something was written to them at different times.
 
-2. **Changing sort key**—this was promised to be released. A third key will appear: primary key (must index rows), sort key (can be changed), and this will allow changing the key without repartitioning tables and save memory.
+2. **Changing sort key**—this was promised to be released. A third key will appear: primary key (must index the rows), sort key (can be changed), and this will allow changing the key without repartitioning tables and save memory.
 
 3. **Indexes for data structures**—also in development, need to check.
 
@@ -197,7 +197,7 @@ Up to 30% of queries are optimized automatically. Average query time dropped fro
 
 2. **Understand the system**—ClickHouse is a fairly unique system, it's not quite familiar if you're migrating from another database. It has its own approach, it works differently.
 
-3. **Don't be afraid of problems**—if you encounter difficulties, it definitely won't be easy at first, but no offense, the task is serious, you'll definitely have problems.
+3. **Don't be afraid of problems**—if you encounter difficulties, it definitely won't be easy at first. The task is serious, and you'll definitely have problems.
 
 4. **Use the community**—ClickHouse has a very good community on Telegram, you can ask questions there, and you'll get help.
 
@@ -205,6 +205,6 @@ Up to 30% of queries are optimized automatically. Average query time dropped fro
 
 ## Conclusion
 
-ClickHouse is a powerful system that can work very fast, but requires understanding of its internals. Our experience showed that even with understanding of the system, you can encounter problems, but the right approach to data modeling and optimization allows achieving excellent results.
+ClickHouse is a powerful system that can work very fast, but requires understanding of its internals. Our experience showed that even with understanding of the system, you can encounter problems, but the right approach to data modeling and optimization allows us to achieve excellent results.
 
 The most important thing is system maintainability. A simple system that's easy to maintain is important not only for developers, but for business too. And if business is doing poorly, you won't be doing very well either.

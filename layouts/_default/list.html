@@ -15,19 +15,25 @@
     <div class="articles-section">
         <h2>{{ if eq .Language.Lang "ru" }}Статьи и выступления{{ else }}Articles & Talks{{ end }}</h2>
         <div class="articles">
+            {{ partial "articles_static" (dict "lang" .Language.Lang) }}
+
             {{ $currentLang := .Language.Lang }}
-            {{ $talks := where site.RegularPages "Section" "talks" }}
-            {{ range $talks }}
+            {{ $pages := where site.RegularPages "Section" "in" (slice "talks" "articles") }}
+            {{ range $pages.ByDate.Reverse }}
             {{ if eq .Language.Lang $currentLang }}
             <a href="{{ .Permalink }}" class="article-card">
                 <h3>{{ .Title }}</h3>
                 <p>{{ .Description }}</p>
-                <span class="article-source">{{ if eq $currentLang "ru" }}Доклад{{ else }}Talk{{ end }}</span>
+                <span class="article-source">
+                    {{- if eq .Section "talks" -}}
+                        {{- if eq $currentLang "ru" -}}Доклад{{- else -}}Talk{{- end -}}
+                    {{- else -}}
+                        {{- if eq $currentLang "ru" -}}Статья{{- else -}}Article{{- end -}}
+                    {{- end -}}
+                </span>
             </a>
             {{ end }}
             {{ end }}
-            
-            {{ partial "articles_static" (dict "lang" .Language.Lang) }}
         </div>
     </div>
 </section>

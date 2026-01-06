@@ -22,7 +22,7 @@
     </div>
 
     <footer class="post-footer">
-        <a href="{{ if eq .Language.Lang "ru" }}{{ .Site.BaseURL }}{{ else }}{{ .Site.BaseURL }}{{ .Language.Lang }}/{{ end }}" class="back-link">← {{ i18n "back_to_home" | default "Назад на главную" }}</a>
+        <a href="{{ if eq .Language.Lang "ru" }}{{ .Site.BaseURL }}{{ else }}{{ .Site.BaseURL }}{{ .Language.Lang }}/{{ end }}" class="back-link">← {{ if eq .Language.Lang "ru" }}Назад на главную{{ else }}Back to Home{{ end }}</a>
     </footer>
 </article>
 {{ end }}

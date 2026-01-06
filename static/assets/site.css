@@ -13,6 +13,16 @@
     --border-color: #e5e5e5;
     --lang-btn-active: #2d2d2d;
     --lang-btn-active-text: #ffffff;
+    --code-block-bg: var(--bg-color);
+    --inline-code-bg: #f7f7f7;
+    --code-text: var(--text-color);
+    /* Muted "editor-like" syntax palette (light) */
+    --code-keyword: #2f6f9f;
+    --code-string: #2f7a5a;
+    --code-number: #6b4ca6;
+    --code-comment: #7a7a7a;
+    --code-operator: #3b3b3b;
+    --code-func: #6a5d00;
 }
 
 body.dark {
@@ -24,6 +34,17 @@ body.dark {
     --border-color: #2a2a2a;
     --lang-btn-active: #e5e5e5;
     --lang-btn-active-text: #0a0a0a;
+    --code-block-bg: #0f0f0f;
+    --inline-code-bg: #131313;
+    --code-text: #e5e5e5;
+    /* Muted "editor-like" syntax palette (dark, Cursor-ish) */
+    /* slightly desaturated to avoid "neon" on dark background */
+    --code-keyword: #7b96c7;
+    --code-string: #88a96a;
+    --code-number: #a38ad1;
+    --code-comment: #5b647f;
+    --code-operator: #7aa8bf;
+    --code-func: #c19a69;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -36,6 +57,15 @@ body.dark {
         --border-color: #2a2a2a;
         --lang-btn-active: #e5e5e5;
         --lang-btn-active-text: #0a0a0a;
+        --code-block-bg: #0f0f0f;
+        --inline-code-bg: #131313;
+        --code-text: #e5e5e5;
+        --code-keyword: #7b96c7;
+        --code-string: #88a96a;
+        --code-number: #a38ad1;
+        --code-comment: #5b647f;
+        --code-operator: #7aa8bf;
+        --code-func: #c19a69;
     }
 }
 
@@ -453,12 +483,100 @@ h1 {
     line-height: 1.8;
 }
 
-.post-body code {
+.post-body a {
+    color: var(--link-color);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+    transition: opacity 0.15s ease, color 0.15s ease;
+}
+
+.post-body a:hover {
+    opacity: 0.7;
+    color: var(--link-hover-color);
+}
+
+.post-body blockquote {
+    margin: 1.5rem 0;
+    padding-left: 1rem;
+    border-left: 2px solid var(--border-color);
+    color: var(--text-secondary);
+}
+
+.post-body blockquote p {
+    margin-bottom: 0.75rem;
+}
+
+.post-body blockquote p:last-child {
+    margin-bottom: 0;
+}
+
+.post-body pre {
+    margin: 1.5rem 0;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--code-block-bg);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    tab-size: 4;
+}
+
+.post-body .highlight {
+    margin: 1.5rem 0;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--code-block-bg);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.post-body .highlight pre {
+    margin: 0;
+    padding: 0.9rem 1rem;
+    border: none;
+    border-radius: 0;
+    background: transparent !important; /* перебить inline chroma background */
+    color: var(--code-text) !important; /* перебить inline chroma base color */
+    overflow: visible;
+    tab-size: 4;
+}
+
+.post-body .highlight code {
+    background: transparent !important;
+}
+
+.post-body .highlight code,
+.post-body .highlight pre code {
+    color: var(--code-text) !important;
+}
+
+/* Chroma uses inline colors; remap them to a muted editor-like palette */
+.post-body .highlight [style*="color:#66d9ef"] { color: var(--code-keyword) !important; } /* keywords (monokai cyan) */
+.post-body .highlight [style*="color:#ae81ff"] { color: var(--code-number) !important; } /* numbers (monokai purple) */
+.post-body .highlight [style*="color:#e6db74"] { color: var(--code-string) !important; } /* strings (monokai yellow) */
+.post-body .highlight [style*="color:#75715e"] { color: var(--code-comment) !important; } /* comments (monokai gray) */
+.post-body .highlight [style*="color:#f92672"] { color: var(--code-operator) !important; } /* operators (monokai pink) */
+.post-body .highlight [style*="color:#fd971f"] { color: var(--code-func) !important; } /* functions/types (monokai orange) */
+.post-body .highlight [style*="color:#a6e22e"] { color: var(--code-string) !important; } /* identifiers (monokai green) */
+
+.post-body pre code {
+    display: block;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    color: var(--code-text);
+    font-size: 0.85rem;
+    line-height: 1.55;
+}
+
+.post-body :not(pre) > code {
     font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
     font-size: 0.9em;
-    background: var(--border-color);
+    background: var(--inline-code-bg);
     padding: 0.2em 0.4em;
     border-radius: 3px;
+    border: 1px solid var(--border-color);
 }
 
 .post-body strong {
