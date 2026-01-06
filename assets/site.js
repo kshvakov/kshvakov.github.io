@@ -107,11 +107,11 @@
         function setTheme(theme) {
             if (theme === 'dark') {
                 document.body.classList.add('dark');
-                document.documentElement.classList.remove('light');
+                document.body.classList.remove('light');
                 if (themeIcon) themeIcon.textContent = '☾';
             } else {
                 document.body.classList.remove('dark');
-                document.documentElement.classList.add('light');
+                document.body.classList.add('light');
                 if (themeIcon) themeIcon.textContent = '☀';
             }
 
@@ -148,8 +148,17 @@
 
         // Handle theme toggle click
         themeToggle.addEventListener('click', function() {
-            const isDark = document.body.classList.contains('dark');
-            setTheme(isDark ? 'light' : 'dark');
+            const hasDark = document.body.classList.contains('dark');
+            const hasLight = document.body.classList.contains('light');
+            
+            // If no explicit theme is set, determine from system preference
+            if (!hasDark && !hasLight) {
+                const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                setTheme(systemPrefersDark ? 'light' : 'dark');
+            } else {
+                // Toggle between dark and light
+                setTheme(hasDark ? 'light' : 'dark');
+            }
         });
 
     // Listen for system theme changes
@@ -164,6 +173,7 @@
                 // Ignore localStorage errors
             }
         });
+    }
     }
 })();
 
