@@ -541,5 +541,5 @@ LIMIT 10;
 
 
 Источники:
-- Материалы доклада (SQL-листинг): [kshvakov/ClickHouse-Meetup-Exness](https://github.com/kshvakov/ClickHouse-Meetup-Exness)
+
 - Отчёт ClickHouse о митапе: [ClickHouse Meetup in Limassol on May 7, 2019](https://clickhouse.com/blog/click-house-meetup-in-limassol-on-may-7-2019)
