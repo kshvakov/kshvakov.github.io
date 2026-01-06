@@ -23,6 +23,7 @@
     --code-comment: #7a7a7a;
     --code-operator: #3b3b3b;
     --code-func: #6a5d00;
+    --header-control-height: 32px;
 }
 
 body.dark {
@@ -112,7 +113,9 @@ h1 {
 }
 
 .theme-btn {
-    padding: 0.4rem 0.6rem;
+    width: var(--header-control-height);
+    height: var(--header-control-height);
+    padding: 0;
     border: 1px solid var(--border-color);
     border-radius: 4px;
     background: transparent;
@@ -144,10 +147,12 @@ h1 {
     border: 1px solid var(--border-color);
     border-radius: 4px;
     overflow: hidden;
+    height: var(--header-control-height);
 }
 
 .lang-btn {
-    padding: 0.4rem 0.9rem;
+    height: 100%;
+    padding: 0 0.9rem;
     border: none;
     background: transparent;
     color: var(--text-secondary);
@@ -156,6 +161,7 @@ h1 {
     font-weight: 400;
     transition: all 0.15s ease;
     font-family: inherit;
+    line-height: 1;
     border-right: 1px solid var(--border-color);
     text-decoration: none;
     display: inline-flex;
