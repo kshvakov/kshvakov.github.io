@@ -1,0 +1,43 @@
+baseURL: 'https://kshvakov.github.io/'
+languageCode: 'ru'
+title: 'Кирилл Шваков'
+
+defaultContentLanguage: 'ru'
+defaultContentLanguageInSubdir: false
+
+languages:
+  ru:
+    languageName: 'Русский'
+    weight: 1
+    title: 'Кирилл Шваков'
+    params:
+      author: 'Кирилл Шваков'
+  en:
+    languageName: 'English'
+    weight: 2
+    title: 'Kirill Shvakov'
+    params:
+      author: 'Kirill Shvakov'
+
+params:
+  author: 'Кирилл Шваков'
+  jobTitle: 'CTO'
+  company: 'Kinescope'
+  companyURL: 'https://kinescope.ru/'
+  github: 'https://github.com/kshvakov'
+  telegram: 'https://t.me/kshvakov'
+  aiCourseURL: 'https://kshvakov.github.io/ai-agent-course/ru/'
+  aiCourseURLEn: 'https://kshvakov.github.io/ai-agent-course/'
+  yandex_verification: '0407992383df341f'
+  google_verification: 'Xg8NZGFTAmQMSBUZ9FVmv5zeiQzm2vV5-sQcoTPZ9uE'
+  metrika_id: '106153539'
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+
+taxonomies:
+  category: categories
+  tag: tags
+

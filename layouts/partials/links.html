@@ -1,0 +1,37 @@
+{{ $lang := .lang }}
+{{ if eq $lang "ru" }}
+<a href="{{ .site.Params.aiCourseURL }}" class="link-card">
+    <h3>Курс по AI‑агентам</h3>
+    <p>Практический курс по созданию автономных AI‑агентов на Go</p>
+</a>
+<a href="{{ .site.Params.github }}" class="link-card" target="_blank" rel="noopener noreferrer">
+    <h3>GitHub</h3>
+    <p>Репозитории с кодом и open source проекты</p>
+</a>
+<a href="{{ .site.Params.telegram }}" class="link-card" target="_blank" rel="noopener noreferrer">
+    <h3>Telegram</h3>
+    <p>Связаться со мной</p>
+</a>
+<a href="{{ .site.Params.companyURL }}" class="link-card" target="_blank" rel="noopener noreferrer">
+    <h3>{{ .site.Params.company }}</h3>
+    <p>Видеоплатформа, где я работаю CTO</p>
+</a>
+{{ else }}
+<a href="{{ .site.Params.aiCourseURLEn }}" class="link-card">
+    <h3>AI Agent Course</h3>
+    <p>A hands-on course for building autonomous AI agents in Go</p>
+</a>
+<a href="{{ .site.Params.github }}" class="link-card" target="_blank" rel="noopener noreferrer">
+    <h3>GitHub</h3>
+    <p>Open source projects and code repositories</p>
+</a>
+<a href="{{ .site.Params.telegram }}" class="link-card" target="_blank" rel="noopener noreferrer">
+    <h3>Telegram</h3>
+    <p>Let's connect</p>
+</a>
+<a href="{{ .site.Params.companyURL }}" class="link-card" target="_blank" rel="noopener noreferrer">
+    <h3>{{ .site.Params.company }}</h3>
+    <p>The video platform where I serve as CTO</p>
+</a>
+{{ end }}
+

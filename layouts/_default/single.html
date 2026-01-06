@@ -1,0 +1,76 @@
+{{ define "main" }}
+{{ if .Params.youtube_id }}
+<article class="post">
+    <header class="post-header">
+        <h1 class="post-title">{{ .Title }}</h1>
+        <p class="post-meta">
+            <span>{{ i18n "talk" | default "Доклад на конференции" }}</span>
+            <span>•</span>
+            {{ if .Params.date }}
+            <time datetime="{{ .Params.date }}">{{ dateFormat "2006" .Params.date }}</time>
+            {{ end }}
+        </p>
+    </header>
+
+    {{ partial "youtube" (dict "id" .Params.youtube_id "title" .Title) }}
+
+    <div class="post-content">
+        {{ if .Params.description }}
+        <div class="post-intro">
+            {{ .Params.description | markdownify }}
+        </div>
+        {{ end }}
+
+        {{ if .Content }}
+        <div class="post-body">
+            {{ .Content }}
+        </div>
+        {{ end }}
+
+        {{ if .Params.transcript }}
+        <section class="raw-transcript-section">
+            {{ partial "raw_transcript" (dict "path" .Params.transcript "title" (i18n "show_raw_transcript" | default "Показать сырой текст расшифровки")) }}
+        </section>
+        {{ end }}
+    </div>
+
+    <footer class="post-footer">
+        <a href="{{ if eq .Language.Lang "ru" }}{{ .Site.BaseURL }}{{ else }}{{ .Site.BaseURL }}{{ .Language.Lang }}/{{ end }}" class="back-link">← {{ i18n "back_to_home" | default "Назад на главную" }}</a>
+    </footer>
+</article>
+
+{{ else }}
+<article class="post">
+    <h1>{{ .Title }}</h1>
+    <div class="post-content">
+        {{ .Content }}
+    </div>
+</article>
+{{ end }}
+{{ end }}
+
+{{ define "head" }}
+{{ if .Params.youtube_id }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "{{ .Title }}",
+  "description": "{{ if .Params.description }}{{ .Params.description | plainify }}{{ else }}{{ .Description | plainify }}{{ end }}",
+  "thumbnailUrl": "https://img.youtube.com/vi/{{ .Params.youtube_id }}/maxresdefault.jpg",
+  {{ if .Params.date }}"uploadDate": "{{ .Params.date }}",{{ end }}
+  {{ if .Params.duration }}"duration": "{{ .Params.duration }}",{{ end }}
+  "contentUrl": "https://www.youtube.com/watch?v={{ .Params.youtube_id }}",
+  "embedUrl": "https://www.youtube.com/embed/{{ .Params.youtube_id }}",
+  {{ if .Params.publisher }}"publisher": {
+    "@type": "Organization",
+    "name": "{{ .Params.publisher }}"
+  },{{ end }}
+  "speaker": {
+    "@type": "Person",
+    "name": "{{ if or (eq .Site.Language.Lang "en") (hasPrefix .RelPermalink "/en/") }}Kirill Shvakov{{ else }}{{ .Site.Params.author }}{{ end }}"
+  }
+}
+</script>
+{{ end }}
+{{ end }}

@@ -1,0 +1,29 @@
+{{ define "main" }}
+<section class="content-section" lang="{{ .Language.Lang }}">
+    <div class="bio">
+        <p>{{ if .Params.bio }}{{ .Params.bio | markdownify }}{{ else }}{{ .Content }}{{ end }}</p>
+    </div>
+
+    <nav class="links">
+        {{ partial "links" (dict "lang" .Language.Lang "site" .Site) }}
+    </nav>
+
+    <div class="articles-section">
+        <h2>{{ if eq .Language.Lang "ru" }}Статьи и выступления{{ else }}Articles & Talks{{ end }}</h2>
+        <div class="articles">
+            {{ $talks := where (where site.RegularPages "Section" "talks") "Params.youtube_id" "!=" nil }}
+            {{ range $talks }}
+            {{ if eq .Language.Lang $.Language.Lang }}
+            <a href="{{ .Permalink }}" class="article-card">
+                <h3>{{ .Title }}</h3>
+                <p>{{ if .Params.short_description }}{{ .Params.short_description }}{{ else }}{{ .Description }}{{ end }}</p>
+                <span class="article-source">{{ if eq $.Language.Lang "ru" }}Доклад{{ else }}Talk{{ end }}</span>
+            </a>
+            {{ end }}
+            {{ end }}
+            
+            {{ partial "articles_static" (dict "lang" .Language.Lang) }}
+        </div>
+    </div>
+</section>
+{{ end }}
