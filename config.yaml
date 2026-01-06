@@ -10,12 +10,14 @@ languages:
     languageName: 'Русский'
     weight: 1
     title: 'Кирилл Шваков'
+    contentDir: content
     params:
       author: 'Кирилл Шваков'
   en:
     languageName: 'English'
     weight: 2
     title: 'Kirill Shvakov'
+    contentDir: content/en
     params:
       author: 'Kirill Shvakov'
 

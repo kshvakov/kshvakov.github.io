@@ -4,7 +4,7 @@
         <h1 class="post-title">{{ .Title }}</h1>
         {{ if eq .Section "talks" }}
         <p class="post-meta">
-            <span>{{ i18n "talk" | default "Доклад на конференции" }}</span>
+            <span>{{ if eq .Language.Lang "ru" }}Доклад на конференции{{ else }}Conference Talk{{ end }}</span>
             <span>•</span>
             {{ if .Params.date }}
             <time datetime="{{ .Params.date }}">{{ dateFormat "2006" .Params.date }}</time>

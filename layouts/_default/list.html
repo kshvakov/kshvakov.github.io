@@ -1,7 +1,11 @@
 {{ define "main" }}
 <section class="content-section" lang="{{ .Language.Lang }}">
     <div class="bio">
-        <p>{{ if .Params.bio }}{{ .Params.bio | markdownify }}{{ else }}{{ .Content }}{{ end }}</p>
+        <p>{{- if .Params.bio -}}
+            {{- .Params.bio | markdownify -}}
+        {{- else if .Content -}}
+            {{- .Content -}}
+        {{- end -}}</p>
     </div>
 
     <nav class="links">
@@ -11,15 +15,14 @@
     <div class="articles-section">
         <h2>{{ if eq .Language.Lang "ru" }}Статьи и выступления{{ else }}Articles & Talks{{ end }}</h2>
         <div class="articles">
+            {{ $currentLang := .Language.Lang }}
             {{ $talks := where site.RegularPages "Section" "talks" }}
             {{ range $talks }}
-            {{ $isEnPage := hasPrefix .RelPermalink "/en/" }}
-            {{ $showPage := or (and (eq $.Language.Lang "ru") (not $isEnPage)) (and (eq $.Language.Lang "en") $isEnPage) }}
-            {{ if $showPage }}
+            {{ if eq .Language.Lang $currentLang }}
             <a href="{{ .Permalink }}" class="article-card">
                 <h3>{{ .Title }}</h3>
                 <p>{{ .Description }}</p>
-                <span class="article-source">{{ if eq $.Language.Lang "ru" }}Доклад{{ else }}Talk{{ end }}</span>
+                <span class="article-source">{{ if eq $currentLang "ru" }}Доклад{{ else }}Talk{{ end }}</span>
             </a>
             {{ end }}
             {{ end }}
