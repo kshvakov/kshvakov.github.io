@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kshvakov.github.io/sitemap.xml
+
+
