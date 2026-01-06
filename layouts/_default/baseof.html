@@ -10,7 +10,7 @@
     {{ if .Site.Params.google_verification }}
     <meta name="google-site-verification" content="{{ .Site.Params.google_verification }}" />
     {{ end }}
-    <title>{{ if .Title }}{{ .Title }} — {{ end }}{{ if or (eq .Site.Language.Lang "en") (hasPrefix .RelPermalink "/en/") }}Kirill Shvakov{{ else }}{{ .Site.Title }}{{ end }}</title>
+    <title>{{ if and .Title (not .IsHome) }}{{ .Title }} — {{ end }}{{ if or (eq .Site.Language.Lang "en") (hasPrefix .RelPermalink "/en/") }}Kirill Shvakov{{ else }}{{ .Site.Title }}{{ end }}</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="stylesheet" href="/assets/site.css">
     <link rel="canonical" href="{{ .Permalink }}">
@@ -20,7 +20,7 @@
     <link rel="alternate" hreflang="x-default" href="{{ .Site.BaseURL }}">
 
     <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
-    <meta property="og:title" content="{{ if .Title }}{{ .Title }} — {{ end }}{{ if or (eq .Site.Language.Lang "en") (hasPrefix .RelPermalink "/en/") }}Kirill Shvakov{{ else }}{{ .Site.Title }}{{ end }}">
+    <meta property="og:title" content="{{ if and .Title (not .IsHome) }}{{ .Title }} — {{ end }}{{ if or (eq .Site.Language.Lang "en") (hasPrefix .RelPermalink "/en/") }}Kirill Shvakov{{ else }}{{ .Site.Title }}{{ end }}">
     <meta property="og:description" content="{{ if .Params.description }}{{ .Params.description | plainify | truncate 160 }}{{ else if .Description }}{{ .Description | plainify | truncate 160 }}{{ else }}{{ .Site.Params.description }}{{ end }}">
     <meta property="og:url" content="{{ .Permalink }}">
 

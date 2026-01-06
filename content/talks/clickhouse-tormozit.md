@@ -1,12 +1,7 @@
 ---
 title: "ClickHouse тормозит"
-youtube_id: efRryvtKlq0
 date: 2018-11-09
-duration: PT45M
-publisher: TrafficStars
-transcript: /assets/transcripts/efRryvtKlq0.ru.txt
 description: "Практический опыт оптимизации ClickHouse: от проблем производительности до решения через массивы и структуры данных. Масштабирование системы статистики до 500 тысяч запросов в секунду и 50 ТБ данных."
-short_description: Анализ проблем производительности ClickHouse и стратегии оптимизации.
 ---
 
 В этом докладе я рассказываю о нашем опыте работы с ClickHouse в TrafficStars. 
