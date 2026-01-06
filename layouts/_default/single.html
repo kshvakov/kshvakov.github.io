@@ -12,15 +12,7 @@
         </p>
     </header>
 
-    {{ partial "youtube" (dict "id" .Params.youtube_id "title" .Title) }}
-
     <div class="post-content">
-        {{ if .Params.description }}
-        <div class="post-intro">
-            {{ .Params.description | markdownify }}
-        </div>
-        {{ end }}
-
         {{ if .Content }}
         <div class="post-body">
             {{ .Content }}

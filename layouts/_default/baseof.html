@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="{{ if .Description }}{{ .Description }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+    <meta name="description" content="{{ if .Params.description }}{{ .Params.description | plainify | truncate 160 }}{{ else if .Description }}{{ .Description | plainify | truncate 160 }}{{ else }}{{ .Site.Params.description }}{{ end }}">
     {{ if .Site.Params.yandex_verification }}
     <meta name="yandex-verification" content="{{ .Site.Params.yandex_verification }}" />
     {{ end }}
@@ -21,7 +21,7 @@
 
     <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
     <meta property="og:title" content="{{ if .Title }}{{ .Title }} — {{ end }}{{ if or (eq .Site.Language.Lang "en") (hasPrefix .RelPermalink "/en/") }}Kirill Shvakov{{ else }}{{ .Site.Title }}{{ end }}">
-    <meta property="og:description" content="{{ if .Description }}{{ .Description }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+    <meta property="og:description" content="{{ if .Params.description }}{{ .Params.description | plainify | truncate 160 }}{{ else if .Description }}{{ .Description | plainify | truncate 160 }}{{ else }}{{ .Site.Params.description }}{{ end }}">
     <meta property="og:url" content="{{ .Permalink }}">
 
     {{ block "head" . }}{{ end }}
