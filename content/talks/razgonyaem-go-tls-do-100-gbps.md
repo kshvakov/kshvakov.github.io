@@ -872,6 +872,7 @@ kTLS эффективен только когда **ваш сервер** дел
 ## Полезные материалы
 
 - [kTLS: Kernel TLS для Linux](https://www.kernel.org/doc/html/latest/networking/tls.html) — официальная документация ядра Linux по kTLS, API и примеры использования
+- [Playing with kernel TLS in Linux 4.13 and Go](https://words.filippo.io/playing-with-kernel-tls-in-linux-4-13-and-go/) — одна из первых экспериментальных реализаций kTLS для Go от Филиппо Валсорды (2017), демонстрирующая ранний подход к интеграции kTLS с `crypto/tls`
 - [HTTP/2 Prioritization with NGINX](https://blog.cloudflare.com/http-2-prioritization-with-nginx/) — как Cloudflare решает проблемы приоритизации HTTP/2 и почему это важно для производительности
 - [The Story of One Latency Spike](https://blog.cloudflare.com/the-story-of-one-latency-spike/) — практический пример диагностики проблем производительности: как искать узкие места в системе
 - [Linux Network Performance Ultimate Guide](https://ntk148v.github.io/posts/linux-network-performance-ultimate-guide/) — полное руководство по тюнингу сетевой производительности в Linux: настройки ядра, драйверов и системных параметров

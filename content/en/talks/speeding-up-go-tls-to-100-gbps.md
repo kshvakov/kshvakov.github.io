@@ -872,6 +872,7 @@ If you generate content in userspace, kTLS isn't a silver bullet: first you need
 ## Useful Resources
 
 - [kTLS: Kernel TLS for Linux](https://www.kernel.org/doc/html/latest/networking/tls.html) — official Linux kernel documentation on kTLS, API, and usage examples
+- [Playing with kernel TLS in Linux 4.13 and Go](https://words.filippo.io/playing-with-kernel-tls-in-linux-4-13-and-go/) — one of the first experimental kTLS implementations for Go by Filippo Valsorda (2017), demonstrating an early approach to integrating kTLS with `crypto/tls`
 - [HTTP/2 Prioritization with NGINX](https://blog.cloudflare.com/http-2-prioritization-with-nginx/) — how Cloudflare solves HTTP/2 prioritization problems and why it matters for performance
 - [The Story of One Latency Spike](https://blog.cloudflare.com/the-story-of-one-latency-spike/) — practical example of performance problem diagnosis: how to find bottlenecks in a system
 - [Linux Network Performance Ultimate Guide](https://ntk148v.github.io/posts/linux-network-performance-ultimate-guide/) — complete guide to tuning network performance in Linux: kernel settings, drivers, and system parameters
