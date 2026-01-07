@@ -880,7 +880,7 @@ If you generate content in userspace, kTLS isn't a silver bullet: first you need
 - [Go pprof: Performance Profiling](https://go.dev/blog/pprof) — official guide on using pprof for profiling Go applications
 - [perf: Linux Profiling with Performance Counters](https://perf.wiki.kernel.org/index.php/Main_Page) — documentation on the perf tool for kernel-level profiling
 - [TLS 1.3: Full Specification](https://datatracker.ietf.org/doc/html/rfc8446) — RFC 8446 describing the TLS 1.3 protocol, including session resumption and optimizations
-- [Go crypto/tls: Performance Issues](https://github.com/golang/go/issues/29257) — discussion of TLS performance problems in Go and possible solutions
+- [crypto/tls: support kernel-provided TLS](https://github.com/golang/go/issues/44506) — proposal to add kTLS support to Go's standard library (accepted to Backlog)
 - [kTLS: Minimal Working Example for Go crypto/tls](https://gist.github.com/kshvakov/3ad0017158e790ebb66b70be1e687caf) — simplified implementation for talk presentation, demonstrating main kTLS integration ideas (not used in production, but useful for understanding the concept)
 
 > **Practical Note.** When diagnosing TLS performance problems, first check cipher suite distribution and share of full handshake vs session resumption. Often the problem isn't encryption itself, but the number of handshakes or clients choosing "expensive" ciphers. Source: experience from Cloudflare and other high-load systems.

@@ -880,7 +880,7 @@ kTLS эффективен только когда **ваш сервер** дел
 - [Go pprof: профилирование производительности](https://go.dev/blog/pprof) — официальное руководство по использованию pprof для профилирования Go-приложений
 - [perf: Linux profiling with performance counters](https://perf.wiki.kernel.org/index.php/Main_Page) — документация по инструменту perf для профилирования на уровне ядра
 - [TLS 1.3: полная спецификация](https://datatracker.ietf.org/doc/html/rfc8446) — RFC 8446 с описанием протокола TLS 1.3, включая session resumption и оптимизации
-- [Go crypto/tls: проблемы производительности](https://github.com/golang/go/issues/29257) — обсуждение проблем производительности TLS в Go и возможные решения
+- [crypto/tls: support kernel-provided TLS](https://github.com/golang/go/issues/44506) — предложение добавить поддержку kTLS в стандартную библиотеку Go (принято в Backlog)
 - [kTLS: минимальный рабочий пример для Go crypto/tls](https://gist.github.com/kshvakov/3ad0017158e790ebb66b70be1e687caf) — упрощённая реализация для презентации на докладе, демонстрирующая основные идеи интеграции kTLS (не используется в продакшене, но полезен для понимания концепции)
 
 > **Практическая заметка.** При диагностике проблем производительности TLS сначала проверьте распределение cipher suites и долю full handshake vs session resumption. Часто проблема не в самом шифровании, а в количестве хендшейков или выборе «дорогих» шифров клиентами. Источник: опыт Cloudflare и других высоконагруженных систем.
