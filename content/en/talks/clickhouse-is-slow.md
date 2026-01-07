@@ -149,7 +149,7 @@ Important: all column lengths in the structure must be the same. It turns out, f
 
 ### ReplacingMergeTree Engine
 
-We use the `ReplacingMergeTree` engine with `-MergeTree` aggregation. This allows us in some cases not to store redundant aggregates. For example, for a sum we can store just a number, not an aggregate—this will work faster.
+We use the `ReplacingMergeTree` engine. This allows us in some cases not to store redundant aggregates. For example, for a sum we can store just a number, not an aggregate—this will work faster.
 
 **Merge magic**: when we write data, it goes into a data block that is written to disk. There a merge happens, and here optimization occurs—magic happens. For rows that are sorted sequentially in blocks, we can sum them, we can remove duplicates. But this only happens during merge, not immediately on write.
 

@@ -35,7 +35,7 @@ Here's the thing: "HTTP serves fast" is one thing, but **HTTP inside TLS** at sc
 I'll barely touch cryptography here—that's a separate large topic. What matters is the engineering mechanics:
 
 1. **TCP connection**.
-2. **TLS handshake**: client and server agree on version/ciphers and obtain key material.
+2. **TLS handshake**: client and server agree on version/ciphers and obtain cryptographic secrets—symmetric keys and parameters (IV/nonce) that will be used to encrypt TLS records in both directions.
 3. **Data exchange**: the application reads/writes bytes, while "inside" data is packed into TLS records and encrypted/decrypted.
 
 I'll use two terms:
@@ -219,7 +219,7 @@ In some scenarios, TLS can be partially offloaded to the NIC (TLS offload). In p
 
 In our fork, there's a commented line for TX zero copy at the NIC level:
 
-```83:85:gitlab.kinescope.dev/go/tls/ktls.go
+```go
 		if kernel.TLS_TX_ZEROCOPY {
 			//	syscall.SetsockoptInt(int(fd), unix.SOL_TLS, TLS_TX_ZEROCOPY_RO, 1)
 		}
@@ -252,7 +252,7 @@ Let's see how we integrated kTLS into a fork of the standard `crypto/tls` packag
 
 Before enabling kTLS, you need to ensure the kernel supports it. In our fork, this is done in the `init()` function:
 
-```28:60:gitlab.kinescope.dev/go/tls/ktls.go
+```go
 func init() {
 	if _, err := os.Stat("/sys/module/tls"); err != nil {
 		fmt.Println("kernel TLS module not enabled (hint: sudo modprobe tls).")
@@ -302,7 +302,7 @@ Key point: standard `crypto/tls` doesn't save key material (`key`, `iv`) in the 
 
 In our fork, we added `key` and `iv` fields to the `halfConn` structure:
 
-```187:189:gitlab.kinescope.dev/go/tls/conn.go
+```go
 	// kTLS
 	key, iv []byte
 }
@@ -312,7 +312,7 @@ Now we need to save these values in two places:
 
 **For TLS 1.3** — in the `setTrafficSecret` function:
 
-```235:243:gitlab.kinescope.dev/go/tls/conn.go
+```go
 func (hc *halfConn) setTrafficSecret(suite *cipherSuiteTLS13, level QUICEncryptionLevel, secret []byte) {
 	hc.trafficSecret = secret
 	hc.level = level
@@ -326,7 +326,7 @@ func (hc *halfConn) setTrafficSecret(suite *cipherSuiteTLS13, level QUICEncrypti
 
 **For TLS 1.2** — in the `prepareCipherSpec` function (called during handshake):
 
-```211:217:gitlab.kinescope.dev/go/tls/conn.go
+```go
 func (hc *halfConn) prepareCipherSpec(version uint16, cipher any, mac hash.Hash, key, iv []byte) {
 	hc.version = version
 	hc.nextCipher = cipher
@@ -342,7 +342,7 @@ Note: in TLS 1.2, `prepareCipherSpec` now takes `key` and `iv` as parameters, be
 
 The Linux kernel expects key material in a special binary structure. For each cipher suite, the structure is different. For example, for AES-128-GCM:
 
-```38:49:gitlab.kinescope.dev/go/tls/cipher_suites_ktls.go
+```go
 type kTLSCryptoAES128GCM struct {
 	kTLSCryptoInfo
 	iv      [kTLS_CIPHER_AES_GCM_128_IV_SIZE]byte
@@ -359,7 +359,7 @@ func (crypto *kTLSCryptoAES128GCM) String() string {
 
 Important point about **salt and IV for AES-GCM**: in TLS, IV consists of two parts—fixed salt (4 bytes) and explicit nonce (8 bytes). The kernel expects them separately:
 
-```90:94:gitlab.kinescope.dev/go/tls/cipher_suites_ktls.go
+```go
 		{
 			copy(crypto.key[:], hc.key)
 			copy(crypto.iv[:], hc.iv[4:])
@@ -369,7 +369,7 @@ Important point about **salt and IV for AES-GCM**: in TLS, IV consists of two pa
 
 The `kTLSCipher()` function selects the needed structure depending on the cipher suite and fills it with data from `halfConn`:
 
-```77:95:gitlab.kinescope.dev/go/tls/cipher_suites_ktls.go
+```go
 func (hc *halfConn) kTLSCipher(cipherSuite uint16) fmt.Stringer {
 	if !kernel.TLS {
 		return nil
@@ -399,7 +399,7 @@ After a successful handshake, `enableKernelTLS()` is called. This function does 
 2. Prepares the `crypto_info` structure for the kernel.
 3. Sets socket options via `setsockopt`:
 
-```62:87:gitlab.kinescope.dev/go/tls/ktls.go
+```go
 func (c *Conn) enableKernelTLS() error {
 	promCipherSuiteReqTotal.WithLabelValues(CipherSuiteName(c.cipherSuite)).Inc()
 	if c.quic != nil || !kernel.TLS || c.config.DisableKernelTLS {
@@ -436,7 +436,7 @@ What happens here:
 
 The call to `enableKernelTLS()` happens **after handshake completion**, in `handshake_server.go` and `handshake_server_tls13.go`:
 
-```89:91:gitlab.kinescope.dev/go/tls/handshake_server_tls13.go
+```go
 	if err := c.enableKernelTLS(); err != nil {
 		return err
 	}
@@ -448,7 +448,7 @@ After enabling kTLS, the kernel only encrypts **application data**. But sometime
 
 Implementation in `ktlsWriteRecord()`:
 
-```89:132:gitlab.kinescope.dev/go/tls/ktls.go
+```go
 func (c *Conn) ktlsWriteRecord(typ recordType, b []byte) (_ int, se error) {
 	switch typ {
 	case recordTypeApplicationData:
@@ -499,7 +499,7 @@ For `application data`, we simply write data to the socket—the kernel adds the
 
 This function is called from `writeRecordLocked()` when the `kTLSCipher` marker is detected:
 
-```985:988:gitlab.kinescope.dev/go/tls/conn.go
+```go
 func (c *Conn) writeRecordLocked(typ recordType, data []byte) (int, error) {
 	if _, ok := c.out.cipher.(kTLSCipher); ok {
 		return c.ktlsWriteRecord(typ, data)
@@ -510,7 +510,7 @@ func (c *Conn) writeRecordLocked(typ recordType, data []byte) (int, error) {
 
 The most important thing for performance is optimizing the `ReadFrom` method. When kTLS is enabled, we can write unencrypted data directly to the TCP socket, and the kernel encrypts it. This allows using `io.Copy` directly on the TCP connection, bypassing userspace encryption:
 
-```14:22:gitlab.kinescope.dev/go/tls/ktls_io.go
+```go
 func (c *Conn) ReadFrom(r io.Reader) (n int64, err error) {
 	if _, ok := c.out.cipher.(kTLSCipher); !ok {
 		return io.Copy(&tlsConnWithoutReadFrom{c: c}, r)
@@ -816,7 +816,7 @@ At the "lots of traffic" level, you often want to move to QUIC/HTTP3, but for ma
 
 **Important**: kTLS **doesn't work with QUIC**. In our fork, there's an explicit check:
 
-```64:66:gitlab.kinescope.dev/go/tls/ktls.go
+```go
 	if c.quic != nil || !kernel.TLS || c.config.DisableKernelTLS {
 		return nil
 	}
