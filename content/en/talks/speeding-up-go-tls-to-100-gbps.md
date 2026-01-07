@@ -20,7 +20,7 @@ Talk video:
 - **At scale, it's not "encryption" that's expensive, but the overhead around it**: extra copies, allocations, and buffers quickly hit memory, CPU cache, and GC limits.
 - **Zero-copy in Linux (`sendfile`, `splice`) is key to throughput**, but TLS in userspace breaks zero-copy because data must be encrypted.
 - **kTLS moves the TLS record layer into the kernel**: you write unencrypted data to the socket, and the kernel forms TLS records and encrypts them. This restores zero-copy (primarily on send).
-- **kTLS isn't available "out of the box" in Go**: you need to extract key material from the handshake (e.g., `SetTrafficSecret` in TLS 1.3) and configure the socket correctly.
+- **kTLS isn't available "out of the box" in Go**: you need to extract cryptographic secrets (keys and parameters) from the handshake (e.g., `SetTrafficSecret` in TLS 1.3) and configure the socket correctly.
 - **Practice**: on production traffic, we hit roughly **~73 Gbps** per server with **~40,000 connections**. Beyond that, the platform sets the limits (network, memory, kernel, drivers).
 - **kTLS barely helps if you *generate* content in userspace**: maximum effect is when you **serve "as-is"** (files/chunks) and can enable zero-copy.
 
@@ -236,7 +236,7 @@ At the idea level, it's simple: take Go, enable kTLS, and rejoice. In practice, 
 
 So in reality, we made a small patch/fork of the TLS part that:
 
-- intercepts key material (secrets) at the handshake stage;
+- intercepts cryptographic secrets (encryption keys and parameters like IV/nonce) at the handshake stage;
 - enables kTLS options on the socket;
 - and then allows using standard serving mechanisms, including the path that gives zero-copy.
 
@@ -298,7 +298,7 @@ What happens here:
 
 ### Step B: Where to Get Keys, IV, and Sequence Number
 
-Key point: standard `crypto/tls` doesn't save key material (`key`, `iv`) in the `halfConn` structure—it immediately creates an encryption object (AEAD) and uses it. For kTLS, we need **raw keys** to pass to the kernel.
+Key point: standard `crypto/tls` doesn't save cryptographic secrets (`key`, `iv`) in the `halfConn` structure—it immediately creates an encryption object (AEAD) and uses it. For kTLS, we need **raw keys and parameters** to pass to the kernel.
 
 In our fork, we added `key` and `iv` fields to the `halfConn` structure:
 
@@ -340,7 +340,7 @@ Note: in TLS 1.2, `prepareCipherSpec` now takes `key` and `iv` as parameters, be
 
 ### Step C: Preparing Structure for Kernel (Cipher Suite → crypto_info)
 
-The Linux kernel expects key material in a special binary structure. For each cipher suite, the structure is different. For example, for AES-128-GCM:
+The Linux kernel expects cryptographic secrets (keys and parameters) in a special binary structure. For each cipher suite, the structure is different. For example, for AES-128-GCM:
 
 ```go
 type kTLSCryptoAES128GCM struct {
@@ -431,7 +431,7 @@ func (c *Conn) enableKernelTLS() error {
 What happens here:
 
 - `SetsockoptString(fd, SOL_TCP, TCP_ULP, "tls")` — enables ULP (Upper Layer Protocol) "tls" for the socket. This tells the kernel this socket will use kTLS.
-- `SetsockoptString(fd, SOL_TLS, TLS_TX, cryptoInfo)` — passes key material to the kernel. The `crypto_info` structure is serialized to bytes via the `String()` method (which uses `unsafe.Pointer` to directly convert the structure to bytes).
+- `SetsockoptString(fd, SOL_TLS, TLS_TX, cryptoInfo)` — passes cryptographic secrets (keys and parameters) to the kernel. The `crypto_info` structure is serialized to bytes via the `String()` method (which uses `unsafe.Pointer` to directly convert the structure to bytes).
 - `c.out.cipher = kTLSCipher{}` — replace the encryption object with a special marker `kTLSCipher`, so the code knows encryption is done by the kernel.
 
 The call to `enableKernelTLS()` happens **after handshake completion**, in `handshake_server.go` and `handshake_server_tls13.go`:
