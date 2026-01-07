@@ -15,7 +15,7 @@ build:
 	hugo --minify
 
 # Start development server
-server:
+serve:
 	@echo "Starting Hugo server on http://localhost:1313"
 	hugo server --bind 0.0.0.0 --port 1313 --noHTTPCache
 
