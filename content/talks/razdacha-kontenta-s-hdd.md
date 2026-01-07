@@ -859,7 +859,7 @@ Purge Thread (каждую минуту)
 
 [^ktls-details]: Подробнее о kTLS, как он работает и как его использовать в Go для достижения высоких скоростей, см. [«Разгоняем Go TLS до 100 Gbps»]({{< relref "talks/razgonyaem-go-tls-do-100-gbps.md" >}}).
 
-[^zero-copy-splice]: О zero-copy механизмах (`sendfile`, `splice`) и их применении для раздачи контента см. [«Разгоняем Go TLS до 100 Gbps»]({{< relref "talks/razgonyaem-go-tls-do-100-gbps.md" >}}) и [«Нет времени объяснять, программируй!»]({{< relref "talks/net-vremeni-obyasnyat-programmiruy.md" >}}).
+[^zero-copy-splice]: О zero-copy механизмах (`sendfile`, `splice`) и их применении для раздачи контента см. [«Разгоняем Go TLS до 100 Gbps»]({{< relref "talks/razgonyaem-go-tls-do-100-gbps.md" >}}).
 
 [^http-1-1-choice]: HTTP/1.1 для раздачи видео часто предпочтительнее HTTP/2, потому что не требует мультиплексирования и приоритизации потоков. Для больших файлов простота HTTP/1.1 может быть преимуществом. Подробнее о выборе протокола см. [HTTP/2 Prioritization with NGINX](https://blog.cloudflare.com/http-2-prioritization-with-nginx/).
 
