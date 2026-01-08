@@ -13,7 +13,7 @@ tags: ["go", "golang", "tls", "https", "ktls", "zero-copy", "sendfile", "splice"
 
 Видео доклада:
 
-{{< youtube id="5TipVdPRQ7s" title="Разгоняем Go TLS до 100 Gbps с сервера / Кирилл Шваков" >}}
+{{< kinescope url="https://kinescope.io/embed/gW9caRMMuDHrNaw3qqsmhS" >}}
 
 ## TL;DR
 
