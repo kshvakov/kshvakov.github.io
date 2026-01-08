@@ -180,9 +180,20 @@ We use HTTP/1.1—for serving video in our case, it fits perfectly and is simple
 
 ### Data Sharding
 
-Since we can't fit all client content on one server, data is **sharded**. A request can come to any edge server in the group.
+Since we can't fit all client content on one server, data is **sharded**.
 
-Then we build a key and understand which server the object "should" be on. If it's local—serve from local disk. If not—proxy the request to the needed server and still serve to the client.
+Important: the description below reflects the **current setup**. In the earlier version (v1), a request could land on any edge, and that edge would proxy to the “correct” server. Today it’s organized differently.
+
+#### Edge proxy: how we pick the “right” server
+
+Requests that should be sharded (by domain) do **not** go directly to an edge. DNS points those domains to a **proxy IP**. The proxy terminates HTTPS, reads the HTTP/1.1 request, and selects a target edge via consistent hashing.
+
+- **Sharding key**: `Host + dirname(path)`. This is intentionally not the full URL: it helps keep structurally related requests on the same shard and reduces unnecessary cross-node traffic.
+- **Degradation**: if the chosen upstream edge is unhealthy / can’t be dialed, it’s marked “off” for a short time (a few seconds) and the request goes through a fallback path (e.g., backend / another upstream).
+- **Connection pools**: to avoid paying the `dial` cost per request, we keep a small keep-alive pool per upstream and reuse connections.
+- **Metrics**: upstream latency and sent bytes per upstream address, plus connection stats (reuse/open/error/bad).
+
+For most requests, proxying is not used: we **route clients directly to specific edge IPs**, so there’s no extra “edge → edge” hop.
 
 #### How Sharding Works
 
@@ -190,24 +201,22 @@ Then we build a key and understand which server the object "should" be on. If it
 client request
    |
    v
-any edge server (DNS round-robin)
+DNS
    |
-   +---> build key from request
+   +---> sharded domains -> proxy IP
    |         |
-   |         +---> consistent hash
-   |                   |
-   |                   +---> target server
+   |         +---> proxy: build key = Host + dirname(path)
+   |         |
+   |         +---> consistent hash -> target edge
+   |         |
+   |         +---> proxy forwards request -> edge serves response
    |
-   +---> local lookup
-   |      |
-   |      +---> found? --> serve from local disk
-   |      |
-   |      +---> not found? --> proxy to target server
-   |                              |
-   |                              +---> serve to client
+   +---> non-sharded domains -> specific edge IPs
+             |
+             +---> edge serves response
 ```
 
-One request can come to any edge, but the object is always on one specific server (via consistent hashing).
+In short: for sharded domains the entry point is the proxy (it does the hashing). For non-sharded domains we try to send clients straight to specific edge addresses without proxying.
 
 ### File Access
 
@@ -245,13 +254,9 @@ The in-memory index allows quickly finding where an object is without filesystem
 
 ### Caching
 
-To avoid hitting disk on every request, we keep a cache in memory on each edge—reading directly from disk is too expensive.
+In version 1, we did keep an explicit in-memory cache on each edge (LRU, tens of gigabytes) — otherwise, “raw” disk reads would quickly run into latency limits.
 
-Cache size is on the order of tens of gigabytes (around 30 GB). Policy is simple—LRU: it covers "hot" content well.
-
-There are scenarios where traffic spikes sharply to hundreds of gigabits (e.g., due to ad campaigns). At such moments, cache is especially important.
-
-In parallel, we collect statistics. Part of the "smart" cache preload logic is moved to a separate controller: it collects signals, forms a key list, and suggests what to put in memory. This is useful, but doesn't work as ideally as we'd like—we'll be honest about that.
+In the current implementation (`cdn/edge`), there’s no separate “cache as a component”: we keep some data in memory based on a heuristic (described in the article), and overall the **OS page cache** does a great job — and in practice it works.
 
 ## What We Got: Version Comparison
 
@@ -264,7 +269,9 @@ The system worked and handled load, but:
 - Operational costs for supporting merge were high
 - System behavior was less predictable due to background processes
 
-Historically, we had many SSDs "with margin," but over time we found they could be used less: SSDs accounted for about 20% of reads, the rest—HDD.
+Historically (at that stage), we had many SSDs “with margin,” but over time we found they could be used less: SSDs accounted for about 20% of reads, the rest—HDD.
+
+As of 2025, the SSD/HDD price gap is no longer as dramatic, and with the optimizations in the new edge implementation we’re gradually pushing HDD out. Our typical setup now is **2/3 HDD and 1/3 SSD**, and the SSD share will grow — it’s become economically advantageous (more traffic per unit).
 
 Load varies by time and clients, but overall everything works. Sometimes we hit roughly 50 Gbps per server—beyond that, the network sets limits, not the disk.
 
@@ -610,9 +617,9 @@ Object arrives for write
 
 ### Integrity Check and TTL
 
-The system periodically checks data integrity:
+Checks happen on the read path and via control operations:
 
-1. **Background check**: each disk periodically reads random objects and checks their integrity (magic sum, checksum)
+1. **Integrity check on read**: when an object is accessed, we verify its integrity (magic sum, checksum)
 2. **TTL check**: on read, `ExpiresIn` is checked—if object expired, it's removed from index
 3. **Zone purge**: separate process removes objects by zone (e.g., when zone is deleted or on schedule)
 
@@ -681,9 +688,11 @@ Layout also helps: we try to put chunks of one file on the same disk. Then on a 
 
 **Question**: Did I understand correctly: you "pack" small files into large containers? Fixed-size container?
 
-**Answer**: Yes, size is fixed: partitions are created at disk initialization. Metadata is fixed size (order of hundreds of megabytes, e.g., ~200 MB), because entries there are fixed structure.
+**Answer**: In version 1 — yes, size is fixed: partitions are created at disk initialization. Metadata is fixed size (order of hundreds of megabytes, e.g., ~200 MB), because entries there are fixed structure.
 
-Partitions themselves come from splitting the disk into equal parts (into 50; this decision later wanted revisiting). At volumes around 100+ TB, "large" containers still end up very many.
+Partitions themselves then came from splitting the disk into equal parts (into 50; this decision later wanted revisiting). At volumes around 100+ TB, “large” containers still ended up very many.
+
+In the new version there are no partitions: **one disk — one file** (an append-only log, e.g. `data.bin`), and wraparound/indexing is built around that.
 
 We consciously don't try to "divide the world" into "small files" and "large files" at the API level—everything is stored the same. But inside the pipeline, there's a rule: small chunks first go to SSD. If you write them to HDD "as-is," random I/O quickly kills performance.
 
