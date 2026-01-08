@@ -5,7 +5,7 @@ description: "Practical experience building a CDN on regular HDDs: how to solve 
 tags: ["go", "golang", "cdn", "storage", "performance", "hdd", "zero-copy", "tls", "kinescope", "infrastructure", "delivery", "evolution", "architecture"]
 ---
 
-When we faced the problem of billions of small files and hit a performance limit at 4 gigabits per server, we had to rethink our approach to storage and serving. This article covers not just how we solved the problem in 2021, but also how the system evolved: from an architecture with merge and complex background processes to a simpler solution that's easier to operate and understand.
+When we faced the problem of billions of small files and hit a performance limit at 4 gigabits per server, we had to rethink our approach to storage and serving. This article covers not just how we solved the problem in 2020, but also how the system evolved: from an architecture with merge and complex background processes to a simpler solution that's easier to operate and understand.
 
 {{< youtube id="M5IHpP9AhLg" title="Serving Content from HDDs: Fast, Engaging, and Reliable / Kirill Shvakov" >}}
 
@@ -14,7 +14,7 @@ When we faced the problem of billions of small files and hit a performance limit
 - **The problem of billions of small files is solved by packing** — all data is stored in large containers (append-only log), not as separate files in the filesystem
 - **Abandoning file deletion** — instead of deletion, a ring buffer (wraparound) with overwrite is used, eliminating fragmentation and load from delete operations
 - **HDDs can be effective** — with proper data organization (sequential writes, batch operations), good performance can be achieved
-- **Architecture evolution**: from a system with merge and complex background processes (2021) to a simpler architecture without merge, where tiering (RAM/SSD/HDD) is just a placement rule, not a separate pipeline
+- **Architecture evolution**: from a system with merge and complex background processes (2020) to a simpler architecture without merge, where tiering (RAM/SSD/HDD) is just a placement rule, not a separate pipeline
 - **Zero-copy is critical for performance** — using `sendfile` and optimized read paths avoids copying data into user space
 - **TLS in Go is slow** — built-in TLS doesn't support zero-copy, so at large traffic volumes this noticeably hurts performance (solution: [kTLS]({{< relref "speeding-up-go-tls-to-100-gbps.md" >}}))
 - **GC creates problems** — when working with large in-memory indexes (tens of millions of objects), the garbage collector becomes a bottleneck
@@ -43,7 +43,7 @@ We had to do something about it.
 
 We made a plan of what we wanted from the server. Requirements were fairly simple:
 
-- **Store more than 100 terabytes of data** — this was the minimum
+- **Store more than 100 terabytes of data per server** — this was the minimum
 - **Content access logic** — signatures, TTL, various limits
 - **More metrics than nginx provides** — we needed detailed statistics
 - **Cheap logs** — we constantly write a lot of data, wanted to optimize them
@@ -53,7 +53,7 @@ We made a plan of what we wanted from the server. Requirements were fairly simpl
 
 We already wrote in Go and knew it well. Build, orchestration, monitoring, and logs were set up—this wasn't a problem. We realized we needed such a server, and then we started dealing with small files.
 
-## Version 1 (2021): Solving the Small Files Problem
+## Version 1 (2020): Solving the Small Files Problem
 
 The first thing we hit—small files. We had to get rid of them. We started creating several large partitions on disk and putting data inside. Physically, these are two files:
 
@@ -85,7 +85,7 @@ disk partition
 
 Instead of billions of small files in the filesystem—one data container and an in-memory metadata index.
 
-## Version 1 (2021): Working with Disks: Fast and Regular
+## Version 1 (2020): Working with Disks: Fast and Regular
 
 We introduced two storage classes: **fast** (SSD/NVMe) and **regular** (HDD).
 
@@ -255,7 +255,7 @@ In parallel, we collect statistics. Part of the "smart" cache preload logic is m
 
 ## What We Got: Version Comparison
 
-### Version 1 (2021): System with Merge
+### Version 1 (2020): System with Merge
 
 Typical server configuration: 32 cores, about 195 GB RAM, and two network adapters.
 
@@ -283,7 +283,7 @@ The new system (`cdn/edge`) preserved performance but became simpler:
 - TLS requires optimizations (kTLS) to achieve maximum performance
 - Monitoring and metrics are critical—without them, it's impossible to understand what's happening in the system
 
-## Version 1 (2021): Gotchas and Reality Pressure
+## Version 1 (2020): Gotchas and Reality Pressure
 
 After building the first version with containers, merge, and ring buffer, it worked, but over time problems accumulated that made us rethink the architecture.
 
