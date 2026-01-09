@@ -139,6 +139,7 @@ h1 {
 .theme-icon {
     display: block;
     line-height: 1;
+    filter: grayscale(100%);
 }
 
 .lang-switcher {
