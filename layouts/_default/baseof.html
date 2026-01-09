@@ -27,6 +27,14 @@
     {{ block "head" . }}{{ end }}
 </head>
 <body>
+    {{ if .IsPage }}
+    <div class="reading-progress">
+        <div class="reading-progress__bar"></div>
+    </div>
+    <button class="scroll-to-top" aria-label="{{ if eq .Language.Lang "ru" }}Наверх{{ else }}Scroll to top{{ end }}">
+        <span class="scroll-to-top__icon">↑</span>
+    </button>
+    {{ end }}
     <div class="container">
         <header>
             <h1>

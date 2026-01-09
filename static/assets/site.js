@@ -79,5 +79,94 @@
         });
     }
     }
+
+    // Reading progress bar
+    const progressBar = document.querySelector('.reading-progress__bar');
+    const progressContainer = document.querySelector('.reading-progress');
+    
+    if (progressBar && progressContainer) {
+        let ticking = false;
+        
+        function updateProgress() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight;
+            const clientHeight = document.documentElement.clientHeight;
+            const scrollable = scrollHeight - clientHeight;
+            
+            if (scrollable <= 0) {
+                // Страница не скроллится, скрываем индикатор
+                progressContainer.style.display = 'none';
+                return;
+            }
+            
+            // Показываем индикатор если он был скрыт
+            progressContainer.style.display = 'block';
+            
+            // Вычисляем прогресс от 0 до 1
+            const progress = Math.min(Math.max(scrollTop / scrollable, 0), 1);
+            
+            // Обновляем transform
+            progressBar.style.transform = 'scaleX(' + progress + ')';
+            
+            ticking = false;
+        }
+        
+        function requestTick() {
+            if (!ticking) {
+                window.requestAnimationFrame(updateProgress);
+                ticking = true;
+            }
+        }
+        
+        // Инициализация при загрузке
+        updateProgress();
+        
+        // Обновление при скролле
+        window.addEventListener('scroll', requestTick, { passive: true });
+        
+        // Обновление при изменении размера окна (может измениться scrollHeight)
+        window.addEventListener('resize', requestTick, { passive: true });
+    }
+
+    // Scroll to top button
+    const scrollToTopBtn = document.querySelector('.scroll-to-top');
+    const SCROLL_THRESHOLD = 300;
+    
+    if (scrollToTopBtn) {
+        let scrollTicking = false;
+        
+        function updateScrollToTop() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > SCROLL_THRESHOLD) {
+                scrollToTopBtn.classList.add('visible');
+            } else {
+                scrollToTopBtn.classList.remove('visible');
+            }
+            
+            scrollTicking = false;
+        }
+        
+        function requestScrollTick() {
+            if (!scrollTicking) {
+                window.requestAnimationFrame(updateScrollToTop);
+                scrollTicking = true;
+            }
+        }
+        
+        // Инициализация при загрузке
+        updateScrollToTop();
+        
+        // Обновление при скролле
+        window.addEventListener('scroll', requestScrollTick, { passive: true });
+        
+        // Обработчик клика для плавной прокрутки наверх
+        scrollToTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
 })();
 
