@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: {{ .Site.BaseURL }}sitemap.xml
+Sitemap: {{ .Site.BaseURL }}ai-agent-course/sitemap.xml
