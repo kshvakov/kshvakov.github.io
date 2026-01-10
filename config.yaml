@@ -2,6 +2,9 @@ baseURL: 'https://kshvakov.github.io/'
 languageCode: 'ru'
 title: 'Кирилл Шваков'
 
+# Включает генерацию robots.txt (используется шаблон layouts/robots.txt)
+enableRobotsTXT: true
+
 defaultContentLanguage: 'ru'
 defaultContentLanguageInSubdir: false
 
