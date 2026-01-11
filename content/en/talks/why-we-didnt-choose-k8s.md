@@ -1,6 +1,7 @@
 ---
 title: "Why We Didn't Choose K8s: Staying Efficient and Improving Performance"
 date: 2024-06-28
+lastmod: 2026-01-07
 description: "Article based on a talk at TeamLead Conf: why we don't use Kubernetes in production and how we built operations on systemd, deb packages, and Ansible."
 tags: ["kubernetes", "devops", "infrastructure", "systemd", "ansible", "operations", "kinescope", "observability", "delivery", "performance"]
 ---

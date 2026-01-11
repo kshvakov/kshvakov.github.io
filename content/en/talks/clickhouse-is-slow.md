@@ -1,6 +1,7 @@
 ---
 title: "ClickHouse is Slow"
 date: 2018-11-09
+lastmod: 2026-01-07
 description: "Practical ClickHouse optimization experience: from performance bottlenecks to solutions using arrays and data structures. Scaling statistics system."
 tags: ["clickhouse", "optimization", "performance", "databases", "analytics", "scaling"]
 ---

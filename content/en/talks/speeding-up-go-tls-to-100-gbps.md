@@ -1,6 +1,7 @@
 ---
 title: "Speeding Up Go TLS to 100 Gbps: kTLS, Zero-Copy, and Production Gotchas"
 date: 2024-12-02
+lastmod: 2026-01-11
 description: "How to squeeze tens of gigabits out of a Go service over HTTPS: why TLS breaks zero-copy, how kTLS works, where moving encryption to the kernel helps, and what we had to change in production."
 tags: ["go", "golang", "tls", "https", "ktls", "zero-copy", "sendfile", "splice", "linux", "performance", "cdn", "kinescope", "networking"]
 ---

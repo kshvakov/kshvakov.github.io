@@ -1,6 +1,7 @@
 ---
 title: "Serving Content from HDDs: CDN Edge Evolution from File Chaos to Simple Storage"
 date: 2021-09-20
+lastmod: 2026-01-08
 description: "Practical experience building a CDN on regular HDDs: how to solve the problem of billions of small files, optimize disk operations, and how the system evolved from a complex architecture with merge to a simpler solution without background processes."
 tags: ["go", "golang", "cdn", "storage", "performance", "hdd", "zero-copy", "tls", "kinescope", "infrastructure", "delivery", "evolution", "architecture"]
 ---

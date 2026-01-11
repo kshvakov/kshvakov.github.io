@@ -1,6 +1,7 @@
 ---
 title: "Operations Without K8s"
 date: 2022-06-14
+lastmod: 2026-01-07
 description: "Practical experience operating production infrastructure without Kubernetes: how we moved away from K8s and built a simple, reliable, and efficient system based on systemd and package managers."
 tags: ["kubernetes", "devops", "infrastructure", "systemd", "ansible", "operations", "kinescope"]
 ---

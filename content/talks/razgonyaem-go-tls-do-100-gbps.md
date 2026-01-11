@@ -1,6 +1,7 @@
 ---
 title: "Разгоняем Go TLS до 100 Gbps: kTLS, zero-copy и грабли продакшена"
 date: 2024-12-02
+lastmod: 2026-01-11
 description: "Как из Go-сервиса выжать десятки гигабит в HTTPS: почему TLS ломает zero-copy, как работает kTLS, где выигрывает перенос шифрования в ядро, и что пришлось поменять в реальном продакшене."
 tags: ["go", "golang", "tls", "https", "ktls", "zero-copy", "sendfile", "splice", "linux", "производительность", "cdn", "kinescope", "сеть"]
 ---
