@@ -62,7 +62,7 @@ kernel (page cache / TCP stack)
 NIC -> network -> client
 ```
 
-Ideally, the application does minimal work: "glues" HTTP headers and tells the kernel: "here's the file, here's the socket."
+Ideally, the application does minimal work: forms and writes HTTP headers to the socket, then tells the kernel: "here's the file, here's the socket."
 
 #### 2) TLS in Userspace: Zero-Copy Breaks Due to Encryption
 
