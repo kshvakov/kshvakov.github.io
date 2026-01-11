@@ -209,9 +209,11 @@ If you need RX kTLS, it's possible, but will require additional work and testing
 
 ### History: Netflix/Facebook and Unexpectedly Oracle
 
-An amusing historical note: the "new" technology was discussed by Netflix (FreeBSD) and Facebook (Linux), but if you dig deeper, a similar idea existed earlier—at Oracle in Solaris.
+kTLS history doesn't begin with Linux and FreeBSD. Oracle Solaris had **KSSL** — a kernel-side proxy for SSL/TLS that performs SSL traffic processing in the kernel (same idea: move the record layer closer to the network stack for performance) — see the description in Oracle Solaris documentation ([kssl(5)](https://docs.oracle.com/cd/E23823_01/html/816-5175/kssl-5.html)).
 
-The concept of "moving TLS closer to the kernel/network stack for performance" isn't a "trendy whim," but a natural consequence of wanting to remove copies.
+**Kernel TLS** first appeared in **FreeBSD 13.0** ([ktls(4)](https://man.freebsd.org/cgi/man.cgi?query=ktls&sektion=4)); **FreeBSD 13.0-RELEASE** was released on **April 13, 2021** ([announcement](https://www.freebsd.org/releases/13.0R/announce/)). However, it's worth noting that **Netflix used kTLS in FreeBSD much earlier** — the company began implementing this technology as early as 2016 to optimize performance when serving video content, well before kTLS made it into the official FreeBSD release.
+
+kTLS made it into Linux mainline on **June 15, 2017**: commit **"tls: kernel TLS support"** adds TLS as a ULP over TCP, with keys passed to the kernel via `setsockopt` after handshake completion, and only symmetric encryption performed in the kernel ([commit 3c4d755](https://github.com/torvalds/linux/commit/3c4d7559159bfe1e3b94df3a657b2cda3a34e218)). The user interface and working model (TLS ULP, separate TX/RX, `sendfile` example) are described in the official Linux kernel documentation ([Kernel TLS docs](https://docs.kernel.org/networking/tls.html)).
 
 ### Bonus: Offload to Network Card
 
@@ -580,7 +582,7 @@ Here are practical steps to reduce handshake load:
 
 If you still have **RSA certificates** in your chain, for some CPUs this can be noticeably more expensive than ECDSA. Reason: RSA operations require more computation than elliptic curve operations.
 
-**Order of magnitude** from a simple benchmark: RSA handshake is roughly "several times" more expensive than on elliptic curves (naturally, numbers depend on CPU and environment; the order matters).
+**Order of magnitude** from a simple benchmark: RSA handshake is roughly "several times" more expensive than on elliptic curves (naturally, numbers depend on CPU and environment; the order matters). For more details on the RSA handshake performance issue in Go, see [issue #20058](https://github.com/golang/go/issues/20058).
 
 **What to do**: simply replace certificates with ECDSA. Modern browsers and clients support ECDSA without issues. This is a "cheap win" that doesn't require code changes.
 
@@ -881,6 +883,7 @@ If you generate content in userspace, kTLS isn't a silver bullet: first you need
 - [perf: Linux Profiling with Performance Counters](https://perf.wiki.kernel.org/index.php/Main_Page) — documentation on the perf tool for kernel-level profiling
 - [TLS 1.3: Full Specification](https://datatracker.ietf.org/doc/html/rfc8446) — RFC 8446 describing the TLS 1.3 protocol, including session resumption and optimizations
 - [crypto/tls: support kernel-provided TLS](https://github.com/golang/go/issues/44506) — proposal to add kTLS support to Go's standard library (accepted to Backlog)
+- [crypto/tls: slow server-side handshake performance for RSA certificates](https://github.com/golang/go/issues/20058) — known RSA handshake performance issue in Go: detailed analysis of bottlenecks and comparison with OpenSSL
 - [kTLS: Minimal Working Example for Go crypto/tls](https://gist.github.com/kshvakov/3ad0017158e790ebb66b70be1e687caf) — simplified implementation for talk presentation, demonstrating main kTLS integration ideas (not used in production, but useful for understanding the concept)
 
 > **Practical Note.** When diagnosing TLS performance problems, first check cipher suite distribution and share of full handshake vs session resumption. Often the problem isn't encryption itself, but the number of handshakes or clients choosing "expensive" ciphers. Source: experience from Cloudflare and other high-load systems.
