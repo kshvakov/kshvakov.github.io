@@ -10,7 +10,7 @@ tags: ["kubernetes", "devops", "инфраструктура", "systemd", "ansib
 
 Похожая тема, но с другим фокусом и для другой аудитории (DevOpsConf) — в материале [«Эксплуатация без K8s»]({{< relref "talks/ekspluatatsiya-bez-k8s.md" >}}).
 
-{{< youtube id="Xkam_SUWUE0" title="Как мы не выбрали K8s, остались эффективными и повысили производительность / Кирилл Шваков, Kinescope" >}}
+{{< kinescope url="https://kinescope.io/embed/myphgzKHjNCSMzgGhieVS5" >}}
 
 ## TL;DR
 

@@ -10,7 +10,7 @@ tags: ["kubernetes", "devops", "инфраструктура", "systemd", "ansib
 
 В статье описаны причины отказа от Kubernetes, требования к системе, выбор решений и практический опыт эксплуатации более 50 серверов в 4 дата-центрах силами одного администратора.
 
-{{< youtube id="e50e5CjsKlU" title="Эксплуатация без K8s / Кирилл Шваков, Kinescope" >}}
+{{< kinescope url="https://kinescope.io/embed/ds2DSrsDzxb76ExPsyiH6B" >}}
 
 ## TL;DR
 

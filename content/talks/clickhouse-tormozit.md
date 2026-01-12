@@ -10,7 +10,7 @@ tags: ["clickhouse", "оптимизация", "производительнос
 
 Эволюция нашей архитектуры: от первоначальной схемы с Vertica и Citus до перехода на ClickHouse, через проблемы с материализованными представлениями и оптимизацию индексов к финальному решению с использованием массивов и структур данных.
 
-{{< youtube id="efRryvtKlq0" title="ClickHouse тормозит" >}}
+{{< kinescope url="https://kinescope.io/embed/2fnb7A2EhRkxKjzFSYngRH" >}}
 
 ## TL;DR
 
