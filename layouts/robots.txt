@@ -3,3 +3,4 @@ Allow: /
 
 Sitemap: {{ .Site.BaseURL }}sitemap.xml
 Sitemap: {{ .Site.BaseURL }}ai-agent-course/sitemap.xml
+Sitemap: {{ .Site.BaseURL }}phoenix-agents-book/sitemap.xml
