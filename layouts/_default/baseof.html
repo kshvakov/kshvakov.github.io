@@ -97,15 +97,12 @@
         // --- Helpers ---
         function isObjectType(t) {
             t = t.toLowerCase();
-            return t === 'object' || t.indexOf('array of objects') !== -1;
+            return t.indexOf('object') !== -1;
         }
 
         function typeToJsonValue(type, children) {
             var t = type.toLowerCase().trim();
-            if (t.startsWith('null')) return null;
-            if (t === 'integer' || t === 'number') return 0;
-            if (t === 'boolean') return false;
-            if (t === 'string') return 'string';
+            // Object types checked first (even if nullable like "null | object")
             if (t.indexOf('array of objects') !== -1) {
                 var inner = {};
                 if (children && children.length) {
@@ -113,15 +110,20 @@
                 }
                 return [inner];
             }
-            if (t.indexOf('array') !== -1) return [];
-            if (t === 'object') {
+            if (t.indexOf('object') !== -1) {
                 var obj = {};
                 if (children && children.length) {
                     children.forEach(function(c) { obj[c.name] = typeToJsonValue(c.type, c.children); });
                 }
                 return obj;
             }
-            if (t === 'enum') return 'value';
+            // Simple nullable types → null
+            if (t.indexOf('null') !== -1) return null;
+            if (t.indexOf('integer') !== -1 || t.indexOf('number') !== -1) return 0;
+            if (t.indexOf('boolean') !== -1) return false;
+            if (t.indexOf('string') !== -1) return 'string';
+            if (t.indexOf('array') !== -1) return [];
+            if (t.indexOf('enum') !== -1) return 'value';
             return 'string';
         }
 

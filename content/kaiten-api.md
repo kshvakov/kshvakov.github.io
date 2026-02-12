@@ -66,10 +66,10 @@ The API includes a `broken_api` parameter:
 | `entity_type` | string | Entity type |
 | `path` | string | Inner path to entity |
 | `sort_order` | number | Space sort order |
-| `parent_entity_uid` | null | string | Parent entity uid |
+| `parent_entity_uid` | null \| string | Parent entity uid |
 | `company_id` | integer | Company id |
-| `allowed_card_type_ids` | null | array | Allowed card types for this space |
-| `external_id` | null | string | External id |
+| `allowed_card_type_ids` | null \| array | Allowed card types for this space |
+| `external_id` | null \| string | External id |
 | `settings` | object | Space settings |
 | - `timeline` | object | Space timeline settings |
 | - - `startHour` | integer | Start hour |
@@ -83,7 +83,7 @@ The API includes a `broken_api` parameter:
 | - `email` | string | User email |
 | - `username` | string | Username for mentions and login |
 | - `avatar_initials_url` | string | Default user avatar |
-| - `avatar_uploaded_url` | null | string | User uploaded avatar url |
+| - `avatar_uploaded_url` | null \| string | User uploaded avatar url |
 | - `initials` | string | User initials |
 | - `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | - `lng` | string | Language |
@@ -144,10 +144,10 @@ The API includes a `broken_api` parameter:
 | `entity_type` | string | Entity type |
 | `path` | string | Inner path to entity |
 | `sort_order` | number | Space sort order |
-| `parent_entity_uid` | null | string | Parent entity uid |
+| `parent_entity_uid` | null \| string | Parent entity uid |
 | `company_id` | integer | Company id |
-| `allowed_card_type_ids` | null | array | Allowed card types for this space |
-| `external_id` | null | string | External id |
+| `allowed_card_type_ids` | null \| array | Allowed card types for this space |
+| `external_id` | null \| string | External id |
 | `settings` | object | Space settings |
 | - `timeline` | object | Space timeline settings |
 | - - `startHour` | integer | Start hour |
@@ -163,11 +163,11 @@ The API includes a `broken_api` parameter:
 | - `cell_wip_limits` |  null | array | JSON containing wip limits rules for cells |
 | - `default_card_type_id` | integer | Default card type for new cards on board |
 | - `description` | string | Board description |
-| - `external_id` | null | string | External id |
+| - `external_id` | null \| string | External id |
 | - `email_key` | string | Email key |
 | - `move_parents_to_done` | boolean | Automatically move parent cards to done when their children cards on this board is done |
 | - `backward_moves_enabled` | boolean | Allow automatic backward movement for summary boards |
-| - `default_tags` | null | string | Default tags |
+| - `default_tags` | null \| string | Default tags |
 | - `first_image_is_cover` | boolean | Automatically mark first uploaded card's image as card's cover |
 | - `reset_lane_spent_time` | boolean | Reset lane spent time when card changed lane |
 | - `automove_cards` | boolean | Automatically move cards depending on their children state |
@@ -218,10 +218,10 @@ The API includes a `broken_api` parameter:
 | `entity_type` | string | Entity type |
 | `path` | string | Inner path to entity |
 | `sort_order` | number | Space sort order |
-| `parent_entity_uid` | null | string | Parent entity uid |
+| `parent_entity_uid` | null \| string | Parent entity uid |
 | `company_id` | integer | Company id |
-| `allowed_card_type_ids` | null | array | Allowed card types for this space |
-| `external_id` | null | string | External id |
+| `allowed_card_type_ids` | null \| array | Allowed card types for this space |
+| `external_id` | null \| string | External id |
 | `settings` | object | Space settings |
 | - `timeline` | object | Space timeline settings |
 | - - `startHour` | integer | Start hour |
@@ -265,11 +265,17 @@ The API includes a `broken_api` parameter:
 | `entity_type` | string | Entity type |
 | `path` | string | Inner path to entity |
 | `sort_order` | number | Space sort order |
-| `parent_entity_uid` | null | string | Parent entity uid |
+| `parent_entity_uid` | null \| string | Parent entity uid |
 | `company_id` | integer | Company id |
-| `allowed_card_type_ids` | null | array | Allowed card types for this space |
-| `external_id` | null | string | External id |
-| `settings` | null | object | Space settings |
+| `allowed_card_type_ids` | null \| array | Allowed card types for this space |
+| `external_id` | null \| string | External id |
+| `settings` | null \| object | Space settings |
+| - `timeline` | object | Space timeline settings |
+| - - `startHour` | integer | Start hour |
+| - - `endHour` | integer | End work hour |
+| - - `workDays` | array | Work days |
+| - - `planningUnits` | enum | 1 - hours, 2 - days |
+| - - `calculateResourcesBy` | enum | 1 - fixed resources, 2 - fixed duration, 3 - fixed duration and duration |
 
 - **400** (error) - validation Error
 
@@ -336,12 +342,12 @@ The API includes a `broken_api` parameter:
 | `id` | integer | Board  id |
 | `title` | string | Board title |
 | `cell_wip_limits` |  null | array | JSON containing wip limits rules for cells |
-| `external_id` | null | string | External id |
+| `external_id` | null \| string | External id |
 | `default_card_type_id` | integer | Default card type for new cards on board |
 | `description` | string | Board description |
 | `email_key` | string | Email key |
 | `move_parents_to_done` | boolean | Automatically move parent cards to done when their children cards on this board is done |
-| `default_tags` | null | string | Default tags |
+| `default_tags` | null \| string | Default tags |
 | `first_image_is_cover` | boolean | Automatically mark first uploaded card's image as card's cover |
 | `reset_lane_spent_time` | boolean | Reset lane spent time when card changed lane |
 | `backward_moves_enabled` | boolean | Allow automatic backward movement for summary boards |
@@ -349,7 +355,7 @@ The API includes a `broken_api` parameter:
 | `hide_done_policies_in_done_column` | boolean | Hide done checklist policies only in done column |
 | `automove_cards` | boolean | Automatically move cards depending on their children state |
 | `auto_assign_enabled` | boolean | Automatically assign a user to the card when he/she moves the card if the user is not a member of the card |
-| `card_properties` | null | array of objects | Properties of the board cards suggested for filling  |
+| `card_properties` | null \| array of objects | Properties of the board cards suggested for filling  |
 | - `key` | string | Property key |
 | - `laneIds` | array | Array of lane ids to which the rule will be applied. Empty array for all lanes |
 | - `required` | boolean | Is rule required |
@@ -363,7 +369,7 @@ The API includes a `broken_api` parameter:
 | - `type` | enum | 1 - queue, 2 – in progress, 3 – done |
 | - `board_id` | integer | Board id |
 | - `column_id` | null | Parent column id |
-| - `external_id` | null | string | External id |
+| - `external_id` | null \| string | External id |
 | - `rules` | integer | Bit mask for column rules. Rules: 1 - checklists must be checked, 2 - display FIFO order |
 | `lanes` | array of objects | Board lanes |
 | - `id` | integer | Lane id |
@@ -371,7 +377,7 @@ The API includes a `broken_api` parameter:
 | - `sort_order` | number | Position |
 | - `board_id` | integer | Board id |
 | - `condition` | enum | 1 - live, 2 - archived, 3 - deleted |
-| - `external_id` | null | string | External id |
+| - `external_id` | null \| string | External id |
 | `top` | integer | Y coordinate of the board on space |
 | `left` | integer | X coordinate of the board on space |
 | `sort_order` | number | Position |
@@ -421,12 +427,12 @@ The API includes a `broken_api` parameter:
 | `id` | integer | Board  id |
 | `title` | string | Board title |
 | `cell_wip_limits` |  null | array | JSON containing wip limits rules for cells |
-| `external_id` | null | string | External id |
+| `external_id` | null \| string | External id |
 | `default_card_type_id` | integer | Default card type for new cards on board |
 | `description` | string | Board description |
 | `email_key` | string | Email key |
 | `move_parents_to_done` | boolean | Automatically move parent cards to done when their children cards on this board is done |
-| `default_tags` | null | string | Default tags |
+| `default_tags` | null \| string | Default tags |
 | `first_image_is_cover` | boolean | Automatically mark first uploaded card's image as card's cover |
 | `reset_lane_spent_time` | boolean | Reset lane spent time when card changed lane |
 | `backward_moves_enabled` | boolean | Allow automatic backward movement for summary boards |
@@ -434,7 +440,7 @@ The API includes a `broken_api` parameter:
 | `hide_done_policies_in_done_column` | boolean | Hide done checklist policies only in done column |
 | `automove_cards` | boolean | Automatically move cards depending on their children state |
 | `auto_assign_enabled` | boolean | Automatically assign a user to the card when he/she moves the card if the user is not a member of the card |
-| `card_properties` | null | array of objects | Properties of the board cards suggested for filling  |
+| `card_properties` | null \| array of objects | Properties of the board cards suggested for filling  |
 | - `key` | string | Property key |
 | - `laneIds` | array | Array of lane ids to which the rule will be applied. Empty array for all lanes |
 | - `required` | boolean | Is rule required |
@@ -448,7 +454,7 @@ The API includes a `broken_api` parameter:
 | - `type` | enum | 1 - queue, 2 – in progress, 3 – done |
 | - `board_id` | integer | Board id |
 | - `column_id` | null | Parent column id |
-| - `external_id` | null | string | External id |
+| - `external_id` | null \| string | External id |
 | - `rules` | integer | Bit mask for column rules. Rules: 1 - checklists must be checked, 2 - display FIFO order |
 | `lanes` | array of objects | Board lanes |
 | - `id` | integer | Lane id |
@@ -456,7 +462,7 @@ The API includes a `broken_api` parameter:
 | - `sort_order` | number | Position |
 | - `board_id` | integer | Board id |
 | - `condition` | enum | 1 - live, 2 - archived, 3 - deleted |
-| - `external_id` | null | string | External id |
+| - `external_id` | null \| string | External id |
 | `top` | integer | Y coordinate of the board on space |
 | `left` | integer | X coordinate of the board on space |
 | `sort_order` | number | Position |
@@ -492,12 +498,12 @@ The API includes a `broken_api` parameter:
 | `id` | integer | Board  id |
 | `title` | string | Board title |
 | `cell_wip_limits` |  null | array | JSON containing wip limits rules for cells |
-| `external_id` | null | string | External id |
+| `external_id` | null \| string | External id |
 | `default_card_type_id` | integer | Default card type for new cards on board |
 | `description` | string | Board description |
 | `email_key` | string | Email key |
 | `move_parents_to_done` | boolean | Automatically move parent cards to done when their children cards on this board is done |
-| `default_tags` | null | string | Default tags |
+| `default_tags` | null \| string | Default tags |
 | `first_image_is_cover` | boolean | Automatically mark first uploaded card's image as card's cover |
 | `reset_lane_spent_time` | boolean | Reset lane spent time when card changed lane |
 | `backward_moves_enabled` | boolean | Allow automatic backward movement for summary boards |
@@ -505,7 +511,7 @@ The API includes a `broken_api` parameter:
 | `hide_done_policies_in_done_column` | boolean | Hide done checklist policies only in done column |
 | `automove_cards` | boolean | Automatically move cards depending on their children state |
 | `auto_assign_enabled` | boolean | Automatically assign a user to the card when he/she moves the card if the user is not a member of the card |
-| `card_properties` | null | array of objects | Properties of the board cards suggested for filling  |
+| `card_properties` | null \| array of objects | Properties of the board cards suggested for filling  |
 | - `key` | string | Property key |
 | - `laneIds` | array | Array of lane ids to which the rule will be applied. Empty array for all lanes |
 | - `required` | boolean | Is rule required |
@@ -519,7 +525,7 @@ The API includes a `broken_api` parameter:
 | - `type` | enum | 1 - queue, 2 – in progress, 3 – done |
 | - `board_id` | integer | Board id |
 | - `column_id` | null | Parent column id |
-| - `external_id` | null | string | External id |
+| - `external_id` | null \| string | External id |
 | - `rules` | integer | Bit mask for column rules. Rules: 1 - checklists must be checked, 2 - display FIFO order |
 | `lanes` | array of objects | Board lanes |
 | - `id` | integer | Lane id |
@@ -527,7 +533,7 @@ The API includes a `broken_api` parameter:
 | - `sort_order` | integer | Position |
 | - `board_id` | integer | Board id |
 | - `condition` | enum | 1 - live, 2 - archived, 3 - deleted |
-| - `external_id` | null | string | External id |
+| - `external_id` | null \| string | External id |
 | `cards` | array of objects | Board cards |
 | - `updated` | string | Last update timestamp |
 | - `created` | string | Create date |
@@ -535,7 +541,7 @@ The API includes a `broken_api` parameter:
 | - `id` | integer | Card id |
 | - `title` | string | Card title |
 | - `asap` | boolean | Card asap flag |
-| - `due_date` | null | string | Card deadline |
+| - `due_date` | null \| string | Card deadline |
 | - `sort_order` | number | Position |
 | - `fifo_order` | integer | Number of card in the cell when fifo rule applied to cards column |
 | - `state` | enum | 1-queued, 2-inProgresss, 3-done |
@@ -549,14 +555,14 @@ The API includes a `broken_api` parameter:
 | - `goals_done` | integer | Number of card done goals |
 | - `time_spent_sum` | integer | Amount of time spent(in minutes) |
 | - `time_blocked_sum` | integer | Amount of blocked time(in minutes) |
-| - `children_number_properties_sum` | null | object | Sum according to numerical data of child cards |
-| - `calculated_planned_start` | null | string | Calculated planned start |
-| - `calculated_planned_end` | null | string | Calculated planned end |
+| - `children_number_properties_sum` | null \| object | Sum according to numerical data of child cards |
+| - `calculated_planned_start` | null \| string | Calculated planned start |
+| - `calculated_planned_end` | null \| string | Calculated planned end |
 | - `blocking_card` | boolean | Is card blocking another card |
 | - `blocked` | boolean | Is card blocked |
-| - `size` | null | number | Numerical part of size |
-| - `size_unit` | null | string | Text part of size |
-| - `size_text` | null | string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
+| - `size` | null \| number | Numerical part of size |
+| - `size_unit` | null \| string | Text part of size |
+| - `size_text` | null \| string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
 | - `due_date_time_present` | boolean | Flag indicating that deadline is specified up to hours and minutes |
 | - `board_id` | integer | Board id |
 | - `column_id` | integer | Column id |
@@ -565,30 +571,61 @@ The API includes a `broken_api` parameter:
 | - `type_id` | integer | Card type id |
 | - `version` | integer | Card version |
 | - `updater_id` | integer | User id who last updated card |
-| - `completed_on_time` | null | boolean | Flag indicating that card completed on time when due date present |
-| - `completed_at` | null | string | Date when card moved to done type column |
-| - `last_moved_at` | null | string | Date when card last moved |
-| - `lane_changed_at` | null | string | Date when card changed lane |
-| - `column_changed_at` | null | string | Date when card changed column |
-| - `first_moved_to_in_progress_at` | null | string | Date when card first moved to inProgress type column |
-| - `last_moved_to_done_at` | null | string | Date when card last moved to done type column |
+| - `completed_on_time` | null \| boolean | Flag indicating that card completed on time when due date present |
+| - `completed_at` | null \| string | Date when card moved to done type column |
+| - `last_moved_at` | null \| string | Date when card last moved |
+| - `lane_changed_at` | null \| string | Date when card changed lane |
+| - `column_changed_at` | null \| string | Date when card changed column |
+| - `first_moved_to_in_progress_at` | null \| string | Date when card first moved to inProgress type column |
+| - `last_moved_to_done_at` | null \| string | Date when card last moved to done type column |
 | - `sprint_id` | integer | Sprint id |
-| - `external_id` | null | string | External id |
+| - `external_id` | null \| string | External id |
 | - `comments_total` | integer | Total card comments |
-| - `comment_last_added_at` | null | string | Date when last comment added |
-| - `properties` | null | object | Card custom properties. Format: id_{propertyId}:value |
-| - `planned_start` | null | string | Card timeline planned start |
-| - `planned_end` | null | string | Card timeline planned end |
+| - `comment_last_added_at` | null \| string | Date when last comment added |
+| - `properties` | null \| object | Card custom properties. Format: id_{propertyId}:value |
+| - `planned_start` | null \| string | Card timeline planned start |
+| - `planned_end` | null \| string | Card timeline planned end |
 | - `service_id` | integer | Service id |
 | - `sd_new_comment` | boolean | Has unseen service desk request author comments |
 | - `public` | boolean | Is card public |
-| - `share_settings` | null | object | Public share settings |
-| - `share_id` | null | string | Public share id |
-| - `external_user_emails` | null | string | External users emails |
+| - `share_settings` | null \| object | Public share settings |
+| - `share_id` | null \| string | Public share id |
+| - `external_user_emails` | null \| string | External users emails |
 | - `description_filled` | boolean | Flag indicating that card has description |
 | - `estimate_workload` | number | Estimate_workload |
 | - `owner` | object | Card owner info |
+| - - `id` | integer | User id |
+| - - `uid` | string | User uid |
+| - - `full_name` | string | User full name |
+| - - `email` | string | User email |
+| - - `username` | string | Username |
+| - - `avatar_initials_url` | string | Default user avatar |
+| - - `avatar_uploaded_url` | null \| string | Uploaded avatar url |
+| - - `initials` | string | User initials |
+| - - `avatar_type` | enum | 1 - gravatar, 2 - initials, 3 - uploaded |
+| - - `lng` | string | Language |
+| - - `timezone` | string | Time zone |
+| - - `theme` | enum | light, dark, auto |
+| - - `created` | string | Create date |
+| - - `updated` | string | Last update timestamp |
+| - - `activated` | boolean | User activated flag |
+| - - `ui_version` | enum | 1 - old ui, 2 - new ui |
+| - - `virtual` | boolean | Is user virtual |
+| - - `email_blocked` | null \| string | Email blocked status |
+| - - `email_blocked_reason` | null \| string | Email blocked reason |
+| - - `delete_requested_at` | null \| string | Delete request date |
 | - `type` | object | Card type info |
+| - - `id` | integer | Card type id |
+| - - `uid` | string | Card type uid |
+| - - `name` | string | Card type name |
+| - - `color` | integer | Color number |
+| - - `letter` | string | Card type letter |
+| - - `company_id` | null \| integer | Company id |
+| - - `archived` | boolean | Archived flag |
+| - - `properties` | null \| object | Card type properties |
+| - - `suggest_fields` | boolean | Suggest fields flag |
+| - - `author_uid` | null \| string | Author uid |
+| - - `description_template` | null \| string | Description template |
 | `top` | integer | Y coordinate of the board on space |
 | `left` | integer | X coordinate of the board on space |
 | `sort_order` | number | Position |
@@ -624,12 +661,12 @@ The API includes a `broken_api` parameter:
 | `id` | integer | Board  id |
 | `title` | string | Board title |
 | `cell_wip_limits` |  null | array | JSON containing wip limits rules for cells |
-| `external_id` | null | string | External id |
+| `external_id` | null \| string | External id |
 | `default_card_type_id` | integer | Default card type for new cards on board |
 | `description` | string | Board description |
 | `email_key` | string | Email key |
 | `move_parents_to_done` | boolean | Automatically move parent cards to done when their children cards on this board is done |
-| `default_tags` | null | string | Default tags |
+| `default_tags` | null \| string | Default tags |
 | `first_image_is_cover` | boolean | Automatically mark first uploaded card's image as card's cover |
 | `reset_lane_spent_time` | boolean | Reset lane spent time when card changed lane |
 | `backward_moves_enabled` | boolean | Allow automatic backward movement for summary boards |
@@ -637,7 +674,7 @@ The API includes a `broken_api` parameter:
 | `hide_done_policies_in_done_column` | boolean | Hide done checklist policies only in done column |
 | `automove_cards` | boolean | Automatically move cards depending on their children state |
 | `auto_assign_enabled` | boolean | Automatically assign a user to the card when he/she moves the card if the user is not a member of the card |
-| `card_properties` | null | array of objects | Properties of the board cards suggested for filling  |
+| `card_properties` | null \| array of objects | Properties of the board cards suggested for filling  |
 | - `key` | string | Property key |
 | - `laneIds` | array | Array of lane ids to which the rule will be applied. Empty array for all lanes |
 | - `required` | boolean | Is rule required |
@@ -651,7 +688,7 @@ The API includes a `broken_api` parameter:
 | - `type` | enum | 1 - queue, 2 – in progress, 3 – done |
 | - `board_id` | integer | Board id |
 | - `column_id` | null | Parent column id |
-| - `external_id` | null | string | External id |
+| - `external_id` | null \| string | External id |
 | - `rules` | integer | Bit mask for column rules. Rules: 1 - checklists must be checked, 2 - display FIFO order |
 | `lanes` | array of objects | Board lanes |
 | - `id` | integer | Lane id |
@@ -659,7 +696,7 @@ The API includes a `broken_api` parameter:
 | - `sort_order` | number | Position |
 | - `board_id` | integer | Board id |
 | - `condition` | enum | 1 - live, 2 - archived, 3 - deleted |
-| - `external_id` | null | string | External id |
+| - `external_id` | null \| string | External id |
 | `top` | integer | Y coordinate of the board on space |
 | `left` | integer | X coordinate of the board on space |
 | `sort_order` | number | Position |
@@ -754,13 +791,13 @@ The API includes a `broken_api` parameter:
 | `column_id` | null | Parent column id |
 | `archive_after_days` | integer | Specify amont of days after which cards will be automatically archived. Works only for columns with type **done** |
 | `wip_limit_type` | enum | 1 – card's count, 2 – card's size |
-| `external_id` | null | string | External id |
+| `external_id` | null \| string | External id |
 | `default_tags` | string | Default tags |
 | `last_moved_warning_after_days` | integer | Warning appears on stale cards |
 | `last_moved_warning_after_hours` | integer | Warning appears on stale cards |
 | `last_moved_warning_after_minutes` | integer | Warning appears on stale cards |
-| `months_to_hide_cards` | null | integer | [Deprecated] Hide cards not moved for the last N months |
-| `card_hide_after_days` | null | integer | Hide cards not moved for the last N days |
+| `months_to_hide_cards` | null \| integer | [Deprecated] Hide cards not moved for the last N months |
+| `card_hide_after_days` | null \| integer | Hide cards not moved for the last N days |
 
 - **400** (error) - validation Error
 
@@ -815,13 +852,13 @@ The API includes a `broken_api` parameter:
 | `column_id` | null | Parent column id |
 | `archive_after_days` | integer | Specify amont of days after which cards will be automatically archived. Works only for columns with type **done** |
 | `wip_limit_type` | enum | 1 – card's count, 2 – card's size |
-| `external_id` | null | string | External id |
+| `external_id` | null \| string | External id |
 | `default_tags` | string | Default tags |
 | `last_moved_warning_after_days` | integer | Warning appears on stale cards |
 | `last_moved_warning_after_hours` | integer | Warning appears on stale cards |
 | `last_moved_warning_after_minutes` | integer | Warning appears on stale cards |
-| `months_to_hide_cards` | null | integer | [Deprecated] Hide cards not moved for the last N months |
-| `card_hide_after_days` | null | integer | Hide cards not moved for the last N days |
+| `months_to_hide_cards` | null \| integer | [Deprecated] Hide cards not moved for the last N months |
+| `card_hide_after_days` | null \| integer | Hide cards not moved for the last N days |
 | `pause_sla` | boolean | Indicates whether the SLA timer should be paused in this column |
 | `subcolumns` | array of objects | Column subcolumns |
 | - `updated` | string | Last update timestamp |
@@ -837,13 +874,13 @@ The API includes a `broken_api` parameter:
 | - `column_id` | null | Parent column id |
 | - `archive_after_days` | integer | Specify amont of days after which cards will be automatically archived. Works only for columns with type **done** |
 | - `wip_limit_type` | enum | 1 – card's count, 2 – card's size |
-| - `external_id` | null | string | External id |
+| - `external_id` | null \| string | External id |
 | - `default_tags` | string | Default tags |
 | - `last_moved_warning_after_days` | integer | Warning appears on stale cards |
 | - `last_moved_warning_after_hours` | integer | Warning appears on stale cards |
 | - `last_moved_warning_after_minutes` | integer | Warning appears on stale cards |
-| - `months_to_hide_cards` | null | integer | [Deprecated] Hide cards not moved for the last N months |
-| - `card_hide_after_days` | null | integer | Hide cards not moved for the last N days |
+| - `months_to_hide_cards` | null \| integer | [Deprecated] Hide cards not moved for the last N months |
+| - `card_hide_after_days` | null \| integer | Hide cards not moved for the last N days |
 
 - **401** (error) - Invalid token
 - **403** (error) - Forbiden
@@ -883,13 +920,13 @@ The API includes a `broken_api` parameter:
 | `column_id` | null | Parent column id |
 | `archive_after_days` | integer | Specify amont of days after which cards will be automatically archived. Works only for columns with type **done** |
 | `wip_limit_type` | enum | 1 – card's count, 2 – card's size |
-| `external_id` | null | string | External id |
+| `external_id` | null \| string | External id |
 | `default_tags` | string | Default tags |
 | `last_moved_warning_after_days` | integer | Warning appears on stale cards |
 | `last_moved_warning_after_hours` | integer | Warning appears on stale cards |
 | `last_moved_warning_after_minutes` | integer | Warning appears on stale cards |
-| `months_to_hide_cards` | null | integer | [Deprecated] Hide cards not moved for the last N months |
-| `card_hide_after_days` | null | integer | Hide cards not moved for the last N days |
+| `months_to_hide_cards` | null \| integer | [Deprecated] Hide cards not moved for the last N months |
+| `card_hide_after_days` | null \| integer | Hide cards not moved for the last N days |
 
 - **400** (error) - validation Error
 
@@ -981,13 +1018,13 @@ The API includes a `broken_api` parameter:
 | `column_id` | integer | Parent column id |
 | `archive_after_days` | integer | Specify amont of days after which cards will be automatically archived. Works only for columns with type **done** |
 | `wip_limit_type` | enum | 1 – card's count, 2 – card's size |
-| `external_id` | null | string | External id |
+| `external_id` | null \| string | External id |
 | `default_tags` | string | Default tags |
 | `last_moved_warning_after_days` | integer | Warning appears on stale cards |
 | `last_moved_warning_after_hours` | integer | Warning appears on stale cards |
 | `last_moved_warning_after_minutes` | integer | Warning appears on stale cards |
-| `months_to_hide_cards` | null | integer | [Deprecated] Hide cards not moved for the last N months |
-| `card_hide_after_days` | null | integer | Hide cards not moved for the last N months |
+| `months_to_hide_cards` | null \| integer | [Deprecated] Hide cards not moved for the last N months |
+| `card_hide_after_days` | null \| integer | Hide cards not moved for the last N months |
 
 - **400** (error) - validation Error
 
@@ -1042,13 +1079,13 @@ The API includes a `broken_api` parameter:
 | `column_id` | integer | Parent column id |
 | `archive_after_days` | integer | Specify amont of days after which cards will be automatically archived. Works only for columns with type **done** |
 | `wip_limit_type` | enum | 1 – card's count, 2 – card's size |
-| `external_id` | null | string | External id |
+| `external_id` | null \| string | External id |
 | `default_tags` | string | Default tags |
 | `last_moved_warning_after_days` | integer | Warning appears on stale cards |
 | `last_moved_warning_after_hours` | integer | Warning appears on stale cards |
 | `last_moved_warning_after_minutes` | integer | Warning appears on stale cards |
-| `months_to_hide_cards` | null | integer | [Deprecated] Hide cards not moved for the last N months |
-| `card_hide_after_days` | null | integer | Hide cards not moved for the last N months |
+| `months_to_hide_cards` | null \| integer | [Deprecated] Hide cards not moved for the last N months |
+| `card_hide_after_days` | null \| integer | Hide cards not moved for the last N months |
 
 - **401** (error) - Invalid token
 - **403** (error) - Forbiden
@@ -1088,13 +1125,13 @@ The API includes a `broken_api` parameter:
 | `column_id` | integer | Parent column id |
 | `archive_after_days` | integer | Specify amont of days after which cards will be automatically archived. Works only for columns with type **done** |
 | `wip_limit_type` | enum | 1 – card's count, 2 – card's size |
-| `external_id` | null | string | External id |
+| `external_id` | null \| string | External id |
 | `default_tags` | string | Default tags |
 | `last_moved_warning_after_days` | integer | Warning appears on stale cards |
 | `last_moved_warning_after_hours` | integer | Warning appears on stale cards |
 | `last_moved_warning_after_minutes` | integer | Warning appears on stale cards |
-| `months_to_hide_cards` | null | integer | [Deprecated] Hide cards not moved for the last N months |
-| `card_hide_after_days` | null | integer | Hide cards not moved for the last N months |
+| `months_to_hide_cards` | null \| integer | [Deprecated] Hide cards not moved for the last N months |
+| `card_hide_after_days` | null \| integer | Hide cards not moved for the last N months |
 
 - **400** (error) - validation Error
 
@@ -1188,9 +1225,9 @@ The API includes a `broken_api` parameter:
 | `row_count` | integer | Height |
 | `wip_limit` | integer | Recommended limit for column |
 | `board_id` | integer | Board id |
-| `default_card_type_id` | null | integer | Default card type for new cards in lane |
+| `default_card_type_id` | null \| integer | Default card type for new cards in lane |
 | `wip_limit_type` | enum | 1 – card's count, 2 – card's size |
-| `external_id` | null | string | External id |
+| `external_id` | null \| string | External id |
 | `default_tags` | string | Default tags |
 | `last_moved_warning_after_days` | integer | Warning appears on stale cards |
 | `last_moved_warning_after_hours` | integer | Warning appears on stale cards |
@@ -1245,9 +1282,9 @@ The API includes a `broken_api` parameter:
 | `row_count` | integer | Height |
 | `wip_limit` | integer | Recommended limit for column |
 | `board_id` | integer | Board id |
-| `default_card_type_id` | null | integer | Default card type for new cards in lane |
+| `default_card_type_id` | null \| integer | Default card type for new cards in lane |
 | `wip_limit_type` | enum | 1 – card's count, 2 – card's size |
-| `external_id` | null | string | External id |
+| `external_id` | null \| string | External id |
 | `default_tags` | string | Default tags |
 | `last_moved_warning_after_days` | integer | Warning appears on stale cards |
 | `last_moved_warning_after_hours` | integer | Warning appears on stale cards |
@@ -1287,9 +1324,9 @@ The API includes a `broken_api` parameter:
 | `row_count` | integer | Height |
 | `wip_limit` | integer | Recommended limit for column |
 | `board_id` | integer | Board id |
-| `default_card_type_id` | null | integer | Default card type for new cards in lane |
+| `default_card_type_id` | null \| integer | Default card type for new cards in lane |
 | `wip_limit_type` | enum | 1 – card's count, 2 – card's size |
-| `external_id` | null | string | External id |
+| `external_id` | null \| string | External id |
 | `default_tags` | string | Default tags |
 | `last_moved_warning_after_days` | integer | Warning appears on stale cards |
 | `last_moved_warning_after_hours` | integer | Warning appears on stale cards |
@@ -1379,7 +1416,7 @@ The API includes a `broken_api` parameter:
 | - `email` | string | User email |
 | - `username` | string | Username for mentions and login |
 | - `avatar_initials_url` | string | Default user avatar |
-| - `avatar_uploaded_url` | null | string | User uploaded avatar url |
+| - `avatar_uploaded_url` | null \| string | User uploaded avatar url |
 | - `initials` | string | User initials |
 | - `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | - `lng` | string | Language |
@@ -1435,7 +1472,7 @@ The API includes a `broken_api` parameter:
 | `email` | string | User email |
 | `username` | string | Username for mentions and login |
 | `avatar_initials_url` | string | Default user avatar |
-| `avatar_uploaded_url` | null | string | User uploaded avatar url |
+| `avatar_uploaded_url` | null \| string | User uploaded avatar url |
 | `initials` | string | User initials |
 | `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | `lng` | string | Language |
@@ -1482,7 +1519,7 @@ The API includes a `broken_api` parameter:
 | `email` | string | User email |
 | `username` | string | Username for mentions and login |
 | `avatar_initials_url` | string | Default user avatar |
-| `avatar_uploaded_url` | null | string | User uploaded avatar url |
+| `avatar_uploaded_url` | null \| string | User uploaded avatar url |
 | `initials` | string | User initials |
 | `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | `lng` | string | Language |
@@ -1818,12 +1855,12 @@ The API includes a `broken_api` parameter:
 | `id` | integer | Board id |
 | `title` | string | Board title |
 | `cell_wip_limits` |  null | array | JSON containing wip limits rules for cells |
-| `external_id` | null | string  | External id |
+| `external_id` | null \| string | External id |
 | `default_card_type_id` | integer | Default card type for new cards on board |
 | `description` | string | Board description |
 | `email_key` | string | Email key |
 | `move_parents_to_done` | boolean | Automatically move parent cards to done when their children cards on this board is done |
-| `default_tags` | null | string | Default tags |
+| `default_tags` | null \| string | Default tags |
 | `first_image_is_cover` | boolean | Automatically mark first uploaded card's image as card's cover |
 | `reset_lane_spent_time` | boolean | Reset lane spent time when card changed lane |
 | `backward_moves_enabled` | boolean | Allow automatic backward movement for summary boards |
@@ -1831,7 +1868,7 @@ The API includes a `broken_api` parameter:
 | `hide_done_policies_in_done_column` | boolean | Hide done checklist policies only in done column |
 | `automove_cards` | boolean | Automatically move cards depending on their children state |
 | `auto_assign_enabled` | boolean | Automatically assign a user to the card when he/she moves the card if the user is not a member of the card |
-| `card_properties` | null | array of objects | Properties of the board cards suggested for filling  |
+| `card_properties` | null \| array of objects | Properties of the board cards suggested for filling  |
 | - `key` | string | Property key |
 | - `laneIds` | array | Array of lane ids to which the rule will be applied. Empty array for all lanes |
 | - `required` | boolean | Is rule required |
@@ -1845,7 +1882,7 @@ The API includes a `broken_api` parameter:
 | - `type` | enum | 1 - queue, 2 – in progress, 3 – done |
 | - `board_id` | integer | Board id |
 | - `column_id` | null | Parent column id |
-| - `external_id` | null | string | External id |
+| - `external_id` | null \| string | External id |
 | - `rules` | integer | Bit mask for column rules. Rules: 1 - checklists must be checked, 2 - display FIFO order |
 | `lanes` | array of objects | Board lanes |
 | - `id` | integer | Lane id |
@@ -1853,7 +1890,7 @@ The API includes a `broken_api` parameter:
 | - `sort_order` | number | Position |
 | - `board_id` | integer | Board id |
 | - `condition` | enum | 1 - live, 2 - archived, 3 - deleted |
-| - `external_id` | null | string | External id |
+| - `external_id` | null \| string | External id |
 | `cards` | array of objects | Board cards |
 | - `updated` | string | Last update timestamp |
 | - `created` | string | Create date |
@@ -1861,7 +1898,7 @@ The API includes a `broken_api` parameter:
 | - `id` | integer | Card id |
 | - `title` | string | Card title |
 | - `asap` | boolean | Card asap flag |
-| - `due_date` | null | string | Card deadline |
+| - `due_date` | null \| string | Card deadline |
 | - `sort_order` | number | Position |
 | - `fifo_order` | integer | Number of card in the cell when fifo rule applied to cards column |
 | - `state` | enum | 1-queued, 2-inProgresss, 3-done |
@@ -1875,14 +1912,14 @@ The API includes a `broken_api` parameter:
 | - `goals_done` | integer | Number of card done goals |
 | - `time_spent_sum` | integer | Amount of time spent(in minutes) |
 | - `time_blocked_sum` | integer | Amount of blocked time(in minutes) |
-| - `children_number_properties_sum` | null | object | Sum according to numerical data of child cards |
-| - `calculated_planned_start` | null | string | Calculated planned start |
-| - `calculated_planned_end` | null | string | Calculated planned end |
+| - `children_number_properties_sum` | null \| object | Sum according to numerical data of child cards |
+| - `calculated_planned_start` | null \| string | Calculated planned start |
+| - `calculated_planned_end` | null \| string | Calculated planned end |
 | - `blocking_card` | boolean | Is card blocking another card |
 | - `blocked` | boolean | Is card blocked |
-| - `size` | null | number | Numerical part of size |
-| - `size_unit` | null | string | Text part of size |
-| - `size_text` | null | string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
+| - `size` | null \| number | Numerical part of size |
+| - `size_unit` | null \| string | Text part of size |
+| - `size_text` | null \| string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
 | - `due_date_time_present` | boolean | Flag indicating that deadline is specified up to hours and minutes |
 | - `board_id` | integer | Board id |
 | - `column_id` | integer | Column id |
@@ -1891,32 +1928,62 @@ The API includes a `broken_api` parameter:
 | - `type_id` | integer | Card type id |
 | - `version` | integer | Card version |
 | - `updater_id` | integer | User id who last updated card |
-| - `completed_on_time` | null | boolean | Flag indicating that card completed on time when due date present |
-| - `completed_at` | null | string | Date when card moved to done type column |
-| - `last_moved_at` | null | string | Date when card last moved |
-| - `lane_changed_at` | null | string | Date when card changed lane |
-| - `column_changed_at` | null | string | Date when card changed column |
-| - `first_moved_to_in_progress_at` | null | string | Date when card first moved to inProgress type column |
-| - `last_moved_to_done_at` | null | string | Date when card last moved to done type column |
+| - `completed_on_time` | null \| boolean | Flag indicating that card completed on time when due date present |
+| - `completed_at` | null \| string | Date when card moved to done type column |
+| - `last_moved_at` | null \| string | Date when card last moved |
+| - `lane_changed_at` | null \| string | Date when card changed lane |
+| - `column_changed_at` | null \| string | Date when card changed column |
+| - `first_moved_to_in_progress_at` | null \| string | Date when card first moved to inProgress type column |
+| - `last_moved_to_done_at` | null \| string | Date when card last moved to done type column |
 | - `sprint_id` | integer | Sprint id |
-| - `external_id` | null | string  | External id |
+| - `external_id` | null \| string | External id |
 | - `comments_total` | integer | Total card comments |
-| - `comment_last_added_at` | null | string | Date when last comment added |
-| - `properties` | null | object | Card custom properties. Format: id_{propertyId}:value |
-| - `planned_start` | null | string | Card timeline planned start |
-| - `planned_end` | null | string | Card timeline planned end |
+| - `comment_last_added_at` | null \| string | Date when last comment added |
+| - `properties` | null \| object | Card custom properties. Format: id_{propertyId}:value |
+| - `planned_start` | null \| string | Card timeline planned start |
+| - `planned_end` | null \| string | Card timeline planned end |
 | - `service_id` | integer | Service id |
 | - `sd_new_comment` | boolean | Has unseen service desk request author comments |
 | - `public` | boolean | Is card public |
-| - `share_settings` | null | object | Public share settings |
-| - `share_id` | null | string | Public share id |
-| - `external_user_emails` | null | string | External users emails |
+| - `share_settings` | null \| object | Public share settings |
+| - `share_id` | null \| string | Public share id |
+| - `external_user_emails` | null \| string | External users emails |
 | - `description_filled` | boolean | Flag indicating that card has description |
 | - `estimate_workload` | number | Estimate_workload |
 | - `owner` | object | Card owner info |
+| - - `id` | integer | User id |
+| - - `uid` | string | User uid |
+| - - `full_name` | string | User full name |
+| - - `email` | string | User email |
+| - - `username` | string | Username |
+| - - `avatar_initials_url` | string | Default user avatar |
+| - - `avatar_uploaded_url` | null \| string | Uploaded avatar url |
+| - - `initials` | string | User initials |
+| - - `avatar_type` | enum | 1 - gravatar, 2 - initials, 3 - uploaded |
+| - - `lng` | string | Language |
+| - - `timezone` | string | Time zone |
+| - - `theme` | enum | light, dark, auto |
+| - - `created` | string | Create date |
+| - - `updated` | string | Last update timestamp |
+| - - `activated` | boolean | User activated flag |
+| - - `ui_version` | enum | 1 - old ui, 2 - new ui |
+| - - `virtual` | boolean | Is user virtual |
+| - - `email_blocked` | null \| string | Email blocked status |
+| - - `email_blocked_reason` | null \| string | Email blocked reason |
+| - - `delete_requested_at` | null \| string | Delete request date |
 | - `type` | object | Card type info |
-| - `source` | enum | null | app, api, email, telegram, slack,
- webhook, import, schedule, automation |
+| - - `id` | integer | Card type id |
+| - - `uid` | string | Card type uid |
+| - - `name` | string | Card type name |
+| - - `color` | integer | Color number |
+| - - `letter` | string | Card type letter |
+| - - `company_id` | null \| integer | Company id |
+| - - `archived` | boolean | Archived flag |
+| - - `properties` | null \| object | Card type properties |
+| - - `suggest_fields` | boolean | Suggest fields flag |
+| - - `author_uid` | null \| string | Author uid |
+| - - `description_template` | null \| string | Description template |
+| - `source` | enum | null \| app, api, email, telegram, slack, webhook, import, schedule, automation |
 
 - **401** (error) - Invalid token
 - **403** (error) - Forbiden
@@ -1948,9 +2015,9 @@ To create a card at the beginning of the cell send position: 1 and position: 2 t
 | `archived` | boolean | Card archived flag |
 | `id` | integer | Card id |
 | `title` | string | Card title |
-| `description` | null | string | Card description |
+| `description` | null \| string | Card description |
 | `asap` | boolean | Card asap flag |
-| `due_date` | null | string | Card deadline |
+| `due_date` | null \| string | Card deadline |
 | `sort_order` | number | Position |
 | `fifo_order` | integer | Number of card in the cell when fifo rule applied to cards column |
 | `state` | enum | 1-queued, 2-inProgresss, 3-done |
@@ -1963,17 +2030,17 @@ To create a card at the beginning of the cell send position: 1 and position: 2 t
 | `goals_done` | integer | Number of card done goals |
 | `time_spent_sum` | integer | Amount of time spent(in minutes) |
 | `time_blocked_sum` | integer | Amount of blocked time(in minutes) |
-| `children_number_properties_sum` | null | object | Sum according to numerical data of child cards |
+| `children_number_properties_sum` | null \| object | Sum according to numerical data of child cards |
 | - `size` | number | Children cards size sum |
 | - `time_spent_sum` | integer | Children cards spent time sum |
-| `calculated_planned_start` | null | string | Calculated planned start |
-| `calculated_planned_end` | null | string | Calculated planned end |
-| `parent_checklist_ids` | null | array | Array of card parent checklist ids |
+| `calculated_planned_start` | null \| string | Calculated planned start |
+| `calculated_planned_end` | null \| string | Calculated planned end |
+| `parent_checklist_ids` | null \| array | Array of card parent checklist ids |
 | `blocking_card` | boolean | Is card blocking another card |
 | `blocked` | boolean | Is card blocked |
-| `size` | null | number | Numerical part of size |
-| `size_unit` | null | string | Text part of size |
-| `size_text` | null | string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
+| `size` | null \| number | Numerical part of size |
+| `size_unit` | null \| string | Text part of size |
+| `size_text` | null \| string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
 | `due_date_time_present` | boolean | Flag indicating that deadline is specified up to hours and minutes |
 | `board_id` | integer | Board id |
 | `column_id` | integer | Column id |
@@ -1982,30 +2049,30 @@ To create a card at the beginning of the cell send position: 1 and position: 2 t
 | `type_id` | integer | Card type id |
 | `version` | integer | Card version |
 | `updater_id` | integer | User id who last updated card |
-| `completed_on_time` | null | boolean | Flag indicating that card completed on time when due date present |
-| `completed_at` | null | string | Date when card moved to done type column |
-| `last_moved_at` | null | string | Date when card last moved |
-| `lane_changed_at` | null | string | Date when card changed lane |
-| `column_changed_at` | null | string | Date when card changed column |
-| `first_moved_to_in_progress_at` | null | string | Date when card first moved to inProgress type column |
-| `last_moved_to_done_at` | null | string | Date when card last moved to done type column |
+| `completed_on_time` | null \| boolean | Flag indicating that card completed on time when due date present |
+| `completed_at` | null \| string | Date when card moved to done type column |
+| `last_moved_at` | null \| string | Date when card last moved |
+| `lane_changed_at` | null \| string | Date when card changed lane |
+| `column_changed_at` | null \| string | Date when card changed column |
+| `first_moved_to_in_progress_at` | null \| string | Date when card first moved to inProgress type column |
+| `last_moved_to_done_at` | null \| string | Date when card last moved to done type column |
 | `sprint_id` | integer | Sprint id |
-| `external_id` | null | string | External id |
+| `external_id` | null \| string | External id |
 | `service_id` | integer | Service id |
 | `comments_total` | integer | Total card comments |
-| `comment_last_added_at` | null | string | Date when last comment added |
-| `properties` | null | object | Card custom properties. Format: id_{propertyId}:value |
-| - `id_{propertyId}` | string | integer | null | object | Card custom property. Format id_{propertyId}:value |
-| `planned_start` | null | string | Card timeline planned start |
-| `planned_end` | null | string | Card timeline planned end |
+| `comment_last_added_at` | null \| string | Date when last comment added |
+| `properties` | null \| object | Card custom properties. Format: id_{propertyId}:value |
+| - `id_{propertyId}` | string \| integer | null \| object | Card custom property. Format id_{propertyId}:value |
+| `planned_start` | null \| string | Card timeline planned start |
+| `planned_end` | null \| string | Card timeline planned end |
 | `counters_recalculated_at` | string | Date of recalculating counters |
 | `sd_new_comment` | boolean | Has unseen service desk request author comments |
 | `public` | boolean | Is card public |
-| `share_settings` | null | object | Public share settings |
+| `share_settings` | null \| object | Public share settings |
 | - `fields` | object | List of shared card fields. Format fieldName: value |
-| - `share_due_date` | string | null | Share due date timestamp |
-| `share_id` | null | string | Public share id |
-| `external_user_emails` | null | string | External users emails |
+| - `share_due_date` | string \| null | Share due date timestamp |
+| `share_id` | null \| string | Public share id |
+| `external_user_emails` | null \| string | External users emails |
 | `description_filled` | boolean | Flag indicating that card has description |
 | `estimate_workload` | number | Estimate_workload |
 | `owner` | object | Card owner info |
@@ -2017,7 +2084,7 @@ To create a card at the beginning of the cell send position: 1 and position: 2 t
 | - `email` | string | User email |
 | - `activated` | boolean | User activated flag |
 | - `avatar_initials_url` | string | Default user avatar url |
-| - `avatar_uploaded_url` | string | null | User uploaded avatar url |
+| - `avatar_uploaded_url` | string \| null | User uploaded avatar url |
 | - `initials` | string | User initials |
 | - `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | - `lng` | string | Language |
@@ -2033,9 +2100,9 @@ To create a card at the beginning of the cell send position: 1 and position: 2 t
 | - `name` | string | Card type name |
 | - `color` | integer | Color number |
 | - `letter` | string | Card type letter |
-| - `description_template` | null | string | Card type escription_template |
+| - `description_template` | null \| string | Card type escription_template |
 | - `company_id` | integer | Company id |
-| - `properties` | null | object | Card type properties(preset and custom) |
+| - `properties` | null \| object | Card type properties(preset and custom) |
 | `external_links` | array | Card external links |
 | - `created` | string | Create date |
 | - `updated` | string | Last update timestamp |
@@ -2062,15 +2129,34 @@ To create a card at the beginning of the cell send position: 1 and position: 2 t
 | - `type` | enum | 1 - attachment, 2 - googleDrive, 3 - dropBox, 4 - box, 5 -oneDrive, 6 - yandex disc, 7 - comment email, 8 - commentAttachment |
 | - `url` | string | Uploaded url |
 | - `author` | object | Author info |
+| - - `id` | integer | User id |
+| - - `uid` | string | User uid |
+| - - `full_name` | string | User full name |
+| - - `email` | string | User email |
+| - - `username` | string | Username |
+| - - `avatar_initials_url` | string | Default user avatar |
+| - - `avatar_uploaded_url` | null \| string | Uploaded avatar url |
+| - - `initials` | string | User initials |
+| - - `avatar_type` | enum | 1 - gravatar, 2 - initials, 3 - uploaded |
+| - - `lng` | string | Language |
+| - - `timezone` | string | Time zone |
+| - - `theme` | enum | light, dark, auto |
+| - - `created` | string | Create date |
+| - - `updated` | string | Last update timestamp |
+| - - `activated` | boolean | User activated flag |
+| - - `ui_version` | enum | 1 - old ui, 2 - new ui |
+| - - `virtual` | boolean | Is user virtual |
+| - - `email_blocked` | null \| string | Email blocked status |
+| - - `email_blocked_reason` | null \| string | Email blocked reason |
+| - - `delete_requested_at` | null \| string | Delete request date |
 | `checklists` | array | Card checklists |
 | - `updated` | string | Last update timestamp |
 | - `created` | string | Create date |
 | - `id` | integer | Card checklist id |
 | - `name` | string | Checklist name |
-| - `policy_id` | null | integer | Template checklist id |
+| - `policy_id` | null \| integer | Template checklist id |
 | - `items` | array | Checklist items |
-| `source` | enum | null | app, api, email, telegram, slack,
- webhook, import, schedule, automation |
+| `source` | enum | null \| app, api, email, telegram, slack, webhook, import, schedule, automation |
 
 - **400** (error) - validation Error
 
@@ -2113,9 +2199,9 @@ Get Card list filtered by query parameters. The result of the request is display
 | `archived` | boolean | Card archived flag |
 | `id` | integer | Card id |
 | `title` | string | Card title |
-| `description` | null | string | Card description. Present only if query parameter 'additional_card_fields' in the request contains 'description' field option |
+| `description` | null \| string | Card description. Present only if query parameter 'additional_card_fields' in the request contains 'description' field option |
 | `asap` | boolean | Card asap flag |
-| `due_date` | null | string | Card deadline |
+| `due_date` | null \| string | Card deadline |
 | `sort_order` | number | Position |
 | `fifo_order` | integer | Number of card in the cell when fifo rule applied to cards column |
 | `state` | enum | 1-queued, 2-inProgresss, 3-done |
@@ -2129,19 +2215,19 @@ Get Card list filtered by query parameters. The result of the request is display
 | `goals_done` | integer | Number of card done goals |
 | `time_spent_sum` | integer | Amount of time spent(in minutes) |
 | `time_blocked_sum` | integer | Amount of blocked time(in minutes) |
-| `children_number_properties_sum` | null | object | Sum according to numerical data of child cards |
+| `children_number_properties_sum` | null \| object | Sum according to numerical data of child cards |
 | - `size` | number | Children cards size sum |
 | - `time_spent_sum` | integer | Children cards spent time sum |
-| `calculated_planned_start` | null | string | Calculated planned start |
-| `calculated_planned_end` | null | string | Calculated planned end |
-| `parent_checklist_ids` | null | array | Array of card parent checklist ids |
-| `parents_ids` | null | array | Array of card parent ids |
-| `children_ids` | null | array | Array of card children ids |
+| `calculated_planned_start` | null \| string | Calculated planned start |
+| `calculated_planned_end` | null \| string | Calculated planned end |
+| `parent_checklist_ids` | null \| array | Array of card parent checklist ids |
+| `parents_ids` | null \| array | Array of card parent ids |
+| `children_ids` | null \| array | Array of card children ids |
 | `blocking_card` | boolean | Is card blocking another card |
 | `blocked` | boolean | Is card blocked |
-| `size` | null | number | Numerical part of size |
-| `size_unit` | null | string | Text part of size |
-| `size_text` | null | string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
+| `size` | null \| number | Numerical part of size |
+| `size_unit` | null \| string | Text part of size |
+| `size_text` | null \| string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
 | `due_date_time_present` | boolean | Flag indicating that deadline is specified up to hours and minutes |
 | `board_id` | integer | Board id |
 | `column_id` | integer | Column id |
@@ -2150,30 +2236,30 @@ Get Card list filtered by query parameters. The result of the request is display
 | `type_id` | integer | Card type id |
 | `version` | integer | Card version |
 | `updater_id` | integer | User id who last updated card |
-| `completed_on_time` | null | boolean | Flag indicating that card completed on time when due date present |
-| `completed_at` | null | string | Date when card moved to done type column |
-| `last_moved_at` | null | string | Date when card last moved |
-| `lane_changed_at` | null | string | Date when card changed lane |
-| `column_changed_at` | null | string | Date when card changed column |
-| `first_moved_to_in_progress_at` | null | string | Date when card first moved to inProgress type column |
-| `last_moved_to_done_at` | null | string | Date when card last moved to done type column |
+| `completed_on_time` | null \| boolean | Flag indicating that card completed on time when due date present |
+| `completed_at` | null \| string | Date when card moved to done type column |
+| `last_moved_at` | null \| string | Date when card last moved |
+| `lane_changed_at` | null \| string | Date when card changed lane |
+| `column_changed_at` | null \| string | Date when card changed column |
+| `first_moved_to_in_progress_at` | null \| string | Date when card first moved to inProgress type column |
+| `last_moved_to_done_at` | null \| string | Date when card last moved to done type column |
 | `sprint_id` | integer | Sprint id |
-| `external_id` | null | string  | External id |
+| `external_id` | null \| string | External id |
 | `service_id` | integer | Service id |
 | `comments_total` | integer | Total card comments |
-| `comment_last_added_at` | null | string | Date when last comment added |
-| `properties` | null | object | Card custom properties. Format: id_{propertyId}:value |
-| - `id_{propertyId}` | string | integer | null | object | Card custom property. Format id_{propertyId}:value |
-| `planned_start` | null | string | Card timeline planned start |
-| `planned_end` | null | string | Card timeline planned end |
+| `comment_last_added_at` | null \| string | Date when last comment added |
+| `properties` | null \| object | Card custom properties. Format: id_{propertyId}:value |
+| - `id_{propertyId}` | string \| integer | null \| object | Card custom property. Format id_{propertyId}:value |
+| `planned_start` | null \| string | Card timeline planned start |
+| `planned_end` | null \| string | Card timeline planned end |
 | `counters_recalculated_at` | string | Date of recalculating counters |
 | `sd_new_comment` | boolean | Has unseen service desk request author comments |
 | `public` | boolean | Is card public |
-| `share_settings` | null | object | Public share settings |
+| `share_settings` | null \| object | Public share settings |
 | - `fields` | object | List of shared card fields. Format fieldName: value |
-| - `share_due_date` | string | null | Share due date timestamp |
-| `share_id` | null | string | Public share id |
-| `external_user_emails` | null | string | External users emails |
+| - `share_due_date` | string \| null | Share due date timestamp |
+| `share_id` | null \| string | Public share id |
+| `external_user_emails` | null \| string | External users emails |
 | `description_filled` | boolean | Flag indicating that card has description |
 | `estimate_workload` | number | Estimate_workload |
 | `owner` | object | Card owner info |
@@ -2185,7 +2271,7 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `email` | string | User email |
 | - `activated` | boolean | User activated flag |
 | - `avatar_initials_url` | string | Default user avatar url |
-| - `avatar_uploaded_url` | string | null | User uploaded avatar url |
+| - `avatar_uploaded_url` | string \| null | User uploaded avatar url |
 | - `initials` | string | User initials |
 | - `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | - `lng` | string | Language |
@@ -2201,21 +2287,21 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `name` | string | Card type name |
 | - `color` | integer | Color number |
 | - `letter` | string | Card type letter |
-| - `description_template` | null | string | Card type escription_template |
+| - `description_template` | null \| string | Card type escription_template |
 | - `company_id` | integer | Company id |
-| - `properties` | null | object | Card type properties(preset and custom) |
+| - `properties` | null \| object | Card type properties(preset and custom) |
 | `board` | object | Card board info |
 | - `created` | string | Create date |
 | - `updated` | string | Last update timestamp |
 | - `id` | integer | Board id |
 | - `title` | string | Board title |
 | - `cell_wip_limits` |  null | array | JSON containing wip limits rules for cells |
-| - `external_id` | null | string | External id |
+| - `external_id` | null \| string | External id |
 | - `default_card_type_id` | integer | Default card type for new cards on board |
 | - `description` | string | Board description |
 | - `email_key` | string | Email key |
 | - `move_parents_to_done` | boolean | Automatically move parent cards to done when their children cards on this board is done |
-| - `default_tags` | null | string | Default tags |
+| - `default_tags` | null \| string | Default tags |
 | - `first_image_is_cover` | boolean | Automatically mark first uploaded card's image as card's cover |
 | - `reset_lane_spent_time` | boolean | Reset lane spent time when card changed lane |
 | - `backward_moves_enabled` | boolean | Allow automatic backward movement for summary boards |
@@ -2223,7 +2309,7 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `hide_done_policies_in_done_column` | boolean | Hide done checklist policies only in done column |
 | - `automove_cards` | boolean | Automatically move cards depending on their children state |
 | - `auto_assign_enabled` | boolean | Automatically assign a user to the card when he/she moves the card if the user is not a member of the card |
-| - `card_properties` | null | array of objects | Properties of the board cards suggested for filling  |
+| - `card_properties` | null \| array of objects | Properties of the board cards suggested for filling  |
 | - `columns` | array of objects | Board columns |
 | - `lanes` | array of objects | Board lanes |
 | - `cards` | array of objects | Board cards |
@@ -2236,7 +2322,7 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `email` | string | User email |
 | - `activated` | boolean | User activated flag |
 | - `avatar_initials_url` | string | Default user avatar url |
-| - `avatar_uploaded_url` | string | null | User uploaded avatar url |
+| - `avatar_uploaded_url` | string \| null | User uploaded avatar url |
 | - `initials` | string | User initials |
 | - `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | - `lng` | string | Language |
@@ -2259,13 +2345,13 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `column_id` | null | Parent column id |
 | - `archive_after_days` | integer | Specify amont of days after which cards will be automatically archived. Works only for columns with type **done** |
 | - `wip_limit_type` | enum | 1 – card's count, 2 – card's size |
-| - `external_id` | null | string | External id |
+| - `external_id` | null \| string | External id |
 | - `default_tags` | string | Default tags |
 | - `last_moved_warning_after_days` | integer | Warning appears on stale cards |
 | - `last_moved_warning_after_hours` | integer | Warning appears on stale cards |
 | - `last_moved_warning_after_minutes` | integer | Warning appears on stale cards |
-| - `months_to_hide_cards` | null | integer | [Deprecated] Hide cards not moved for the last N months |
-| - `card_hide_after_days` | null | integer | Hide cards not moved for the last N days |
+| - `months_to_hide_cards` | null \| integer | [Deprecated] Hide cards not moved for the last N months |
+| - `card_hide_after_days` | null \| integer | Hide cards not moved for the last N days |
 | `lane` | object | Card lane info |
 | - `updated` | string | Last update timestamp |
 | - `created` | string | Create date |
@@ -2275,9 +2361,9 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `row_count` | integer | Height |
 | - `wip_limit` | integer | Recommended limit for column |
 | - `board_id` | integer | Board id |
-| - `default_card_type_id` | null | integer | Default card type for new cards in lane |
+| - `default_card_type_id` | null \| integer | Default card type for new cards in lane |
 | - `wip_limit_type` | enum | 1 – card's count, 2 – card's size |
-| - `external_id` | null | string | External id |
+| - `external_id` | null \| string | External id |
 | - `default_tags` | string | Default tags |
 | - `last_moved_warning_after_days` | integer | Warning appears on stale cards |
 | - `last_moved_warning_after_hours` | integer | Warning appears on stale cards |
@@ -2289,9 +2375,9 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `archived` | boolean | Card archived flag |
 | - `id` | integer | Children card id |
 | - `title` | string | Card title |
-| - `description` | null | string | Card description |
+| - `description` | null \| string | Card description |
 | - `asap` | boolean | Card asap flag |
-| - `due_date` | null | string | Card deadline |
+| - `due_date` | null \| string | Card deadline |
 | - `fifo_order` | integer | Number of card in the cell when fifo rule applied to cards column |
 | - `state` | enum | 1-queued, 2-inProgresss, 3-done |
 | - `condition` | enum | 1 - live, 2 - archived |
@@ -2303,13 +2389,13 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `goals_done` | integer | Number of card done goals |
 | - `time_spent_sum` | integer | Amount of time spent(in minutes) |
 | - `time_blocked_sum` | integer | Amount of blocked time(in minutes) |
-| - `children_number_properties_sum` | null | object | Sum according to numerical data of child cards |
-| - `parent_checklist_ids` | null | array | Array of card parent checklist ids |
+| - `children_number_properties_sum` | null \| object | Sum according to numerical data of child cards |
+| - `parent_checklist_ids` | null \| array | Array of card parent checklist ids |
 | - `blocking_card` | boolean | Is card blocking another card |
 | - `blocked` | boolean | Is card blocked |
-| - `size` | null | number | Numerical part of size |
-| - `size_unit` | null | string | Text part of size |
-| - `size_text` | null | string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
+| - `size` | null \| number | Numerical part of size |
+| - `size_unit` | null \| string | Text part of size |
+| - `size_text` | null \| string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
 | - `due_date_time_present` | boolean | Flag indicating that deadline is specified up to hours and minutes |
 | - `board_id` | integer | Board id |
 | - `column_id` | integer | Column id |
@@ -2318,34 +2404,90 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `type_id` | integer | Card type id |
 | - `version` | integer | Card version |
 | - `updater_id` | integer | User id who last updated card |
-| - `completed_on_time` | null | boolean | Flag indicating that card completed on time when due date present |
-| - `completed_at` | null | string | Date when card moved to done type column |
-| - `last_moved_at` | null | string | Date when card last moved |
-| - `lane_changed_at` | null | string | Date when card changed lane |
-| - `column_changed_at` | null | string | Date when card changed column |
-| - `first_moved_to_in_progress_at` | null | string | Date when card first moved to inProgress type column |
-| - `last_moved_to_done_at` | null | string | Date when card last moved to done type column |
+| - `completed_on_time` | null \| boolean | Flag indicating that card completed on time when due date present |
+| - `completed_at` | null \| string | Date when card moved to done type column |
+| - `last_moved_at` | null \| string | Date when card last moved |
+| - `lane_changed_at` | null \| string | Date when card changed lane |
+| - `column_changed_at` | null \| string | Date when card changed column |
+| - `first_moved_to_in_progress_at` | null \| string | Date when card first moved to inProgress type column |
+| - `last_moved_to_done_at` | null \| string | Date when card last moved to done type column |
 | - `sprint_id` | integer | Sprint id |
-| - `external_id` | null | string | External id |
+| - `external_id` | null \| string | External id |
 | - `service_id` | integer | Service id |
 | - `comments_total` | integer | Total card comments |
-| - `comment_last_added_at` | null | string | Date when last comment added |
-| - `properties` | null | object | Card custom properties. Format: id_{propertyId}:value |
-| - `planned_start` | null | string | Card timeline planned start |
-| - `planned_end` | null | string | Card timeline planned end |
+| - `comment_last_added_at` | null \| string | Date when last comment added |
+| - `properties` | null \| object | Card custom properties. Format: id_{propertyId}:value |
+| - `planned_start` | null \| string | Card timeline planned start |
+| - `planned_end` | null \| string | Card timeline planned end |
 | - `counters_recalculated_at` | string | Date of recalculating counters |
 | - `sd_new_comment` | boolean | Has unseen service desk request author comments |
 | - `public` | boolean | Is card public |
-| - `share_settings` | null | object | Public share settings |
-| - `share_id` | null | string | Public share id |
-| - `external_user_emails` | null | string | External users emails |
+| - `share_settings` | null \| object | Public share settings |
+| - `share_id` | null \| string | Public share id |
+| - `external_user_emails` | null \| string | External users emails |
 | - `description_filled` | boolean | Flag indicating that card has description |
 | - `estimate_workload` | number | Estimate_workload |
 | - `owner` | object | Card owner info |
+| - - `id` | integer | User id |
+| - - `uid` | string | User uid |
+| - - `full_name` | string | User full name |
+| - - `email` | string | User email |
+| - - `username` | string | Username |
+| - - `avatar_initials_url` | string | Default user avatar |
+| - - `avatar_uploaded_url` | null \| string | Uploaded avatar url |
+| - - `initials` | string | User initials |
+| - - `avatar_type` | enum | 1 - gravatar, 2 - initials, 3 - uploaded |
+| - - `lng` | string | Language |
+| - - `timezone` | string | Time zone |
+| - - `theme` | enum | light, dark, auto |
+| - - `created` | string | Create date |
+| - - `updated` | string | Last update timestamp |
+| - - `activated` | boolean | User activated flag |
+| - - `ui_version` | enum | 1 - old ui, 2 - new ui |
+| - - `virtual` | boolean | Is user virtual |
+| - - `email_blocked` | null \| string | Email blocked status |
+| - - `email_blocked_reason` | null \| string | Email blocked reason |
+| - - `delete_requested_at` | null \| string | Delete request date |
 | - `type` | object | Card type info |
+| - - `id` | integer | Card type id |
+| - - `uid` | string | Card type uid |
+| - - `name` | string | Card type name |
+| - - `color` | integer | Color number |
+| - - `letter` | string | Card type letter |
+| - - `company_id` | null \| integer | Company id |
+| - - `archived` | boolean | Archived flag |
+| - - `properties` | null \| object | Card type properties |
+| - - `suggest_fields` | boolean | Suggest fields flag |
+| - - `author_uid` | null \| string | Author uid |
+| - - `description_template` | null \| string | Description template |
 | - `board` | object | Board info |
+| - - `id` | integer | Board id |
+| - - `uid` | string | Board uid |
+| - - `title` | string | Board title |
+| - - `external_id` | null \| string | External id |
+| - - `card_properties` | null \| array | Board card properties |
+| - - `settings` | null \| object | Board settings |
 | - `column` | object | Column info |
+| - - `id` | integer | Column id |
+| - - `uid` | string | Column uid |
+| - - `title` | string | Column title |
+| - - `sort_order` | number | Position |
+| - - `col_count` | integer | Width |
+| - - `type` | enum | 1 - queue, 2 - in progress, 3 - done |
+| - - `board_id` | integer | Board id |
+| - - `column_id` | null \| integer | Parent column id |
+| - - `external_id` | null \| string | External id |
+| - - `rules` | integer | Column rules bitmask |
+| - - `pause_sla` | boolean | Pause SLA timer in this column |
 | - `lane` | object | Lane info |
+| - - `id` | integer | Lane id |
+| - - `uid` | string | Lane uid |
+| - - `title` | string | Lane title |
+| - - `sort_order` | number | Position |
+| - - `board_id` | integer | Board id |
+| - - `condition` | enum | 1 - live, 2 - archived, 3 - deleted |
+| - - `external_id` | null \| string | External id |
+| - - `default_card_type_id` | null \| integer | Default card type id |
 | - `card_id` | integer | Parent card id |
 | - `depends_on_card_id` | integer | Children card id |
 | `parents` | array | Card parents |
@@ -2354,9 +2496,9 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `archived` | boolean | Card archived flag |
 | - `id` | integer | Children card id |
 | - `title` | string | Card title |
-| - `description` | null | string | Card description |
+| - `description` | null \| string | Card description |
 | - `asap` | boolean | Card asap flag |
-| - `due_date` | null | string | Card deadline |
+| - `due_date` | null \| string | Card deadline |
 | - `fifo_order` | integer | Number of card in the cell when fifo rule applied to cards column |
 | - `state` | enum | 1-queued, 2-inProgresss, 3-done |
 | - `condition` | enum | 1 - live, 2 - archived |
@@ -2368,13 +2510,13 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `goals_done` | integer | Number of card done goals |
 | - `time_spent_sum` | integer | Amount of time spent(in minutes) |
 | - `time_blocked_sum` | integer | Amount of blocked time(in minutes) |
-| - `children_number_properties_sum` | null | object | Sum according to numerical data of child cards |
-| - `parent_checklist_ids` | null | array | Array of card parent checklist ids |
+| - `children_number_properties_sum` | null \| object | Sum according to numerical data of child cards |
+| - `parent_checklist_ids` | null \| array | Array of card parent checklist ids |
 | - `blocking_card` | boolean | Is card blocking another card |
 | - `blocked` | boolean | Is card blocked |
-| - `size` | null | number | Numerical part of size |
-| - `size_unit` | null | string | Text part of size |
-| - `size_text` | null | string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
+| - `size` | null \| number | Numerical part of size |
+| - `size_unit` | null \| string | Text part of size |
+| - `size_text` | null \| string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
 | - `due_date_time_present` | boolean | Flag indicating that deadline is specified up to hours and minutes |
 | - `board_id` | integer | Board id |
 | - `column_id` | integer | Column id |
@@ -2383,44 +2525,124 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `type_id` | integer | Card type id |
 | - `version` | integer | Card version |
 | - `updater_id` | integer | User id who last updated card |
-| - `completed_on_time` | null | boolean | Flag indicating that card completed on time when due date present |
-| - `completed_at` | null | string | Date when card moved to done type column |
-| - `last_moved_at` | null | string | Date when card last moved |
-| - `lane_changed_at` | null | string | Date when card changed lane |
-| - `column_changed_at` | null | string | Date when card changed column |
-| - `first_moved_to_in_progress_at` | null | string | Date when card first moved to inProgress type column |
-| - `last_moved_to_done_at` | null | string | Date when card last moved to done type column |
+| - `completed_on_time` | null \| boolean | Flag indicating that card completed on time when due date present |
+| - `completed_at` | null \| string | Date when card moved to done type column |
+| - `last_moved_at` | null \| string | Date when card last moved |
+| - `lane_changed_at` | null \| string | Date when card changed lane |
+| - `column_changed_at` | null \| string | Date when card changed column |
+| - `first_moved_to_in_progress_at` | null \| string | Date when card first moved to inProgress type column |
+| - `last_moved_to_done_at` | null \| string | Date when card last moved to done type column |
 | - `sprint_id` | integer | Sprint id |
-| - `external_id` | null | string | External id |
+| - `external_id` | null \| string | External id |
 | - `service_id` | integer | Service id |
 | - `comments_total` | integer | Total card comments |
-| - `comment_last_added_at` | null | string | Date when last comment added |
-| - `properties` | null | object | Card custom properties. Format: id_{propertyId}:value |
-| - `planned_start` | null | string | Card timeline planned start |
-| - `planned_end` | null | string | Card timeline planned end |
+| - `comment_last_added_at` | null \| string | Date when last comment added |
+| - `properties` | null \| object | Card custom properties. Format: id_{propertyId}:value |
+| - `planned_start` | null \| string | Card timeline planned start |
+| - `planned_end` | null \| string | Card timeline planned end |
 | - `counters_recalculated_at` | string | Date of recalculating counters |
 | - `sd_new_comment` | boolean | Has unseen service desk request author comments |
 | - `public` | boolean | Is card public |
-| - `share_settings` | null | object | Public share settings |
-| - `share_id` | null | string | Public share id |
-| - `external_user_emails` | null | string | External users emails |
+| - `share_settings` | null \| object | Public share settings |
+| - `share_id` | null \| string | Public share id |
+| - `external_user_emails` | null \| string | External users emails |
 | - `description_filled` | boolean | Flag indicating that card has description |
 | - `estimate_workload` | number | Estimate_workload |
 | - `owner` | object | Card owner info |
+| - - `id` | integer | User id |
+| - - `uid` | string | User uid |
+| - - `full_name` | string | User full name |
+| - - `email` | string | User email |
+| - - `username` | string | Username |
+| - - `avatar_initials_url` | string | Default user avatar |
+| - - `avatar_uploaded_url` | null \| string | Uploaded avatar url |
+| - - `initials` | string | User initials |
+| - - `avatar_type` | enum | 1 - gravatar, 2 - initials, 3 - uploaded |
+| - - `lng` | string | Language |
+| - - `timezone` | string | Time zone |
+| - - `theme` | enum | light, dark, auto |
+| - - `created` | string | Create date |
+| - - `updated` | string | Last update timestamp |
+| - - `activated` | boolean | User activated flag |
+| - - `ui_version` | enum | 1 - old ui, 2 - new ui |
+| - - `virtual` | boolean | Is user virtual |
+| - - `email_blocked` | null \| string | Email blocked status |
+| - - `email_blocked_reason` | null \| string | Email blocked reason |
+| - - `delete_requested_at` | null \| string | Delete request date |
 | - `type` | object | Card type info |
+| - - `id` | integer | Card type id |
+| - - `uid` | string | Card type uid |
+| - - `name` | string | Card type name |
+| - - `color` | integer | Color number |
+| - - `letter` | string | Card type letter |
+| - - `company_id` | null \| integer | Company id |
+| - - `archived` | boolean | Archived flag |
+| - - `properties` | null \| object | Card type properties |
+| - - `suggest_fields` | boolean | Suggest fields flag |
+| - - `author_uid` | null \| string | Author uid |
+| - - `description_template` | null \| string | Description template |
 | - `board` | object | Board info |
+| - - `id` | integer | Board id |
+| - - `uid` | string | Board uid |
+| - - `title` | string | Board title |
+| - - `external_id` | null \| string | External id |
+| - - `card_properties` | null \| array | Board card properties |
+| - - `settings` | null \| object | Board settings |
 | - `column` | object | Column info |
+| - - `id` | integer | Column id |
+| - - `uid` | string | Column uid |
+| - - `title` | string | Column title |
+| - - `sort_order` | number | Position |
+| - - `col_count` | integer | Width |
+| - - `type` | enum | 1 - queue, 2 - in progress, 3 - done |
+| - - `board_id` | integer | Board id |
+| - - `column_id` | null \| integer | Parent column id |
+| - - `external_id` | null \| string | External id |
+| - - `rules` | integer | Column rules bitmask |
+| - - `pause_sla` | boolean | Pause SLA timer in this column |
 | - `lane` | object | Lane info |
+| - - `id` | integer | Lane id |
+| - - `uid` | string | Lane uid |
+| - - `title` | string | Lane title |
+| - - `sort_order` | number | Position |
+| - - `board_id` | integer | Board id |
+| - - `condition` | enum | 1 - live, 2 - archived, 3 - deleted |
+| - - `external_id` | null \| string | External id |
+| - - `default_card_type_id` | null \| integer | Default card type id |
 | - `card_id` | integer | Parent card id |
 | - `depends_on_card_id` | integer | Children card id |
 | `path_data` | object | Card path info (space, board, column, lane, etc) |
 | - `space` | object | Card path space |
 | - `board` | object | Card path board |
+| - - `id` | integer | Board id |
+| - - `uid` | string | Board uid |
+| - - `title` | string | Board title |
+| - - `external_id` | null \| string | External id |
+| - - `card_properties` | null \| array | Board card properties |
+| - - `settings` | null \| object | Board settings |
 | - `column` | object | Card column info |
+| - - `id` | integer | Column id |
+| - - `uid` | string | Column uid |
+| - - `title` | string | Column title |
+| - - `sort_order` | number | Position |
+| - - `col_count` | integer | Width |
+| - - `type` | enum | 1 - queue, 2 - in progress, 3 - done |
+| - - `board_id` | integer | Board id |
+| - - `column_id` | null \| integer | Parent column id |
+| - - `external_id` | null \| string | External id |
+| - - `rules` | integer | Column rules bitmask |
+| - - `pause_sla` | boolean | Pause SLA timer in this column |
 | - `lane` | object | Card lane info |
+| - - `id` | integer | Lane id |
+| - - `uid` | string | Lane uid |
+| - - `title` | string | Lane title |
+| - - `sort_order` | number | Position |
+| - - `board_id` | integer | Board id |
+| - - `condition` | enum | 1 - live, 2 - archived, 3 - deleted |
+| - - `external_id` | null \| string | External id |
+| - - `default_card_type_id` | null \| integer | Default card type id |
 | - `subcolumn` | object | Card subcolumn info |
-| `source` | enum | null | app, api, email, telegram, slack,
- webhook, import, schedule, automation |
+| `source` | enum | null \| app, api, email, telegram, slack, webhook, import, schedule, automation |
 
 - **401** (error) - Invalid token
 - **403** (error) - Forbidden
@@ -2450,9 +2672,9 @@ Get Card list filtered by query parameters. The result of the request is display
 | `archived` | boolean | Card archived flag |
 | `id` | integer | Card id |
 | `title` | string | Card title |
-| `description` | null | string | Card description |
+| `description` | null \| string | Card description |
 | `asap` | boolean | Card asap flag |
-| `due_date` | null | string | Card deadline |
+| `due_date` | null \| string | Card deadline |
 | `sort_order` | number | Position |
 | `fifo_order` | integer | Number of card in the cell when fifo rule applied to cards column |
 | `state` | enum | 1-queued, 2-inProgress, 3-done |
@@ -2466,19 +2688,19 @@ Get Card list filtered by query parameters. The result of the request is display
 | `goals_done` | integer | Number of card done goals |
 | `time_spent_sum` | integer | Amount of time spent(in minutes) |
 | `time_blocked_sum` | integer | Amount of blocked time(in minutes) |
-| `children_number_properties_sum` | null | object | Sum according to numerical data of child cards |
+| `children_number_properties_sum` | null \| object | Sum according to numerical data of child cards |
 | - `size` | number | Children cards size sum |
 | - `time_spent_sum` | integer | Children cards spent time sum |
-| `calculated_planned_start` | null | string | Calculated planned start |
-| `calculated_planned_end` | null | string | Calculated planned end |
-| `parent_checklist_ids` | null | array | Array of card parent checklist ids |
-| `parents_ids` | null | array | Array of card parent ids |
-| `children_ids` | null | array | Array of card children ids |
+| `calculated_planned_start` | null \| string | Calculated planned start |
+| `calculated_planned_end` | null \| string | Calculated planned end |
+| `parent_checklist_ids` | null \| array | Array of card parent checklist ids |
+| `parents_ids` | null \| array | Array of card parent ids |
+| `children_ids` | null \| array | Array of card children ids |
 | `blocking_card` | boolean | Is card blocking another card |
 | `blocked` | boolean | Is card blocked |
-| `size` | null | number | Numerical part of size |
-| `size_unit` | null | string | Text part of size |
-| `size_text` | null | string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
+| `size` | null \| number | Numerical part of size |
+| `size_unit` | null \| string | Text part of size |
+| `size_text` | null \| string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
 | `due_date_time_present` | boolean | Flag indicating that deadline is specified up to hours and minutes |
 | `board_id` | integer | Board id |
 | `column_id` | integer | Column id |
@@ -2487,31 +2709,31 @@ Get Card list filtered by query parameters. The result of the request is display
 | `type_id` | integer | Card type id |
 | `version` | integer | Card version |
 | `updater_id` | integer | User id who last updated card |
-| `completed_on_time` | null | boolean | Flag indicating that card completed on time when due date present |
-| `completed_at` | null | string | Date when card moved to done type column |
-| `last_moved_at` | null | string | Date when card last moved |
-| `lane_changed_at` | null | string | Date when card changed lane |
-| `column_changed_at` | null | string | Date when card changed column |
-| `first_moved_to_in_progress_at` | null | string | Date when card first moved to inProgress type column |
-| `last_moved_to_done_at` | null | string | Date when card last moved to done type column |
+| `completed_on_time` | null \| boolean | Flag indicating that card completed on time when due date present |
+| `completed_at` | null \| string | Date when card moved to done type column |
+| `last_moved_at` | null \| string | Date when card last moved |
+| `lane_changed_at` | null \| string | Date when card changed lane |
+| `column_changed_at` | null \| string | Date when card changed column |
+| `first_moved_to_in_progress_at` | null \| string | Date when card first moved to inProgress type column |
+| `last_moved_to_done_at` | null \| string | Date when card last moved to done type column |
 | `sprint_id` | integer | Sprint id |
-| `external_id` | null | string | External id |
+| `external_id` | null \| string | External id |
 | `service_id` | integer | Service id |
 | `comments_total` | integer | Total card comments |
-| `comment_last_added_at` | null | string | Date when last comment added |
-| `properties` | null | object | Card custom properties. Format: id_{propertyId}:value |
-| - `id_{propertyId}` | string | integer | null | object | Card custom property. Format id_{propertyId}:value |
-| `planned_start` | null | string | Card timeline planned start |
-| `planned_end` | null | string | Card timeline planned end |
+| `comment_last_added_at` | null \| string | Date when last comment added |
+| `properties` | null \| object | Card custom properties. Format: id_{propertyId}:value |
+| - `id_{propertyId}` | string \| integer | null \| object | Card custom property. Format id_{propertyId}:value |
+| `planned_start` | null \| string | Card timeline planned start |
+| `planned_end` | null \| string | Card timeline planned end |
 | `counters_recalculated_at` | string | Date of recalculating counters |
 | `sd_new_comment` | boolean | Has unseen service desk request author comments |
-| `import_id` | null | integer | Import id |
+| `import_id` | null \| integer | Import id |
 | `public` | boolean | Is card public |
-| `share_settings` | null | object | Public share settings |
+| `share_settings` | null \| object | Public share settings |
 | - `fields` | object | List of shared card fields. Format fieldName: value |
-| - `share_due_date` | string | null | Share due date timestamp |
-| `share_id` | null | string | Public share id |
-| `external_user_emails` | null | string | External users emails |
+| - `share_due_date` | string \| null | Share due date timestamp |
+| `share_id` | null \| string | Public share id |
+| `external_user_emails` | null \| string | External users emails |
 | `description_filled` | boolean | Flag indicating that card has description |
 | `estimate_workload` | number | Estimate_workload |
 | `checklists` | array | Card checklists |
@@ -2519,7 +2741,7 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `created` | string | Create date |
 | - `id` | integer | Card checklist id |
 | - `name` | string | Checklist name |
-| - `policy_id` | null | integer | Template checklist id |
+| - `policy_id` | null \| integer | Template checklist id |
 | - `items` | array | Checklist items |
 | `owner` | object | Card owner info |
 | - `created` | string | Create date |
@@ -2530,7 +2752,7 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `email` | string | User email |
 | - `activated` | boolean | User activated flag |
 | - `avatar_initials_url` | string | Default user avatar url |
-| - `avatar_uploaded_url` | string | null | User uploaded avatar url |
+| - `avatar_uploaded_url` | string \| null | User uploaded avatar url |
 | - `initials` | string | User initials |
 | - `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | - `lng` | string | Language |
@@ -2546,21 +2768,21 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `name` | string | Card type name |
 | - `color` | integer | Color number |
 | - `letter` | string | Card type letter |
-| - `description_template` | null | string | Card type escription_template |
+| - `description_template` | null \| string | Card type escription_template |
 | - `company_id` | integer | Company id |
-| - `properties` | null | object | Card type properties(preset and custom) |
+| - `properties` | null \| object | Card type properties(preset and custom) |
 | `board` | object | Card board info |
 | - `created` | string | Create date |
 | - `updated` | string | Last update timestamp |
 | - `id` | integer | Board id |
 | - `title` | string | Board title |
 | - `cell_wip_limits` |  null | array | JSON containing wip limits rules for cells |
-| - `external_id` | null | string | External id |
+| - `external_id` | null \| string | External id |
 | - `default_card_type_id` | integer | Default card type for new cards on board |
 | - `description` | string | Board description |
 | - `email_key` | string | Email key |
 | - `move_parents_to_done` | boolean | Automatically move parent cards to done when their children cards on this board is done |
-| - `default_tags` | null | string | Default tags |
+| - `default_tags` | null \| string | Default tags |
 | - `first_image_is_cover` | boolean | Automatically mark first uploaded card's image as card's cover |
 | - `reset_lane_spent_time` | boolean | Reset lane spent time when card changed lane |
 | - `backward_moves_enabled` | boolean | Allow automatic backward movement for summary boards |
@@ -2568,7 +2790,7 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `hide_done_policies_in_done_column` | boolean | Hide done checklist policies only in done column |
 | - `automove_cards` | boolean | Automatically move cards depending on their children state |
 | - `auto_assign_enabled` | boolean | Automatically assign a user to the card when he/she moves the card if the user is not a member of the card |
-| - `card_properties` | null | array of objects | Properties of the board cards suggested for filling  |
+| - `card_properties` | null \| array of objects | Properties of the board cards suggested for filling  |
 | - `columns` | array of objects | Board columns |
 | - `lanes` | array of objects | Board lanes |
 | - `cards` | array of objects | Board cards |
@@ -2581,7 +2803,7 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `email` | string | User email |
 | - `activated` | boolean | User activated flag |
 | - `avatar_initials_url` | string | Default user avatar url |
-| - `avatar_uploaded_url` | string | null | User uploaded avatar url |
+| - `avatar_uploaded_url` | string \| null | User uploaded avatar url |
 | - `initials` | string | User initials |
 | - `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | - `lng` | string | Language |
@@ -2598,7 +2820,7 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `email` | string | User email |
 | - `activated` | boolean | User activated flag |
 | - `avatar_initials_url` | string | Default user avatar url |
-| - `avatar_uploaded_url` | string | null | User uploaded avatar url |
+| - `avatar_uploaded_url` | string \| null | User uploaded avatar url |
 | - `initials` | string | User initials |
 | - `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | - `lng` | string | Language |
@@ -2633,13 +2855,13 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `column_id` | null | Parent column id |
 | - `archive_after_days` | integer | Specify amont of days after which cards will be automatically archived. Works only for columns with type **done** |
 | - `wip_limit_type` | enum | 1 – card's count, 2 – card's size |
-| - `external_id` | null | string | External id |
+| - `external_id` | null \| string | External id |
 | - `default_tags` | string | Default tags |
 | - `last_moved_warning_after_days` | integer | Warning appears on stale cards |
 | - `last_moved_warning_after_hours` | integer | Warning appears on stale cards |
 | - `last_moved_warning_after_minutes` | integer | Warning appears on stale cards |
-| - `months_to_hide_cards` | null | integer | [Deprecated] Hide cards not moved for the last N months |
-| - `card_hide_after_days` | null | integer | Hide cards not moved for the last N days |
+| - `months_to_hide_cards` | null \| integer | [Deprecated] Hide cards not moved for the last N months |
+| - `card_hide_after_days` | null \| integer | Hide cards not moved for the last N days |
 | `lane` | object | Card lane info |
 | - `updated` | string | Last update timestamp |
 | - `created` | string | Create date |
@@ -2649,9 +2871,9 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `row_count` | integer | Height |
 | - `wip_limit` | integer | Recommended limit for column |
 | - `board_id` | integer | Board id |
-| - `default_card_type_id` | null | integer | Default card type for new cards in lane |
+| - `default_card_type_id` | null \| integer | Default card type for new cards in lane |
 | - `wip_limit_type` | enum | 1 – card's count, 2 – card's size |
-| - `external_id` | null | string | External id |
+| - `external_id` | null \| string | External id |
 | - `default_tags` | string | Default tags |
 | - `last_moved_warning_after_days` | integer | Warning appears on stale cards |
 | - `last_moved_warning_after_hours` | integer | Warning appears on stale cards |
@@ -2668,7 +2890,7 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `email` | string | User email |
 | - `activated` | boolean | User activated flag |
 | - `avatar_initials_url` | string | Default user avatar url |
-| - `avatar_uploaded_url` | string | null | User uploaded avatar url |
+| - `avatar_uploaded_url` | string \| null | User uploaded avatar url |
 | - `initials` | string | User initials |
 | - `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | - `lng` | string | Language |
@@ -2683,9 +2905,9 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `archived` | boolean | Card archived flag |
 | - `id` | integer | Children card id |
 | - `title` | string | Card title |
-| - `description` | null | string | Card description |
+| - `description` | null \| string | Card description |
 | - `asap` | boolean | Card asap flag |
-| - `due_date` | null | string | Card deadline |
+| - `due_date` | null \| string | Card deadline |
 | - `fifo_order` | integer | Number of card in the cell when fifo rule applied to cards column |
 | - `state` | enum | 1-queued, 2-inProgresss, 3-done |
 | - `condition` | enum | 1 - live, 2 - archived |
@@ -2697,13 +2919,13 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `goals_done` | integer | Number of card done goals |
 | - `time_spent_sum` | integer | Amount of time spent(in minutes) |
 | - `time_blocked_sum` | integer | Amount of blocked time(in minutes) |
-| - `children_number_properties_sum` | null | object | Sum according to numerical data of child cards |
-| - `parent_checklist_ids` | null | array | Array of card parent checklist ids |
+| - `children_number_properties_sum` | null \| object | Sum according to numerical data of child cards |
+| - `parent_checklist_ids` | null \| array | Array of card parent checklist ids |
 | - `blocking_card` | boolean | Is card blocking another card |
 | - `blocked` | boolean | Is card blocked |
-| - `size` | null | number | Numerical part of size |
-| - `size_unit` | null | string | Text part of size |
-| - `size_text` | null | string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
+| - `size` | null \| number | Numerical part of size |
+| - `size_unit` | null \| string | Text part of size |
+| - `size_text` | null \| string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
 | - `due_date_time_present` | boolean | Flag indicating that deadline is specified up to hours and minutes |
 | - `board_id` | integer | Board id |
 | - `column_id` | integer | Column id |
@@ -2712,34 +2934,90 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `type_id` | integer | Card type id |
 | - `version` | integer | Card version |
 | - `updater_id` | integer | User id who last updated card |
-| - `completed_on_time` | null | boolean | Flag indicating that card completed on time when due date present |
-| - `completed_at` | null | string | Date when card moved to done type column |
-| - `last_moved_at` | null | string | Date when card last moved |
-| - `lane_changed_at` | null | string | Date when card changed lane |
-| - `column_changed_at` | null | string | Date when card changed column |
-| - `first_moved_to_in_progress_at` | null | string | Date when card first moved to inProgress type column |
-| - `last_moved_to_done_at` | null | string | Date when card last moved to done type column |
+| - `completed_on_time` | null \| boolean | Flag indicating that card completed on time when due date present |
+| - `completed_at` | null \| string | Date when card moved to done type column |
+| - `last_moved_at` | null \| string | Date when card last moved |
+| - `lane_changed_at` | null \| string | Date when card changed lane |
+| - `column_changed_at` | null \| string | Date when card changed column |
+| - `first_moved_to_in_progress_at` | null \| string | Date when card first moved to inProgress type column |
+| - `last_moved_to_done_at` | null \| string | Date when card last moved to done type column |
 | - `sprint_id` | integer | Sprint id |
-| - `external_id` | null | string | External id |
+| - `external_id` | null \| string | External id |
 | - `service_id` | integer | Service id |
 | - `comments_total` | integer | Total card comments |
-| - `comment_last_added_at` | null | string | Date when last comment added |
-| - `properties` | null | object | Card custom properties. Format: id_{propertyId}:value |
-| - `planned_start` | null | string | Card timeline planned start |
-| - `planned_end` | null | string | Card timeline planned end |
+| - `comment_last_added_at` | null \| string | Date when last comment added |
+| - `properties` | null \| object | Card custom properties. Format: id_{propertyId}:value |
+| - `planned_start` | null \| string | Card timeline planned start |
+| - `planned_end` | null \| string | Card timeline planned end |
 | - `counters_recalculated_at` | string | Date of recalculating counters |
 | - `sd_new_comment` | boolean | Has unseen service desk request author comments |
 | - `public` | boolean | Is card public |
-| - `share_settings` | null | object | Public share settings |
-| - `share_id` | null | string | Public share id |
-| - `external_user_emails` | null | string | External users emails |
+| - `share_settings` | null \| object | Public share settings |
+| - `share_id` | null \| string | Public share id |
+| - `external_user_emails` | null \| string | External users emails |
 | - `description_filled` | boolean | Flag indicating that card has description |
 | - `estimate_workload` | number | Estimate_workload |
 | - `owner` | object | Card owner info |
+| - - `id` | integer | User id |
+| - - `uid` | string | User uid |
+| - - `full_name` | string | User full name |
+| - - `email` | string | User email |
+| - - `username` | string | Username |
+| - - `avatar_initials_url` | string | Default user avatar |
+| - - `avatar_uploaded_url` | null \| string | Uploaded avatar url |
+| - - `initials` | string | User initials |
+| - - `avatar_type` | enum | 1 - gravatar, 2 - initials, 3 - uploaded |
+| - - `lng` | string | Language |
+| - - `timezone` | string | Time zone |
+| - - `theme` | enum | light, dark, auto |
+| - - `created` | string | Create date |
+| - - `updated` | string | Last update timestamp |
+| - - `activated` | boolean | User activated flag |
+| - - `ui_version` | enum | 1 - old ui, 2 - new ui |
+| - - `virtual` | boolean | Is user virtual |
+| - - `email_blocked` | null \| string | Email blocked status |
+| - - `email_blocked_reason` | null \| string | Email blocked reason |
+| - - `delete_requested_at` | null \| string | Delete request date |
 | - `type` | object | Card type info |
+| - - `id` | integer | Card type id |
+| - - `uid` | string | Card type uid |
+| - - `name` | string | Card type name |
+| - - `color` | integer | Color number |
+| - - `letter` | string | Card type letter |
+| - - `company_id` | null \| integer | Company id |
+| - - `archived` | boolean | Archived flag |
+| - - `properties` | null \| object | Card type properties |
+| - - `suggest_fields` | boolean | Suggest fields flag |
+| - - `author_uid` | null \| string | Author uid |
+| - - `description_template` | null \| string | Description template |
 | - `board` | object | Board info |
+| - - `id` | integer | Board id |
+| - - `uid` | string | Board uid |
+| - - `title` | string | Board title |
+| - - `external_id` | null \| string | External id |
+| - - `card_properties` | null \| array | Board card properties |
+| - - `settings` | null \| object | Board settings |
 | - `column` | object | Column info |
+| - - `id` | integer | Column id |
+| - - `uid` | string | Column uid |
+| - - `title` | string | Column title |
+| - - `sort_order` | number | Position |
+| - - `col_count` | integer | Width |
+| - - `type` | enum | 1 - queue, 2 - in progress, 3 - done |
+| - - `board_id` | integer | Board id |
+| - - `column_id` | null \| integer | Parent column id |
+| - - `external_id` | null \| string | External id |
+| - - `rules` | integer | Column rules bitmask |
+| - - `pause_sla` | boolean | Pause SLA timer in this column |
 | - `lane` | object | Lane info |
+| - - `id` | integer | Lane id |
+| - - `uid` | string | Lane uid |
+| - - `title` | string | Lane title |
+| - - `sort_order` | number | Position |
+| - - `board_id` | integer | Board id |
+| - - `condition` | enum | 1 - live, 2 - archived, 3 - deleted |
+| - - `external_id` | null \| string | External id |
+| - - `default_card_type_id` | null \| integer | Default card type id |
 | - `card_id` | integer | Parent card id |
 | - `depends_on_card_id` | integer | Children card id |
 | `parents` | array | Card parents |
@@ -2748,9 +3026,9 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `archived` | boolean | Card archived flag |
 | - `id` | integer | Children card id |
 | - `title` | string | Card title |
-| - `description` | null | string | Card description |
+| - `description` | null \| string | Card description |
 | - `asap` | boolean | Card asap flag |
-| - `due_date` | null | string | Card deadline |
+| - `due_date` | null \| string | Card deadline |
 | - `fifo_order` | integer | Number of card in the cell when fifo rule applied to cards column |
 | - `state` | enum | 1-queued, 2-inProgresss, 3-done |
 | - `condition` | enum | 1 - live, 2 - archived |
@@ -2762,13 +3040,13 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `goals_done` | integer | Number of card done goals |
 | - `time_spent_sum` | integer | Amount of time spent(in minutes) |
 | - `time_blocked_sum` | integer | Amount of blocked time(in minutes) |
-| - `children_number_properties_sum` | null | object | Sum according to numerical data of child cards |
-| - `parent_checklist_ids` | null | array | Array of card parent checklist ids |
+| - `children_number_properties_sum` | null \| object | Sum according to numerical data of child cards |
+| - `parent_checklist_ids` | null \| array | Array of card parent checklist ids |
 | - `blocking_card` | boolean | Is card blocking another card |
 | - `blocked` | boolean | Is card blocked |
-| - `size` | null | number | Numerical part of size |
-| - `size_unit` | null | string | Text part of size |
-| - `size_text` | null | string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
+| - `size` | null \| number | Numerical part of size |
+| - `size_unit` | null \| string | Text part of size |
+| - `size_text` | null \| string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
 | - `due_date_time_present` | boolean | Flag indicating that deadline is specified up to hours and minutes |
 | - `board_id` | integer | Board id |
 | - `column_id` | integer | Column id |
@@ -2777,34 +3055,90 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `type_id` | integer | Card type id |
 | - `version` | integer | Card version |
 | - `updater_id` | integer | User id who last updated card |
-| - `completed_on_time` | null | boolean | Flag indicating that card completed on time when due date present |
-| - `completed_at` | null | string | Date when card moved to done type column |
-| - `last_moved_at` | null | string | Date when card last moved |
-| - `lane_changed_at` | null | string | Date when card changed lane |
-| - `column_changed_at` | null | string | Date when card changed column |
-| - `first_moved_to_in_progress_at` | null | string | Date when card first moved to inProgress type column |
-| - `last_moved_to_done_at` | null | string | Date when card last moved to done type column |
+| - `completed_on_time` | null \| boolean | Flag indicating that card completed on time when due date present |
+| - `completed_at` | null \| string | Date when card moved to done type column |
+| - `last_moved_at` | null \| string | Date when card last moved |
+| - `lane_changed_at` | null \| string | Date when card changed lane |
+| - `column_changed_at` | null \| string | Date when card changed column |
+| - `first_moved_to_in_progress_at` | null \| string | Date when card first moved to inProgress type column |
+| - `last_moved_to_done_at` | null \| string | Date when card last moved to done type column |
 | - `sprint_id` | integer | Sprint id |
-| - `external_id` | null | string | External id |
+| - `external_id` | null \| string | External id |
 | - `service_id` | integer | Service id |
 | - `comments_total` | integer | Total card comments |
-| - `comment_last_added_at` | null | string | Date when last comment added |
-| - `properties` | null | object | Card custom properties. Format: id_{propertyId}:value |
-| - `planned_start` | null | string | Card timeline planned start |
-| - `planned_end` | null | string | Card timeline planned end |
+| - `comment_last_added_at` | null \| string | Date when last comment added |
+| - `properties` | null \| object | Card custom properties. Format: id_{propertyId}:value |
+| - `planned_start` | null \| string | Card timeline planned start |
+| - `planned_end` | null \| string | Card timeline planned end |
 | - `counters_recalculated_at` | string | Date of recalculating counters |
 | - `sd_new_comment` | boolean | Has unseen service desk request author comments |
 | - `public` | boolean | Is card public |
-| - `share_settings` | null | object | Public share settings |
-| - `share_id` | null | string | Public share id |
-| - `external_user_emails` | null | string | External users emails |
+| - `share_settings` | null \| object | Public share settings |
+| - `share_id` | null \| string | Public share id |
+| - `external_user_emails` | null \| string | External users emails |
 | - `description_filled` | boolean | Flag indicating that card has description |
 | - `estimate_workload` | number | Estimate_workload |
 | - `owner` | object | Card owner info |
+| - - `id` | integer | User id |
+| - - `uid` | string | User uid |
+| - - `full_name` | string | User full name |
+| - - `email` | string | User email |
+| - - `username` | string | Username |
+| - - `avatar_initials_url` | string | Default user avatar |
+| - - `avatar_uploaded_url` | null \| string | Uploaded avatar url |
+| - - `initials` | string | User initials |
+| - - `avatar_type` | enum | 1 - gravatar, 2 - initials, 3 - uploaded |
+| - - `lng` | string | Language |
+| - - `timezone` | string | Time zone |
+| - - `theme` | enum | light, dark, auto |
+| - - `created` | string | Create date |
+| - - `updated` | string | Last update timestamp |
+| - - `activated` | boolean | User activated flag |
+| - - `ui_version` | enum | 1 - old ui, 2 - new ui |
+| - - `virtual` | boolean | Is user virtual |
+| - - `email_blocked` | null \| string | Email blocked status |
+| - - `email_blocked_reason` | null \| string | Email blocked reason |
+| - - `delete_requested_at` | null \| string | Delete request date |
 | - `type` | object | Card type info |
+| - - `id` | integer | Card type id |
+| - - `uid` | string | Card type uid |
+| - - `name` | string | Card type name |
+| - - `color` | integer | Color number |
+| - - `letter` | string | Card type letter |
+| - - `company_id` | null \| integer | Company id |
+| - - `archived` | boolean | Archived flag |
+| - - `properties` | null \| object | Card type properties |
+| - - `suggest_fields` | boolean | Suggest fields flag |
+| - - `author_uid` | null \| string | Author uid |
+| - - `description_template` | null \| string | Description template |
 | - `board` | object | Board info |
+| - - `id` | integer | Board id |
+| - - `uid` | string | Board uid |
+| - - `title` | string | Board title |
+| - - `external_id` | null \| string | External id |
+| - - `card_properties` | null \| array | Board card properties |
+| - - `settings` | null \| object | Board settings |
 | - `column` | object | Column info |
+| - - `id` | integer | Column id |
+| - - `uid` | string | Column uid |
+| - - `title` | string | Column title |
+| - - `sort_order` | number | Position |
+| - - `col_count` | integer | Width |
+| - - `type` | enum | 1 - queue, 2 - in progress, 3 - done |
+| - - `board_id` | integer | Board id |
+| - - `column_id` | null \| integer | Parent column id |
+| - - `external_id` | null \| string | External id |
+| - - `rules` | integer | Column rules bitmask |
+| - - `pause_sla` | boolean | Pause SLA timer in this column |
 | - `lane` | object | Lane info |
+| - - `id` | integer | Lane id |
+| - - `uid` | string | Lane uid |
+| - - `title` | string | Lane title |
+| - - `sort_order` | number | Position |
+| - - `board_id` | integer | Board id |
+| - - `condition` | enum | 1 - live, 2 - archived, 3 - deleted |
+| - - `external_id` | null \| string | External id |
+| - - `default_card_type_id` | null \| integer | Default card type id |
 | - `card_id` | integer | Parent card id |
 | - `depends_on_card_id` | integer | Children card id |
 | `external_links` | array | Card external links |
@@ -2833,6 +3167,26 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `type` | enum | 1 - attachment, 2 - googleDrive, 3 - dropBox, 4 - box, 5 -oneDrive, 6 - yandex disc, 7 - comment email, 8 - commentAttachment |
 | - `url` | string | Uploaded url |
 | - `author` | object | Author info |
+| - - `id` | integer | User id |
+| - - `uid` | string | User uid |
+| - - `full_name` | string | User full name |
+| - - `email` | string | User email |
+| - - `username` | string | Username |
+| - - `avatar_initials_url` | string | Default user avatar |
+| - - `avatar_uploaded_url` | null \| string | Uploaded avatar url |
+| - - `initials` | string | User initials |
+| - - `avatar_type` | enum | 1 - gravatar, 2 - initials, 3 - uploaded |
+| - - `lng` | string | Language |
+| - - `timezone` | string | Time zone |
+| - - `theme` | enum | light, dark, auto |
+| - - `created` | string | Create date |
+| - - `updated` | string | Last update timestamp |
+| - - `activated` | boolean | User activated flag |
+| - - `ui_version` | enum | 1 - old ui, 2 - new ui |
+| - - `virtual` | boolean | Is user virtual |
+| - - `email_blocked` | null \| string | Email blocked status |
+| - - `email_blocked_reason` | null \| string | Email blocked reason |
+| - - `delete_requested_at` | null \| string | Delete request date |
 | `tags` | array | Card tags |
 | - `updated` | string | Last update timestamp |
 | - `created` | string | Create date |
@@ -2843,8 +3197,7 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `color` | integer | Card tag color number |
 | `cardRole` | integer | User card role who made the request. 1-reader, 2-writer, 3-admin |
 | `email` | string | Card email for email comment |
-| `source` | enum | null | app, api, email, telegram, slack,
- webhook, import, schedule, automation |
+| `source` | enum | null \| app, api, email, telegram, slack, webhook, import, schedule, automation |
 
 - **401** (error) - Invalid token
 - **403** (error) - Forbidden
@@ -2874,9 +3227,9 @@ Get Card list filtered by query parameters. The result of the request is display
 | `archived` | boolean | Card archived flag |
 | `id` | integer | Card id |
 | `title` | string | Card title |
-| `description` | null | string | Card description |
+| `description` | null \| string | Card description |
 | `asap` | boolean | Card asap flag |
-| `due_date` | null | string | Card deadline |
+| `due_date` | null \| string | Card deadline |
 | `sort_order` | number | Position |
 | `fifo_order` | integer | Number of card in the cell when fifo rule applied to cards column |
 | `state` | enum | 1-queued, 2-inProgresss, 3-done |
@@ -2890,19 +3243,19 @@ Get Card list filtered by query parameters. The result of the request is display
 | `goals_done` | integer | Number of card done goals |
 | `time_spent_sum` | integer | Amount of time spent(in minutes) |
 | `time_blocked_sum` | integer | Amount of blocked time(in minutes) |
-| `children_number_properties_sum` | null | object | Sum according to numerical data of child cards |
+| `children_number_properties_sum` | null \| object | Sum according to numerical data of child cards |
 | - `size` | number | Children cards size sum |
 | - `time_spent_sum` | integer | Children cards spent time sum |
-| `calculated_planned_start` | null | string | Calculated planned start |
-| `calculated_planned_end` | null | string | Calculated planned end |
-| `parent_checklist_ids` | null | array | Array of card parent checklist ids |
-| `parents_ids` | null | array | Array of card parent ids |
-| `children_ids` | null | array | Array of card children ids |
+| `calculated_planned_start` | null \| string | Calculated planned start |
+| `calculated_planned_end` | null \| string | Calculated planned end |
+| `parent_checklist_ids` | null \| array | Array of card parent checklist ids |
+| `parents_ids` | null \| array | Array of card parent ids |
+| `children_ids` | null \| array | Array of card children ids |
 | `blocking_card` | boolean | Is card blocking another card |
 | `blocked` | boolean | Is card blocked |
-| `size` | null | number | Numerical part of size |
-| `size_unit` | null | string | Text part of size |
-| `size_text` | null | string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
+| `size` | null \| number | Numerical part of size |
+| `size_unit` | null \| string | Text part of size |
+| `size_text` | null \| string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
 | `due_date_time_present` | boolean | Flag indicating that deadline is specified up to hours and minutes |
 | `board_id` | integer | Board id |
 | `column_id` | integer | Column id |
@@ -2911,31 +3264,31 @@ Get Card list filtered by query parameters. The result of the request is display
 | `type_id` | integer | Card type id |
 | `version` | integer | Card version |
 | `updater_id` | integer | User id who last updated card |
-| `completed_on_time` | null | boolean | Flag indicating that card completed on time when due date present |
-| `completed_at` | null | string | Date when card moved to done type column |
-| `last_moved_at` | null | string | Date when card last moved |
-| `lane_changed_at` | null | string | Date when card changed lane |
-| `column_changed_at` | null | string | Date when card changed column |
-| `first_moved_to_in_progress_at` | null | string | Date when card first moved to inProgress type column |
-| `last_moved_to_done_at` | null | string | Date when card last moved to done type column |
+| `completed_on_time` | null \| boolean | Flag indicating that card completed on time when due date present |
+| `completed_at` | null \| string | Date when card moved to done type column |
+| `last_moved_at` | null \| string | Date when card last moved |
+| `lane_changed_at` | null \| string | Date when card changed lane |
+| `column_changed_at` | null \| string | Date when card changed column |
+| `first_moved_to_in_progress_at` | null \| string | Date when card first moved to inProgress type column |
+| `last_moved_to_done_at` | null \| string | Date when card last moved to done type column |
 | `sprint_id` | integer | Sprint id |
-| `external_id` | null | string | External id |
+| `external_id` | null \| string | External id |
 | `service_id` | integer | Service id |
 | `comments_total` | integer | Total card comments |
-| `comment_last_added_at` | null | string | Date when last comment added |
-| `properties` | null | object | Card custom properties. Format: id_{propertyId}:value |
-| - `id_{propertyId}` | string | number | null | object | Card custom property. Format id_{propertyId}:value |
-| `planned_start` | null | string | Card timeline planned start |
-| `planned_end` | null | string | Card timeline planned end |
+| `comment_last_added_at` | null \| string | Date when last comment added |
+| `properties` | null \| object | Card custom properties. Format: id_{propertyId}:value |
+| - `id_{propertyId}` | string \| number | null \| object | Card custom property. Format id_{propertyId}:value |
+| `planned_start` | null \| string | Card timeline planned start |
+| `planned_end` | null \| string | Card timeline planned end |
 | `counters_recalculated_at` | string | Date of recalculating counters |
 | `sd_new_comment` | boolean | Has unseen service desk request author comments |
-| `import_id` | null | integer | Import id |
+| `import_id` | null \| integer | Import id |
 | `public` | boolean | Is card public |
-| `share_settings` | null | object | Public share settings |
+| `share_settings` | null \| object | Public share settings |
 | - `fields` | object | List of shared card fields. Format fieldName: value |
-| - `share_due_date` | string | null | Share due date timestamp |
-| `share_id` | null | string | Public share id |
-| `external_user_emails` | null | string | External users emails |
+| - `share_due_date` | string \| null | Share due date timestamp |
+| `share_id` | null \| string | Public share id |
+| `external_user_emails` | null \| string | External users emails |
 | `description_filled` | boolean | Flag indicating that card has description |
 | `estimate_workload` | number | Estimate_workload |
 | `owner` | object | Card owner info |
@@ -2947,7 +3300,7 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `email` | string | User email |
 | - `activated` | boolean | User activated flag |
 | - `avatar_initials_url` | string | Default user avatar url |
-| - `avatar_uploaded_url` | string | null | User uploaded avatar url |
+| - `avatar_uploaded_url` | string \| null | User uploaded avatar url |
 | - `initials` | string | User initials |
 | - `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | - `lng` | string | Language |
@@ -2964,7 +3317,7 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `email` | string | User email |
 | - `activated` | boolean | User activated flag |
 | - `avatar_initials_url` | string | Default user avatar url |
-| - `avatar_uploaded_url` | string | null | User uploaded avatar url |
+| - `avatar_uploaded_url` | string \| null | User uploaded avatar url |
 | - `initials` | string | User initials |
 | - `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | - `lng` | string | Language |
@@ -2981,8 +3334,7 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `name` | string | Card tag name |
 | - `company_id` | integer | Company id |
 | - `color` | integer | Card tag color number |
-| `source` | enum | null | app, api, email, telegram, slack,
- webhook, import, schedule, automation |
+| `source` | enum | null \| app, api, email, telegram, slack, webhook, import, schedule, automation |
 
 - **400** (error) - validation Error
 
@@ -3067,9 +3419,9 @@ Update multiple cards by criteria. Runs in the background and returns a job ID.
 | `archived` | boolean | Card archived flag |
 | `id` | integer | Card id |
 | `title` | string | Card title |
-| `description` | null | string | Card description |
+| `description` | null \| string | Card description |
 | `asap` | boolean | Card asap flag |
-| `due_date` | null | string | Card deadline |
+| `due_date` | null \| string | Card deadline |
 | `sort_order` | number | Position |
 | `fifo_order` | integer | Number of card in the cell when fifo rule applied to cards column |
 | `state` | enum | 1-queued, 2-inProgresss, 3-done |
@@ -3083,19 +3435,19 @@ Update multiple cards by criteria. Runs in the background and returns a job ID.
 | `goals_done` | integer | Number of card done goals |
 | `time_spent_sum` | integer | Amount of time spent(in minutes) |
 | `time_blocked_sum` | integer | Amount of blocked time(in minutes) |
-| `children_number_properties_sum` | null | object | Sum according to numerical data of child cards |
+| `children_number_properties_sum` | null \| object | Sum according to numerical data of child cards |
 | - `size` | number | Children cards size sum |
 | - `time_spent_sum` | integer | Children cards spent time sum |
-| `calculated_planned_start` | null | string | Calculated planned start |
-| `calculated_planned_end` | null | string | Calculated planned end |
-| `parent_checklist_ids` | null | array | Array of card parent checklist ids |
-| `parents_ids` | null | array | Array of card parent ids |
-| `children_ids` | null | array | Array of card children ids |
+| `calculated_planned_start` | null \| string | Calculated planned start |
+| `calculated_planned_end` | null \| string | Calculated planned end |
+| `parent_checklist_ids` | null \| array | Array of card parent checklist ids |
+| `parents_ids` | null \| array | Array of card parent ids |
+| `children_ids` | null \| array | Array of card children ids |
 | `blocking_card` | boolean | Is card blocking another card |
 | `blocked` | boolean | Is card blocked |
-| `size` | null | number | Numerical part of size |
-| `size_unit` | null | string | Text part of size |
-| `size_text` | null | string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
+| `size` | null \| number | Numerical part of size |
+| `size_unit` | null \| string | Text part of size |
+| `size_text` | null \| string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
 | `due_date_time_present` | boolean | Flag indicating that deadline is specified up to hours and minutes |
 | `board_id` | integer | Board id |
 | `column_id` | integer | Column id |
@@ -3104,31 +3456,31 @@ Update multiple cards by criteria. Runs in the background and returns a job ID.
 | `type_id` | integer | Card type id |
 | `version` | integer | Card version |
 | `updater_id` | integer | User id who last updated card |
-| `completed_on_time` | null | boolean | Flag indicating that card completed on time when due date present |
-| `completed_at` | null | string | Date when card moved to done type column |
-| `last_moved_at` | null | string | Date when card last moved |
-| `lane_changed_at` | null | string | Date when card changed lane |
-| `column_changed_at` | null | string | Date when card changed column |
-| `first_moved_to_in_progress_at` | null | string | Date when card first moved to inProgress type column |
-| `last_moved_to_done_at` | null | string | Date when card last moved to done type column |
+| `completed_on_time` | null \| boolean | Flag indicating that card completed on time when due date present |
+| `completed_at` | null \| string | Date when card moved to done type column |
+| `last_moved_at` | null \| string | Date when card last moved |
+| `lane_changed_at` | null \| string | Date when card changed lane |
+| `column_changed_at` | null \| string | Date when card changed column |
+| `first_moved_to_in_progress_at` | null \| string | Date when card first moved to inProgress type column |
+| `last_moved_to_done_at` | null \| string | Date when card last moved to done type column |
 | `sprint_id` | integer | Sprint id |
-| `external_id` | null | string | External id |
+| `external_id` | null \| string | External id |
 | `service_id` | integer | Service id |
 | `comments_total` | integer | Total card comments |
-| `comment_last_added_at` | null | string | Date when last comment added |
-| `properties` | null | object | Card custom properties. Format: id_{propertyId}:value |
-| - `id_{propertyId}` | string | integer | null | object | Card custom property. Format id_{propertyId}:value |
-| `planned_start` | null | string | Card timeline planned start |
-| `planned_end` | null | string | Card timeline planned end |
+| `comment_last_added_at` | null \| string | Date when last comment added |
+| `properties` | null \| object | Card custom properties. Format: id_{propertyId}:value |
+| - `id_{propertyId}` | string \| integer | null \| object | Card custom property. Format id_{propertyId}:value |
+| `planned_start` | null \| string | Card timeline planned start |
+| `planned_end` | null \| string | Card timeline planned end |
 | `counters_recalculated_at` | string | Date of recalculating counters |
 | `sd_new_comment` | boolean | Has unseen service desk request author comments |
-| `import_id` | null | integer | Import id |
+| `import_id` | null \| integer | Import id |
 | `public` | boolean | Is card public |
-| `share_settings` | null | object | Public share settings |
+| `share_settings` | null \| object | Public share settings |
 | - `fields` | object | List of shared card fields. Format fieldName: value |
-| - `share_due_date` | string | null | Share due date timestamp |
-| `share_id` | null | string | Public share id |
-| `external_user_emails` | null | string | External users emails |
+| - `share_due_date` | string \| null | Share due date timestamp |
+| `share_id` | null \| string | Public share id |
+| `external_user_emails` | null \| string | External users emails |
 | `description_filled` | boolean | Flag indicating that card has description |
 | `estimate_workload` | number | Estimate_workload |
 | `owner` | object | Card owner info |
@@ -3140,7 +3492,7 @@ Update multiple cards by criteria. Runs in the background and returns a job ID.
 | - `email` | string | User email |
 | - `activated` | boolean | User activated flag |
 | - `avatar_initials_url` | string | Default user avatar url |
-| - `avatar_uploaded_url` | string | null | User uploaded avatar url |
+| - `avatar_uploaded_url` | string \| null | User uploaded avatar url |
 | - `initials` | string | User initials |
 | - `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | - `lng` | string | Language |
@@ -3157,7 +3509,7 @@ Update multiple cards by criteria. Runs in the background and returns a job ID.
 | - `email` | string | User email |
 | - `activated` | boolean | User activated flag |
 | - `avatar_initials_url` | string | Default user avatar url |
-| - `avatar_uploaded_url` | string | null | User uploaded avatar url |
+| - `avatar_uploaded_url` | string \| null | User uploaded avatar url |
 | - `initials` | string | User initials |
 | - `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | - `lng` | string | Language |
@@ -3166,8 +3518,7 @@ Update multiple cards by criteria. Runs in the background and returns a job ID.
 | - `ui_version` | enum | 1 - old ui. 2 - new ui |
 | - `apps_permissions` | string | 0 - no access, 1 - full access (service desk denied), 2 - guest access (service desk denied), 4 - service desk only, 5 - full access + service desk, 6 - guest access + service desk |
 | - `type` | integer | 1 - member, 2- responsible |
-| `source` | enum | null | app, api, email, telegram, slack,
- webhook, import, schedule, automation |
+| `source` | enum | null \| app, api, email, telegram, slack, webhook, import, schedule, automation |
 
 - **400** (error) - validation Error
 
@@ -3207,9 +3558,9 @@ Get card location history
 | `card_id` | integer | Card id |
 | `board_id` | integer | Id of board card was moved to |
 | `column_id` | integer | Id of column the card was moved to |
-| `subcolumn_id` | integer | null | Id of subcolumn the card was moved to |
+| `subcolumn_id` | integer \| null | Id of subcolumn the card was moved to |
 | `lane_id` | integer | Id of lane the card was moved to |
-| `sprint_id` | integer | null | Sprint id |
+| `sprint_id` | integer \| null | Sprint id |
 | `author_id` | integer | Id of used that performed the movement/state changing action with card |
 | `author` | object | User who has moved the card, author of the action |
 | - `id` | integer | User id |
@@ -3218,7 +3569,7 @@ Get card location history
 | - `email` | string | User email |
 | - `username` | string | Username for mentions and login |
 | - `avatar_initials_url` | string | Default user avatar |
-| - `avatar_uploaded_url` | null | string | User uploaded avatar url |
+| - `avatar_uploaded_url` | null \| string | User uploaded avatar url |
 | - `initials` | string | User initials |
 | - `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | - `lng` | string | Language |
@@ -3229,8 +3580,8 @@ Get card location history
 | - `activated` | boolean | User activated flag |
 | - `ui_version` | enum | 1 - old ui. 2 - new ui |
 | - `virtual` | boolean | Whether the user is virtual |
-| - `email_blocked` | string | null | If blocked, email block timestamp |
-| - `email_blocked_reason` | null | string | Reason of blocking |
+| - `email_blocked` | string \| null | If blocked, email block timestamp |
+| - `email_blocked_reason` | null \| string | Reason of blocking |
 | `condition` | integer | Condition of the movement event (1 - Active, 2 - Archived, 3 - Deleted) |
 | `changed` | string | Movement or state modification event timestamp |
 
@@ -3308,7 +3659,7 @@ Get all unarchived baselines of unarchived projects for this card
 | `blocker_card_title` | null || string | Title of blocking card |
 | `released` | boolean | Is block released |
 | `released_by_id` | integer | Id of user who released block |
-| `due_date` | null | string | Block deadline |
+| `due_date` | null \| string | Block deadline |
 | `due_date_time_present` | boolean | Flag indicating that deadline is specified up to hours and minutes |
 | `blocked_card` | object | Blocked card info |
 | - `updated` | string | Last update timestamp |
@@ -3317,7 +3668,7 @@ Get all unarchived baselines of unarchived projects for this card
 | - `id` | integer | Card id |
 | - `title` | string | Card title |
 | - `asap` | boolean | Card asap flag |
-| - `due_date` | null | string | Card deadline |
+| - `due_date` | null \| string | Card deadline |
 | - `sort_order` | number | Position |
 | - `fifo_order` | integer | Number of card in the cell when fifo rule applied to cards column |
 | - `state` | enum | 1-queued, 2-inProgresss, 3-done |
@@ -3331,14 +3682,14 @@ Get all unarchived baselines of unarchived projects for this card
 | - `goals_done` | integer | Number of card done goals |
 | - `time_spent_sum` | integer | Amount of time spent(in minutes) |
 | - `time_blocked_sum` | integer | Amount of blocked time(in minutes) |
-| - `children_number_properties_sum` | null | object | Sum according to numerical data of child cards |
-| - `calculated_planned_start` | null | string | Calculated planned start |
-| - `calculated_planned_end` | null | string | Calculated planned end |
+| - `children_number_properties_sum` | null \| object | Sum according to numerical data of child cards |
+| - `calculated_planned_start` | null \| string | Calculated planned start |
+| - `calculated_planned_end` | null \| string | Calculated planned end |
 | - `blocking_card` | boolean | Is card blocking another card |
 | - `blocked` | boolean | Is card blocked |
-| - `size` | null | number | Numerical part of size |
-| - `size_unit` | null | string | Text part of size |
-| - `size_text` | null | string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
+| - `size` | null \| number | Numerical part of size |
+| - `size_unit` | null \| string | Text part of size |
+| - `size_text` | null \| string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
 | - `due_date_time_present` | boolean | Flag indicating that deadline is specified up to hours and minutes |
 | - `board_id` | integer | Board id |
 | - `column_id` | integer | Column id |
@@ -3347,32 +3698,62 @@ Get all unarchived baselines of unarchived projects for this card
 | - `type_id` | integer | Card type id |
 | - `version` | integer | Card version |
 | - `updater_id` | integer | User id who last updated card |
-| - `completed_on_time` | null | boolean | Flag indicating that card completed on time when due date present |
-| - `completed_at` | null | string | Date when card moved to done type column |
-| - `last_moved_at` | null | string | Date when card last moved |
-| - `lane_changed_at` | null | string | Date when card changed lane |
-| - `column_changed_at` | null | string | Date when card changed column |
-| - `first_moved_to_in_progress_at` | null | string | Date when card first moved to inProgress type column |
-| - `last_moved_to_done_at` | null | string | Date when card last moved to done type column |
+| - `completed_on_time` | null \| boolean | Flag indicating that card completed on time when due date present |
+| - `completed_at` | null \| string | Date when card moved to done type column |
+| - `last_moved_at` | null \| string | Date when card last moved |
+| - `lane_changed_at` | null \| string | Date when card changed lane |
+| - `column_changed_at` | null \| string | Date when card changed column |
+| - `first_moved_to_in_progress_at` | null \| string | Date when card first moved to inProgress type column |
+| - `last_moved_to_done_at` | null \| string | Date when card last moved to done type column |
 | - `sprint_id` | integer | Sprint id |
-| - `external_id` | null | string | External id |
+| - `external_id` | null \| string | External id |
 | - `comments_total` | integer | Total card comments |
-| - `comment_last_added_at` | null | string | Date when last comment added |
-| - `properties` | null | object | Card custom properties. Format: id_{propertyId}:value |
-| - `planned_start` | null | string | Card timeline planned start |
-| - `planned_end` | null | string | Card timeline planned end |
+| - `comment_last_added_at` | null \| string | Date when last comment added |
+| - `properties` | null \| object | Card custom properties. Format: id_{propertyId}:value |
+| - `planned_start` | null \| string | Card timeline planned start |
+| - `planned_end` | null \| string | Card timeline planned end |
 | - `service_id` | integer | Service id |
 | - `sd_new_comment` | boolean | Has unseen service desk request author comments |
 | - `public` | boolean | Is card public |
-| - `share_settings` | null | object | Public share settings |
-| - `share_id` | null | string | Public share id |
-| - `external_user_emails` | null | string | External users emails |
+| - `share_settings` | null \| object | Public share settings |
+| - `share_id` | null \| string | Public share id |
+| - `external_user_emails` | null \| string | External users emails |
 | - `description_filled` | boolean | Flag indicating that card has description |
 | - `estimate_workload` | number | Estimate_workload |
 | - `owner` | object | Card owner info |
+| - - `id` | integer | User id |
+| - - `uid` | string | User uid |
+| - - `full_name` | string | User full name |
+| - - `email` | string | User email |
+| - - `username` | string | Username |
+| - - `avatar_initials_url` | string | Default user avatar |
+| - - `avatar_uploaded_url` | null \| string | Uploaded avatar url |
+| - - `initials` | string | User initials |
+| - - `avatar_type` | enum | 1 - gravatar, 2 - initials, 3 - uploaded |
+| - - `lng` | string | Language |
+| - - `timezone` | string | Time zone |
+| - - `theme` | enum | light, dark, auto |
+| - - `created` | string | Create date |
+| - - `updated` | string | Last update timestamp |
+| - - `activated` | boolean | User activated flag |
+| - - `ui_version` | enum | 1 - old ui, 2 - new ui |
+| - - `virtual` | boolean | Is user virtual |
+| - - `email_blocked` | null \| string | Email blocked status |
+| - - `email_blocked_reason` | null \| string | Email blocked reason |
+| - - `delete_requested_at` | null \| string | Delete request date |
 | - `type` | object | Card type info |
-| - `source` | enum | null | app, api, email, telegram, slack,
- webhook, import, schedule, automation |
+| - - `id` | integer | Card type id |
+| - - `uid` | string | Card type uid |
+| - - `name` | string | Card type name |
+| - - `color` | integer | Color number |
+| - - `letter` | string | Card type letter |
+| - - `company_id` | null \| integer | Company id |
+| - - `archived` | boolean | Archived flag |
+| - - `properties` | null \| object | Card type properties |
+| - - `suggest_fields` | boolean | Suggest fields flag |
+| - - `author_uid` | null \| string | Author uid |
+| - - `description_template` | null \| string | Description template |
+| - `source` | enum | null \| app, api, email, telegram, slack, webhook, import, schedule, automation |
 | `blocker` | object | Info of user who blocked card |
 | - `created` | string | Create date |
 | - `updated` | string | Last update timestamp |
@@ -3382,7 +3763,7 @@ Get all unarchived baselines of unarchived projects for this card
 | - `email` | string | User email |
 | - `activated` | boolean | User activated flag |
 | - `avatar_initials_url` | string | Default user avatar url |
-| - `avatar_uploaded_url` | string | null | User uploaded avatar url |
+| - `avatar_uploaded_url` | string \| null | User uploaded avatar url |
 | - `initials` | string | User initials |
 | - `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | - `lng` | string | Language |
@@ -3397,7 +3778,7 @@ Get all unarchived baselines of unarchived projects for this card
 | - `id` | integer | Card id |
 | - `title` | string | Card title |
 | - `asap` | boolean | Card asap flag |
-| - `due_date` | null | string | Card deadline |
+| - `due_date` | null \| string | Card deadline |
 | - `sort_order` | number | Position |
 | - `fifo_order` | integer | Number of card in the cell when fifo rule applied to cards column |
 | - `state` | enum | 1-queued, 2-inProgresss, 3-done |
@@ -3411,14 +3792,14 @@ Get all unarchived baselines of unarchived projects for this card
 | - `goals_done` | integer | Number of card done goals |
 | - `time_spent_sum` | integer | Amount of time spent(in minutes) |
 | - `time_blocked_sum` | integer | Amount of blocked time(in minutes) |
-| - `children_number_properties_sum` | null | object | Sum according to numerical data of child cards |
-| - `calculated_planned_start` | null | string | Calculated planned start |
-| - `calculated_planned_end` | null | string | Calculated planned end |
+| - `children_number_properties_sum` | null \| object | Sum according to numerical data of child cards |
+| - `calculated_planned_start` | null \| string | Calculated planned start |
+| - `calculated_planned_end` | null \| string | Calculated planned end |
 | - `blocking_card` | boolean | Is card blocking another card |
 | - `blocked` | boolean | Is card blocked |
-| - `size` | null | number | Numerical part of size |
-| - `size_unit` | null | string | Text part of size |
-| - `size_text` | null | string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
+| - `size` | null \| number | Numerical part of size |
+| - `size_unit` | null \| string | Text part of size |
+| - `size_text` | null \| string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
 | - `due_date_time_present` | boolean | Flag indicating that deadline is specified up to hours and minutes |
 | - `board_id` | integer | Board id |
 | - `column_id` | integer | Column id |
@@ -3427,32 +3808,62 @@ Get all unarchived baselines of unarchived projects for this card
 | - `type_id` | integer | Card type id |
 | - `version` | integer | Card version |
 | - `updater_id` | integer | User id who last updated card |
-| - `completed_on_time` | null | boolean | Flag indicating that card completed on time when due date present |
-| - `completed_at` | null | string | Date when card moved to done type column |
-| - `last_moved_at` | null | string | Date when card last moved |
-| - `lane_changed_at` | null | string | Date when card changed lane |
-| - `column_changed_at` | null | string | Date when card changed column |
-| - `first_moved_to_in_progress_at` | null | string | Date when card first moved to inProgress type column |
-| - `last_moved_to_done_at` | null | string | Date when card last moved to done type column |
+| - `completed_on_time` | null \| boolean | Flag indicating that card completed on time when due date present |
+| - `completed_at` | null \| string | Date when card moved to done type column |
+| - `last_moved_at` | null \| string | Date when card last moved |
+| - `lane_changed_at` | null \| string | Date when card changed lane |
+| - `column_changed_at` | null \| string | Date when card changed column |
+| - `first_moved_to_in_progress_at` | null \| string | Date when card first moved to inProgress type column |
+| - `last_moved_to_done_at` | null \| string | Date when card last moved to done type column |
 | - `sprint_id` | integer | Sprint id |
-| - `external_id` | null | string | External id |
+| - `external_id` | null \| string | External id |
 | - `comments_total` | integer | Total card comments |
-| - `comment_last_added_at` | null | string | Date when last comment added |
-| - `properties` | null | object | Card custom properties. Format: id_{propertyId}:value |
-| - `planned_start` | null | string | Card timeline planned start |
-| - `planned_end` | null | string | Card timeline planned end |
+| - `comment_last_added_at` | null \| string | Date when last comment added |
+| - `properties` | null \| object | Card custom properties. Format: id_{propertyId}:value |
+| - `planned_start` | null \| string | Card timeline planned start |
+| - `planned_end` | null \| string | Card timeline planned end |
 | - `service_id` | integer | Service id |
 | - `sd_new_comment` | boolean | Has unseen service desk request author comments |
 | - `public` | boolean | Is card public |
-| - `share_settings` | null | object | Public share settings |
-| - `share_id` | null | string | Public share id |
-| - `external_user_emails` | null | string | External users emails |
+| - `share_settings` | null \| object | Public share settings |
+| - `share_id` | null \| string | Public share id |
+| - `external_user_emails` | null \| string | External users emails |
 | - `description_filled` | boolean | Flag indicating that card has description |
 | - `estimate_workload` | number | Estimate_workload |
 | - `owner` | object | Card owner info |
+| - - `id` | integer | User id |
+| - - `uid` | string | User uid |
+| - - `full_name` | string | User full name |
+| - - `email` | string | User email |
+| - - `username` | string | Username |
+| - - `avatar_initials_url` | string | Default user avatar |
+| - - `avatar_uploaded_url` | null \| string | Uploaded avatar url |
+| - - `initials` | string | User initials |
+| - - `avatar_type` | enum | 1 - gravatar, 2 - initials, 3 - uploaded |
+| - - `lng` | string | Language |
+| - - `timezone` | string | Time zone |
+| - - `theme` | enum | light, dark, auto |
+| - - `created` | string | Create date |
+| - - `updated` | string | Last update timestamp |
+| - - `activated` | boolean | User activated flag |
+| - - `ui_version` | enum | 1 - old ui, 2 - new ui |
+| - - `virtual` | boolean | Is user virtual |
+| - - `email_blocked` | null \| string | Email blocked status |
+| - - `email_blocked_reason` | null \| string | Email blocked reason |
+| - - `delete_requested_at` | null \| string | Delete request date |
 | - `type` | object | Card type info |
-| - `source` | enum | null | app, api, email, telegram, slack,
- webhook, import, schedule, automation |
+| - - `id` | integer | Card type id |
+| - - `uid` | string | Card type uid |
+| - - `name` | string | Card type name |
+| - - `color` | integer | Color number |
+| - - `letter` | string | Card type letter |
+| - - `company_id` | null \| integer | Company id |
+| - - `archived` | boolean | Archived flag |
+| - - `properties` | null \| object | Card type properties |
+| - - `suggest_fields` | boolean | Suggest fields flag |
+| - - `author_uid` | null \| string | Author uid |
+| - - `description_template` | null \| string | Description template |
+| - `source` | enum | null \| app, api, email, telegram, slack, webhook, import, schedule, automation |
 
 - **400** (error) - validation Error
 
@@ -3510,7 +3921,7 @@ Get all unarchived baselines of unarchived projects for this card
 | `blocker_card_title` | null || string | Title of blocking card |
 | `released` | boolean | Is block released |
 | `released_by_id` | integer | Id of user who released block |
-| `due_date` | null | string | Block deadline |
+| `due_date` | null \| string | Block deadline |
 | `due_date_time_present` | boolean | Flag indicating that deadline is specified up to hours and minutes |
 | `blocked_card` | object | Blocked card info |
 | - `updated` | string | Last update timestamp |
@@ -3519,7 +3930,7 @@ Get all unarchived baselines of unarchived projects for this card
 | - `id` | integer | Card id |
 | - `title` | string | Card title |
 | - `asap` | boolean | Card asap flag |
-| - `due_date` | null | string | Card deadline |
+| - `due_date` | null \| string | Card deadline |
 | - `sort_order` | number | Position |
 | - `fifo_order` | integer | Number of card in the cell when fifo rule applied to cards column |
 | - `state` | enum | 1-queued, 2-inProgresss, 3-done |
@@ -3533,14 +3944,14 @@ Get all unarchived baselines of unarchived projects for this card
 | - `goals_done` | integer | Number of card done goals |
 | - `time_spent_sum` | integer | Amount of time spent(in minutes) |
 | - `time_blocked_sum` | integer | Amount of blocked time(in minutes) |
-| - `children_number_properties_sum` | null | object | Sum according to numerical data of child cards |
-| - `calculated_planned_start` | null | string | Calculated planned start |
-| - `calculated_planned_end` | null | string | Calculated planned end |
+| - `children_number_properties_sum` | null \| object | Sum according to numerical data of child cards |
+| - `calculated_planned_start` | null \| string | Calculated planned start |
+| - `calculated_planned_end` | null \| string | Calculated planned end |
 | - `blocking_card` | boolean | Is card blocking another card |
 | - `blocked` | boolean | Is card blocked |
-| - `size` | null | number | Numerical part of size |
-| - `size_unit` | null | string | Text part of size |
-| - `size_text` | null | string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
+| - `size` | null \| number | Numerical part of size |
+| - `size_unit` | null \| string | Text part of size |
+| - `size_text` | null \| string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
 | - `due_date_time_present` | boolean | Flag indicating that deadline is specified up to hours and minutes |
 | - `board_id` | integer | Board id |
 | - `column_id` | integer | Column id |
@@ -3549,32 +3960,62 @@ Get all unarchived baselines of unarchived projects for this card
 | - `type_id` | integer | Card type id |
 | - `version` | integer | Card version |
 | - `updater_id` | integer | User id who last updated card |
-| - `completed_on_time` | null | boolean | Flag indicating that card completed on time when due date present |
-| - `completed_at` | null | string | Date when card moved to done type column |
-| - `last_moved_at` | null | string | Date when card last moved |
-| - `lane_changed_at` | null | string | Date when card changed lane |
-| - `column_changed_at` | null | string | Date when card changed column |
-| - `first_moved_to_in_progress_at` | null | string | Date when card first moved to inProgress type column |
-| - `last_moved_to_done_at` | null | string | Date when card last moved to done type column |
+| - `completed_on_time` | null \| boolean | Flag indicating that card completed on time when due date present |
+| - `completed_at` | null \| string | Date when card moved to done type column |
+| - `last_moved_at` | null \| string | Date when card last moved |
+| - `lane_changed_at` | null \| string | Date when card changed lane |
+| - `column_changed_at` | null \| string | Date when card changed column |
+| - `first_moved_to_in_progress_at` | null \| string | Date when card first moved to inProgress type column |
+| - `last_moved_to_done_at` | null \| string | Date when card last moved to done type column |
 | - `sprint_id` | integer | Sprint id |
-| - `external_id` | null | string | External id |
+| - `external_id` | null \| string | External id |
 | - `comments_total` | integer | Total card comments |
-| - `comment_last_added_at` | null | string | Date when last comment added |
-| - `properties` | null | object | Card custom properties. Format: id_{propertyId}:value |
-| - `planned_start` | null | string | Card timeline planned start |
-| - `planned_end` | null | string | Card timeline planned end |
+| - `comment_last_added_at` | null \| string | Date when last comment added |
+| - `properties` | null \| object | Card custom properties. Format: id_{propertyId}:value |
+| - `planned_start` | null \| string | Card timeline planned start |
+| - `planned_end` | null \| string | Card timeline planned end |
 | - `service_id` | integer | Service id |
 | - `sd_new_comment` | boolean | Has unseen service desk request author comments |
 | - `public` | boolean | Is card public |
-| - `share_settings` | null | object | Public share settings |
-| - `share_id` | null | string | Public share id |
-| - `external_user_emails` | null | string | External users emails |
+| - `share_settings` | null \| object | Public share settings |
+| - `share_id` | null \| string | Public share id |
+| - `external_user_emails` | null \| string | External users emails |
 | - `description_filled` | boolean | Flag indicating that card has description |
 | - `estimate_workload` | number | Estimate_workload |
 | - `owner` | object | Card owner info |
+| - - `id` | integer | User id |
+| - - `uid` | string | User uid |
+| - - `full_name` | string | User full name |
+| - - `email` | string | User email |
+| - - `username` | string | Username |
+| - - `avatar_initials_url` | string | Default user avatar |
+| - - `avatar_uploaded_url` | null \| string | Uploaded avatar url |
+| - - `initials` | string | User initials |
+| - - `avatar_type` | enum | 1 - gravatar, 2 - initials, 3 - uploaded |
+| - - `lng` | string | Language |
+| - - `timezone` | string | Time zone |
+| - - `theme` | enum | light, dark, auto |
+| - - `created` | string | Create date |
+| - - `updated` | string | Last update timestamp |
+| - - `activated` | boolean | User activated flag |
+| - - `ui_version` | enum | 1 - old ui, 2 - new ui |
+| - - `virtual` | boolean | Is user virtual |
+| - - `email_blocked` | null \| string | Email blocked status |
+| - - `email_blocked_reason` | null \| string | Email blocked reason |
+| - - `delete_requested_at` | null \| string | Delete request date |
 | - `type` | object | Card type info |
-| - `source` | enum | null | app, api, email, telegram, slack,
- webhook, import, schedule, automation |
+| - - `id` | integer | Card type id |
+| - - `uid` | string | Card type uid |
+| - - `name` | string | Card type name |
+| - - `color` | integer | Color number |
+| - - `letter` | string | Card type letter |
+| - - `company_id` | null \| integer | Company id |
+| - - `archived` | boolean | Archived flag |
+| - - `properties` | null \| object | Card type properties |
+| - - `suggest_fields` | boolean | Suggest fields flag |
+| - - `author_uid` | null \| string | Author uid |
+| - - `description_template` | null \| string | Description template |
+| - `source` | enum | null \| app, api, email, telegram, slack, webhook, import, schedule, automation |
 | `blocker` | object | Info of user who blocked card |
 | - `created` | string | Create date |
 | - `updated` | string | Last update timestamp |
@@ -3584,7 +4025,7 @@ Get all unarchived baselines of unarchived projects for this card
 | - `email` | string | User email |
 | - `activated` | boolean | User activated flag |
 | - `avatar_initials_url` | string | Default user avatar url |
-| - `avatar_uploaded_url` | string | null | User uploaded avatar url |
+| - `avatar_uploaded_url` | string \| null | User uploaded avatar url |
 | - `initials` | string | User initials |
 | - `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | - `lng` | string | Language |
@@ -3599,7 +4040,7 @@ Get all unarchived baselines of unarchived projects for this card
 | - `id` | integer | Card id |
 | - `title` | string | Card title |
 | - `asap` | boolean | Card asap flag |
-| - `due_date` | null | string | Card deadline |
+| - `due_date` | null \| string | Card deadline |
 | - `sort_order` | number | Position |
 | - `fifo_order` | integer | Number of card in the cell when fifo rule applied to cards column |
 | - `state` | enum | 1-queued, 2-inProgresss, 3-done |
@@ -3613,14 +4054,14 @@ Get all unarchived baselines of unarchived projects for this card
 | - `goals_done` | integer | Number of card done goals |
 | - `time_spent_sum` | integer | Amount of time spent(in minutes) |
 | - `time_blocked_sum` | integer | Amount of blocked time(in minutes) |
-| - `children_number_properties_sum` | null | object | Sum according to numerical data of child cards |
-| - `calculated_planned_start` | null | string | Calculated planned start |
-| - `calculated_planned_end` | null | string | Calculated planned end |
+| - `children_number_properties_sum` | null \| object | Sum according to numerical data of child cards |
+| - `calculated_planned_start` | null \| string | Calculated planned start |
+| - `calculated_planned_end` | null \| string | Calculated planned end |
 | - `blocking_card` | boolean | Is card blocking another card |
 | - `blocked` | boolean | Is card blocked |
-| - `size` | null | number | Numerical part of size |
-| - `size_unit` | null | string | Text part of size |
-| - `size_text` | null | string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
+| - `size` | null \| number | Numerical part of size |
+| - `size_unit` | null \| string | Text part of size |
+| - `size_text` | null \| string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
 | - `due_date_time_present` | boolean | Flag indicating that deadline is specified up to hours and minutes |
 | - `board_id` | integer | Board id |
 | - `column_id` | integer | Column id |
@@ -3629,32 +4070,62 @@ Get all unarchived baselines of unarchived projects for this card
 | - `type_id` | integer | Card type id |
 | - `version` | integer | Card version |
 | - `updater_id` | integer | User id who last updated card |
-| - `completed_on_time` | null | boolean | Flag indicating that card completed on time when due date present |
-| - `completed_at` | null | string | Date when card moved to done type column |
-| - `last_moved_at` | null | string | Date when card last moved |
-| - `lane_changed_at` | null | string | Date when card changed lane |
-| - `column_changed_at` | null | string | Date when card changed column |
-| - `first_moved_to_in_progress_at` | null | string | Date when card first moved to inProgress type column |
-| - `last_moved_to_done_at` | null | string | Date when card last moved to done type column |
+| - `completed_on_time` | null \| boolean | Flag indicating that card completed on time when due date present |
+| - `completed_at` | null \| string | Date when card moved to done type column |
+| - `last_moved_at` | null \| string | Date when card last moved |
+| - `lane_changed_at` | null \| string | Date when card changed lane |
+| - `column_changed_at` | null \| string | Date when card changed column |
+| - `first_moved_to_in_progress_at` | null \| string | Date when card first moved to inProgress type column |
+| - `last_moved_to_done_at` | null \| string | Date when card last moved to done type column |
 | - `sprint_id` | integer | Sprint id |
-| - `external_id` | null | string | External id |
+| - `external_id` | null \| string | External id |
 | - `comments_total` | integer | Total card comments |
-| - `comment_last_added_at` | null | string | Date when last comment added |
-| - `properties` | null | object | Card custom properties. Format: id_{propertyId}:value |
-| - `planned_start` | null | string | Card timeline planned start |
-| - `planned_end` | null | string | Card timeline planned end |
+| - `comment_last_added_at` | null \| string | Date when last comment added |
+| - `properties` | null \| object | Card custom properties. Format: id_{propertyId}:value |
+| - `planned_start` | null \| string | Card timeline planned start |
+| - `planned_end` | null \| string | Card timeline planned end |
 | - `service_id` | integer | Service id |
 | - `sd_new_comment` | boolean | Has unseen service desk request author comments |
 | - `public` | boolean | Is card public |
-| - `share_settings` | null | object | Public share settings |
-| - `share_id` | null | string | Public share id |
-| - `external_user_emails` | null | string | External users emails |
+| - `share_settings` | null \| object | Public share settings |
+| - `share_id` | null \| string | Public share id |
+| - `external_user_emails` | null \| string | External users emails |
 | - `description_filled` | boolean | Flag indicating that card has description |
 | - `estimate_workload` | number | Estimate_workload |
 | - `owner` | object | Card owner info |
+| - - `id` | integer | User id |
+| - - `uid` | string | User uid |
+| - - `full_name` | string | User full name |
+| - - `email` | string | User email |
+| - - `username` | string | Username |
+| - - `avatar_initials_url` | string | Default user avatar |
+| - - `avatar_uploaded_url` | null \| string | Uploaded avatar url |
+| - - `initials` | string | User initials |
+| - - `avatar_type` | enum | 1 - gravatar, 2 - initials, 3 - uploaded |
+| - - `lng` | string | Language |
+| - - `timezone` | string | Time zone |
+| - - `theme` | enum | light, dark, auto |
+| - - `created` | string | Create date |
+| - - `updated` | string | Last update timestamp |
+| - - `activated` | boolean | User activated flag |
+| - - `ui_version` | enum | 1 - old ui, 2 - new ui |
+| - - `virtual` | boolean | Is user virtual |
+| - - `email_blocked` | null \| string | Email blocked status |
+| - - `email_blocked_reason` | null \| string | Email blocked reason |
+| - - `delete_requested_at` | null \| string | Delete request date |
 | - `type` | object | Card type info |
-| - `source` | enum | null | app, api, email, telegram, slack,
- webhook, import, schedule, automation |
+| - - `id` | integer | Card type id |
+| - - `uid` | string | Card type uid |
+| - - `name` | string | Card type name |
+| - - `color` | integer | Color number |
+| - - `letter` | string | Card type letter |
+| - - `company_id` | null \| integer | Company id |
+| - - `archived` | boolean | Archived flag |
+| - - `properties` | null \| object | Card type properties |
+| - - `suggest_fields` | boolean | Suggest fields flag |
+| - - `author_uid` | null \| string | Author uid |
+| - - `description_template` | null \| string | Description template |
+| - `source` | enum | null \| app, api, email, telegram, slack, webhook, import, schedule, automation |
 
 - **401** (error) - Invalid token
 - **403** (error) - Forbidden
@@ -3691,7 +4162,7 @@ Get all unarchived baselines of unarchived projects for this card
 | `blocker_card_title` | null || string | Title of blocking card |
 | `released` | boolean | Is block released |
 | `released_by_id` | integer | Id of user who released block |
-| `due_date` | null | string | Block deadline |
+| `due_date` | null \| string | Block deadline |
 | `due_date_time_present` | boolean | Flag indicating that deadline is specified up to hours and minutes |
 
 - **400** (error) - validation Error
@@ -3745,7 +4216,7 @@ Get all unarchived baselines of unarchived projects for this card
 | `blocker_card_title` | null || string | Title of blocking card |
 | `released` | boolean | Is block released |
 | `released_by_id` | integer | Id of user who released block |
-| `due_date` | null | string | Block deadline |
+| `due_date` | null \| string | Block deadline |
 | `due_date_time_present` | boolean | Flag indicating that deadline is specified up to hours and minutes |
 | `blocked_card` | object | Blocked card info |
 | - `updated` | string | Last update timestamp |
@@ -3754,7 +4225,7 @@ Get all unarchived baselines of unarchived projects for this card
 | - `id` | integer | Card id |
 | - `title` | string | Card title |
 | - `asap` | boolean | Card asap flag |
-| - `due_date` | null | string | Card deadline |
+| - `due_date` | null \| string | Card deadline |
 | - `sort_order` | number | Position |
 | - `fifo_order` | integer | Number of card in the cell when fifo rule applied to cards column |
 | - `state` | enum | 1-queued, 2-inProgresss, 3-done |
@@ -3768,14 +4239,14 @@ Get all unarchived baselines of unarchived projects for this card
 | - `goals_done` | integer | Number of card done goals |
 | - `time_spent_sum` | integer | Amount of time spent(in minutes) |
 | - `time_blocked_sum` | integer | Amount of blocked time(in minutes) |
-| - `children_number_properties_sum` | null | object | Sum according to numerical data of child cards |
-| - `calculated_planned_start` | null | string | Calculated planned start |
-| - `calculated_planned_end` | null | string | Calculated planned end |
+| - `children_number_properties_sum` | null \| object | Sum according to numerical data of child cards |
+| - `calculated_planned_start` | null \| string | Calculated planned start |
+| - `calculated_planned_end` | null \| string | Calculated planned end |
 | - `blocking_card` | boolean | Is card blocking another card |
 | - `blocked` | boolean | Is card blocked |
-| - `size` | null | number | Numerical part of size |
-| - `size_unit` | null | string | Text part of size |
-| - `size_text` | null | string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
+| - `size` | null \| number | Numerical part of size |
+| - `size_unit` | null \| string | Text part of size |
+| - `size_text` | null \| string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
 | - `due_date_time_present` | boolean | Flag indicating that deadline is specified up to hours and minutes |
 | - `board_id` | integer | Board id |
 | - `column_id` | integer | Column id |
@@ -3784,32 +4255,62 @@ Get all unarchived baselines of unarchived projects for this card
 | - `type_id` | integer | Card type id |
 | - `version` | integer | Card version |
 | - `updater_id` | integer | User id who last updated card |
-| - `completed_on_time` | null | boolean | Flag indicating that card completed on time when due date present |
-| - `completed_at` | null | string | Date when card moved to done type column |
-| - `last_moved_at` | null | string | Date when card last moved |
-| - `lane_changed_at` | null | string | Date when card changed lane |
-| - `column_changed_at` | null | string | Date when card changed column |
-| - `first_moved_to_in_progress_at` | null | string | Date when card first moved to inProgress type column |
-| - `last_moved_to_done_at` | null | string | Date when card last moved to done type column |
+| - `completed_on_time` | null \| boolean | Flag indicating that card completed on time when due date present |
+| - `completed_at` | null \| string | Date when card moved to done type column |
+| - `last_moved_at` | null \| string | Date when card last moved |
+| - `lane_changed_at` | null \| string | Date when card changed lane |
+| - `column_changed_at` | null \| string | Date when card changed column |
+| - `first_moved_to_in_progress_at` | null \| string | Date when card first moved to inProgress type column |
+| - `last_moved_to_done_at` | null \| string | Date when card last moved to done type column |
 | - `sprint_id` | integer | Sprint id |
-| - `external_id` | null | string | External id |
+| - `external_id` | null \| string | External id |
 | - `comments_total` | integer | Total card comments |
-| - `comment_last_added_at` | null | string | Date when last comment added |
-| - `properties` | null | object | Card custom properties. Format: id_{propertyId}:value |
-| - `planned_start` | null | string | Card timeline planned start |
-| - `planned_end` | null | string | Card timeline planned end |
+| - `comment_last_added_at` | null \| string | Date when last comment added |
+| - `properties` | null \| object | Card custom properties. Format: id_{propertyId}:value |
+| - `planned_start` | null \| string | Card timeline planned start |
+| - `planned_end` | null \| string | Card timeline planned end |
 | - `service_id` | integer | Service id |
 | - `sd_new_comment` | boolean | Has unseen service desk request author comments |
 | - `public` | boolean | Is card public |
-| - `share_settings` | null | object | Public share settings |
-| - `share_id` | null | string | Public share id |
-| - `external_user_emails` | null | string | External users emails |
+| - `share_settings` | null \| object | Public share settings |
+| - `share_id` | null \| string | Public share id |
+| - `external_user_emails` | null \| string | External users emails |
 | - `description_filled` | boolean | Flag indicating that card has description |
 | - `estimate_workload` | number | Estimate_workload |
 | - `owner` | object | Card owner info |
+| - - `id` | integer | User id |
+| - - `uid` | string | User uid |
+| - - `full_name` | string | User full name |
+| - - `email` | string | User email |
+| - - `username` | string | Username |
+| - - `avatar_initials_url` | string | Default user avatar |
+| - - `avatar_uploaded_url` | null \| string | Uploaded avatar url |
+| - - `initials` | string | User initials |
+| - - `avatar_type` | enum | 1 - gravatar, 2 - initials, 3 - uploaded |
+| - - `lng` | string | Language |
+| - - `timezone` | string | Time zone |
+| - - `theme` | enum | light, dark, auto |
+| - - `created` | string | Create date |
+| - - `updated` | string | Last update timestamp |
+| - - `activated` | boolean | User activated flag |
+| - - `ui_version` | enum | 1 - old ui, 2 - new ui |
+| - - `virtual` | boolean | Is user virtual |
+| - - `email_blocked` | null \| string | Email blocked status |
+| - - `email_blocked_reason` | null \| string | Email blocked reason |
+| - - `delete_requested_at` | null \| string | Delete request date |
 | - `type` | object | Card type info |
-| - `source` | enum | null | app, api, email, telegram, slack,
- webhook, import, schedule, automation |
+| - - `id` | integer | Card type id |
+| - - `uid` | string | Card type uid |
+| - - `name` | string | Card type name |
+| - - `color` | integer | Color number |
+| - - `letter` | string | Card type letter |
+| - - `company_id` | null \| integer | Company id |
+| - - `archived` | boolean | Archived flag |
+| - - `properties` | null \| object | Card type properties |
+| - - `suggest_fields` | boolean | Suggest fields flag |
+| - - `author_uid` | null \| string | Author uid |
+| - - `description_template` | null \| string | Description template |
+| - `source` | enum | null \| app, api, email, telegram, slack, webhook, import, schedule, automation |
 | `blocker` | object | Info of user who blocked card |
 | - `created` | string | Create date |
 | - `updated` | string | Last update timestamp |
@@ -3819,7 +4320,7 @@ Get all unarchived baselines of unarchived projects for this card
 | - `email` | string | User email |
 | - `activated` | boolean | User activated flag |
 | - `avatar_initials_url` | string | Default user avatar url |
-| - `avatar_uploaded_url` | string | null | User uploaded avatar url |
+| - `avatar_uploaded_url` | string \| null | User uploaded avatar url |
 | - `initials` | string | User initials |
 | - `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | - `lng` | string | Language |
@@ -3834,7 +4335,7 @@ Get all unarchived baselines of unarchived projects for this card
 | - `id` | integer | Card id |
 | - `title` | string | Card title |
 | - `asap` | boolean | Card asap flag |
-| - `due_date` | null | string | Card deadline |
+| - `due_date` | null \| string | Card deadline |
 | - `sort_order` | number | Position |
 | - `fifo_order` | integer | Number of card in the cell when fifo rule applied to cards column |
 | - `state` | enum | 1-queued, 2-inProgresss, 3-done |
@@ -3848,14 +4349,14 @@ Get all unarchived baselines of unarchived projects for this card
 | - `goals_done` | integer | Number of card done goals |
 | - `time_spent_sum` | integer | Amount of time spent(in minutes) |
 | - `time_blocked_sum` | integer | Amount of blocked time(in minutes) |
-| - `children_number_properties_sum` | null | object | Sum according to numerical data of child cards |
-| - `calculated_planned_start` | null | string | Calculated planned start |
-| - `calculated_planned_end` | null | string | Calculated planned end |
+| - `children_number_properties_sum` | null \| object | Sum according to numerical data of child cards |
+| - `calculated_planned_start` | null \| string | Calculated planned start |
+| - `calculated_planned_end` | null \| string | Calculated planned end |
 | - `blocking_card` | boolean | Is card blocking another card |
 | - `blocked` | boolean | Is card blocked |
-| - `size` | null | number | Numerical part of size |
-| - `size_unit` | null | string | Text part of size |
-| - `size_text` | null | string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
+| - `size` | null \| number | Numerical part of size |
+| - `size_unit` | null \| string | Text part of size |
+| - `size_text` | null \| string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
 | - `due_date_time_present` | boolean | Flag indicating that deadline is specified up to hours and minutes |
 | - `board_id` | integer | Board id |
 | - `column_id` | integer | Column id |
@@ -3864,32 +4365,62 @@ Get all unarchived baselines of unarchived projects for this card
 | - `type_id` | integer | Card type id |
 | - `version` | integer | Card version |
 | - `updater_id` | integer | User id who last updated card |
-| - `completed_on_time` | null | boolean | Flag indicating that card completed on time when due date present |
-| - `completed_at` | null | string | Date when card moved to done type column |
-| - `last_moved_at` | null | string | Date when card last moved |
-| - `lane_changed_at` | null | string | Date when card changed lane |
-| - `column_changed_at` | null | string | Date when card changed column |
-| - `first_moved_to_in_progress_at` | null | string | Date when card first moved to inProgress type column |
-| - `last_moved_to_done_at` | null | string | Date when card last moved to done type column |
+| - `completed_on_time` | null \| boolean | Flag indicating that card completed on time when due date present |
+| - `completed_at` | null \| string | Date when card moved to done type column |
+| - `last_moved_at` | null \| string | Date when card last moved |
+| - `lane_changed_at` | null \| string | Date when card changed lane |
+| - `column_changed_at` | null \| string | Date when card changed column |
+| - `first_moved_to_in_progress_at` | null \| string | Date when card first moved to inProgress type column |
+| - `last_moved_to_done_at` | null \| string | Date when card last moved to done type column |
 | - `sprint_id` | integer | Sprint id |
-| - `external_id` | null | string | External id |
+| - `external_id` | null \| string | External id |
 | - `comments_total` | integer | Total card comments |
-| - `comment_last_added_at` | null | string | Date when last comment added |
-| - `properties` | null | object | Card custom properties. Format: id_{propertyId}:value |
-| - `planned_start` | null | string | Card timeline planned start |
-| - `planned_end` | null | string | Card timeline planned end |
+| - `comment_last_added_at` | null \| string | Date when last comment added |
+| - `properties` | null \| object | Card custom properties. Format: id_{propertyId}:value |
+| - `planned_start` | null \| string | Card timeline planned start |
+| - `planned_end` | null \| string | Card timeline planned end |
 | - `service_id` | integer | Service id |
 | - `sd_new_comment` | boolean | Has unseen service desk request author comments |
 | - `public` | boolean | Is card public |
-| - `share_settings` | null | object | Public share settings |
-| - `share_id` | null | string | Public share id |
-| - `external_user_emails` | null | string | External users emails |
+| - `share_settings` | null \| object | Public share settings |
+| - `share_id` | null \| string | Public share id |
+| - `external_user_emails` | null \| string | External users emails |
 | - `description_filled` | boolean | Flag indicating that card has description |
 | - `estimate_workload` | number | Estimate_workload |
 | - `owner` | object | Card owner info |
+| - - `id` | integer | User id |
+| - - `uid` | string | User uid |
+| - - `full_name` | string | User full name |
+| - - `email` | string | User email |
+| - - `username` | string | Username |
+| - - `avatar_initials_url` | string | Default user avatar |
+| - - `avatar_uploaded_url` | null \| string | Uploaded avatar url |
+| - - `initials` | string | User initials |
+| - - `avatar_type` | enum | 1 - gravatar, 2 - initials, 3 - uploaded |
+| - - `lng` | string | Language |
+| - - `timezone` | string | Time zone |
+| - - `theme` | enum | light, dark, auto |
+| - - `created` | string | Create date |
+| - - `updated` | string | Last update timestamp |
+| - - `activated` | boolean | User activated flag |
+| - - `ui_version` | enum | 1 - old ui, 2 - new ui |
+| - - `virtual` | boolean | Is user virtual |
+| - - `email_blocked` | null \| string | Email blocked status |
+| - - `email_blocked_reason` | null \| string | Email blocked reason |
+| - - `delete_requested_at` | null \| string | Delete request date |
 | - `type` | object | Card type info |
-| - `source` | enum | null | app, api, email, telegram, slack,
- webhook, import, schedule, automation |
+| - - `id` | integer | Card type id |
+| - - `uid` | string | Card type uid |
+| - - `name` | string | Card type name |
+| - - `color` | integer | Color number |
+| - - `letter` | string | Card type letter |
+| - - `company_id` | null \| integer | Company id |
+| - - `archived` | boolean | Archived flag |
+| - - `properties` | null \| object | Card type properties |
+| - - `suggest_fields` | boolean | Suggest fields flag |
+| - - `author_uid` | null \| string | Author uid |
+| - - `description_template` | null \| string | Description template |
+| - `source` | enum | null \| app, api, email, telegram, slack, webhook, import, schedule, automation |
 
 - **401** (error) - Invalid token
 - **403** (error) - Forbidden
@@ -4093,7 +4624,7 @@ Get all unarchived baselines of unarchived projects for this card
 | `deleted` | boolean | Deleted flag |
 | `sd_external_recipients_cc` | null |string | Service desk external recipients |
 | `sd_description` | boolean | Flag indicating that the comment is used as a request description when the card is a service desk request |
-| `notification_sent` | null | string | Notification sent date |
+| `notification_sent` | null \| string | Notification sent date |
 | `author` | object | Author info |
 | - `id` | integer | User id |
 | - `full_name` | string | User full name |
@@ -4102,7 +4633,7 @@ Get all unarchived baselines of unarchived projects for this card
 | - `updated` | string | Last update timestamp |
 | - `created` | string | Create date |
 | - `avatar_initials_url` | string | Default user avatar |
-| - `avatar_uploaded_url` | null | string | User uploaded avatar url |
+| - `avatar_uploaded_url` | null \| string | User uploaded avatar url |
 | - `activated` | boolean | User activated flag |
 | - `initials` | string | User initials |
 | - `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
@@ -4377,9 +4908,9 @@ Get all unarchived baselines of unarchived projects for this card
 | `archived` | boolean | Card archived flag |
 | `id` | integer | Children card id |
 | `title` | string | Card title |
-| `description` | null | string | Card description |
+| `description` | null \| string | Card description |
 | `asap` | boolean | Card asap flag |
-| `due_date` | null | string | Card deadline |
+| `due_date` | null \| string | Card deadline |
 | `fifo_order` | integer | Number of card in the cell when fifo rule applied to cards column |
 | `state` | enum | 1-queued, 2-inProgresss, 3-done |
 | `condition` | enum | 1 - live, 2 - archived |
@@ -4391,15 +4922,15 @@ Get all unarchived baselines of unarchived projects for this card
 | `goals_done` | integer | Number of card done goals |
 | `time_spent_sum` | integer | Amount of time spent(in minutes) |
 | `time_blocked_sum` | integer | Amount of blocked time(in minutes) |
-| `children_number_properties_sum` | null | object | Sum according to numerical data of child cards |
+| `children_number_properties_sum` | null \| object | Sum according to numerical data of child cards |
 | - `size` | number | Children cards size sum |
 | - `time_spent_sum` | integer | Children cards spent time sum |
-| `parent_checklist_ids` | null | array | Array of card parent checklist ids |
+| `parent_checklist_ids` | null \| array | Array of card parent checklist ids |
 | `blocking_card` | boolean | Is card blocking another card |
 | `blocked` | boolean | Is card blocked |
-| `size` | null | number | Numerical part of size |
-| `size_unit` | null | string | Text part of size |
-| `size_text` | null | string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
+| `size` | null \| number | Numerical part of size |
+| `size_unit` | null \| string | Text part of size |
+| `size_text` | null \| string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
 | `due_date_time_present` | boolean | Flag indicating that deadline is specified up to hours and minutes |
 | `board_id` | integer | Board id |
 | `column_id` | integer | Column id |
@@ -4408,30 +4939,30 @@ Get all unarchived baselines of unarchived projects for this card
 | `type_id` | integer | Card type id |
 | `version` | integer | Card version |
 | `updater_id` | integer | User id who last updated card |
-| `completed_on_time` | null | boolean | Flag indicating that card completed on time when due date present |
-| `completed_at` | null | string | Date when card moved to done type column |
-| `last_moved_at` | null | string | Date when card last moved |
-| `lane_changed_at` | null | string | Date when card changed lane |
-| `column_changed_at` | null | string | Date when card changed column |
-| `first_moved_to_in_progress_at` | null | string | Date when card first moved to inProgress type column |
-| `last_moved_to_done_at` | null | string | Date when card last moved to done type column |
+| `completed_on_time` | null \| boolean | Flag indicating that card completed on time when due date present |
+| `completed_at` | null \| string | Date when card moved to done type column |
+| `last_moved_at` | null \| string | Date when card last moved |
+| `lane_changed_at` | null \| string | Date when card changed lane |
+| `column_changed_at` | null \| string | Date when card changed column |
+| `first_moved_to_in_progress_at` | null \| string | Date when card first moved to inProgress type column |
+| `last_moved_to_done_at` | null \| string | Date when card last moved to done type column |
 | `sprint_id` | integer | Sprint id |
-| `external_id` | null | string | External id |
+| `external_id` | null \| string | External id |
 | `service_id` | integer | Service id |
 | `comments_total` | integer | Total card comments |
-| `comment_last_added_at` | null | string | Date when last comment added |
-| `properties` | null | object | Card custom properties. Format: id_{propertyId}:value |
-| - `id_{propertyId}` | string | integer | null | object | Card custom property. Format id_{propertyId}:value |
-| `planned_start` | null | string | Card timeline planned start |
-| `planned_end` | null | string | Card timeline planned end |
+| `comment_last_added_at` | null \| string | Date when last comment added |
+| `properties` | null \| object | Card custom properties. Format: id_{propertyId}:value |
+| - `id_{propertyId}` | string \| integer | null \| object | Card custom property. Format id_{propertyId}:value |
+| `planned_start` | null \| string | Card timeline planned start |
+| `planned_end` | null \| string | Card timeline planned end |
 | `counters_recalculated_at` | string | Date of recalculating counters |
 | `sd_new_comment` | boolean | Has unseen service desk request author comments |
 | `public` | boolean | Is card public |
-| `share_settings` | null | object | Public share settings |
+| `share_settings` | null \| object | Public share settings |
 | - `fields` | object | List of shared card fields. Format fieldName: value |
-| - `share_due_date` | string | null | Share due date timestamp |
-| `share_id` | null | string | Public share id |
-| `external_user_emails` | null | string | External users emails |
+| - `share_due_date` | string \| null | Share due date timestamp |
+| `share_id` | null \| string | Public share id |
+| `external_user_emails` | null \| string | External users emails |
 | `description_filled` | boolean | Flag indicating that card has description |
 | `estimate_workload` | number | Estimate_workload |
 | `owner` | object | Card owner info |
@@ -4443,7 +4974,7 @@ Get all unarchived baselines of unarchived projects for this card
 | - `email` | string | User email |
 | - `activated` | boolean | User activated flag |
 | - `avatar_initials_url` | string | Default user avatar url |
-| - `avatar_uploaded_url` | string | null | User uploaded avatar url |
+| - `avatar_uploaded_url` | string \| null | User uploaded avatar url |
 | - `initials` | string | User initials |
 | - `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | - `lng` | string | Language |
@@ -4459,15 +4990,40 @@ Get all unarchived baselines of unarchived projects for this card
 | - `name` | string | Card type name |
 | - `color` | integer | Color number |
 | - `letter` | string | Card type letter |
-| - `description_template` | null | string | Card type escription_template |
+| - `description_template` | null \| string | Card type escription_template |
 | - `company_id` | integer | Company id |
-| - `properties` | null | object | Card type properties(preset and custom) |
+| - `properties` | null \| object | Card type properties(preset and custom) |
 | `has_access_to_space` | boolean | Flag indicating that user who made request has aceess to space |
 | `path_data` | object | Card path info (space, board, column, lane, etc) |
 | - `lane` | object | Card lane info |
+| - - `id` | integer | Lane id |
+| - - `uid` | string | Lane uid |
+| - - `title` | string | Lane title |
+| - - `sort_order` | number | Position |
+| - - `board_id` | integer | Board id |
+| - - `condition` | enum | 1 - live, 2 - archived, 3 - deleted |
+| - - `external_id` | null \| string | External id |
+| - - `default_card_type_id` | null \| integer | Default card type id |
 | - `board` | object | Card board info |
+| - - `id` | integer | Board id |
+| - - `uid` | string | Board uid |
+| - - `title` | string | Board title |
+| - - `external_id` | null \| string | External id |
+| - - `card_properties` | null \| array | Board card properties |
+| - - `settings` | null \| object | Board settings |
 | - `space` | object | Card space info |
 | - `column` | object | Card column info |
+| - - `id` | integer | Column id |
+| - - `uid` | string | Column uid |
+| - - `title` | string | Column title |
+| - - `sort_order` | number | Position |
+| - - `col_count` | integer | Width |
+| - - `type` | enum | 1 - queue, 2 - in progress, 3 - done |
+| - - `board_id` | integer | Board id |
+| - - `column_id` | null \| integer | Parent column id |
+| - - `external_id` | null \| string | External id |
+| - - `rules` | integer | Column rules bitmask |
+| - - `pause_sla` | boolean | Pause SLA timer in this column |
 | - `subcolumn` | object | Card subcolumn info |
 | `space_id` | integer | Space id |
 
@@ -4515,9 +5071,9 @@ Get all unarchived baselines of unarchived projects for this card
 | `archived` | boolean | Card archived flag |
 | `id` | integer | Children card id |
 | `title` | string | Card title |
-| `description` | null | string | Card description |
+| `description` | null \| string | Card description |
 | `asap` | boolean | Card asap flag |
-| `due_date` | null | string | Card deadline |
+| `due_date` | null \| string | Card deadline |
 | `fifo_order` | integer | Number of card in the cell when fifo rule applied to cards column |
 | `state` | enum | 1-queued, 2-inProgresss, 3-done |
 | `condition` | enum | 1 - live, 2 - archived |
@@ -4529,15 +5085,15 @@ Get all unarchived baselines of unarchived projects for this card
 | `goals_done` | integer | Number of card done goals |
 | `time_spent_sum` | integer | Amount of time spent(in minutes) |
 | `time_blocked_sum` | integer | Amount of blocked time(in minutes) |
-| `children_number_properties_sum` | null | object | Sum according to numerical data of child cards |
+| `children_number_properties_sum` | null \| object | Sum according to numerical data of child cards |
 | - `size` | number | Children cards size sum |
 | - `time_spent_sum` | integer | Children cards spent time sum |
-| `parent_checklist_ids` | null | array | Array of card parent checklist ids |
+| `parent_checklist_ids` | null \| array | Array of card parent checklist ids |
 | `blocking_card` | boolean | Is card blocking another card |
 | `blocked` | boolean | Is card blocked |
-| `size` | null | number | Numerical part of size |
-| `size_unit` | null | string | Text part of size |
-| `size_text` | null | string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
+| `size` | null \| number | Numerical part of size |
+| `size_unit` | null \| string | Text part of size |
+| `size_text` | null \| string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
 | `due_date_time_present` | boolean | Flag indicating that deadline is specified up to hours and minutes |
 | `board_id` | integer | Board id |
 | `column_id` | integer | Column id |
@@ -4546,30 +5102,30 @@ Get all unarchived baselines of unarchived projects for this card
 | `type_id` | integer | Card type id |
 | `version` | integer | Card version |
 | `updater_id` | integer | User id who last updated card |
-| `completed_on_time` | null | boolean | Flag indicating that card completed on time when due date present |
-| `completed_at` | null | string | Date when card moved to done type column |
-| `last_moved_at` | null | string | Date when card last moved |
-| `lane_changed_at` | null | string | Date when card changed lane |
-| `column_changed_at` | null | string | Date when card changed column |
-| `first_moved_to_in_progress_at` | null | string | Date when card first moved to inProgress type column |
-| `last_moved_to_done_at` | null | string | Date when card last moved to done type column |
+| `completed_on_time` | null \| boolean | Flag indicating that card completed on time when due date present |
+| `completed_at` | null \| string | Date when card moved to done type column |
+| `last_moved_at` | null \| string | Date when card last moved |
+| `lane_changed_at` | null \| string | Date when card changed lane |
+| `column_changed_at` | null \| string | Date when card changed column |
+| `first_moved_to_in_progress_at` | null \| string | Date when card first moved to inProgress type column |
+| `last_moved_to_done_at` | null \| string | Date when card last moved to done type column |
 | `sprint_id` | integer | Sprint id |
-| `external_id` | null | string | External id |
+| `external_id` | null \| string | External id |
 | `service_id` | integer | Service id |
 | `comments_total` | integer | Total card comments |
-| `comment_last_added_at` | null | string | Date when last comment added |
-| `properties` | null | object | Card custom properties. Format: id_{propertyId}:value |
-| - `id_{propertyId}` | string | integer | null | object | Card custom property. Format id_{propertyId}:value |
-| `planned_start` | null | string | Card timeline planned start |
-| `planned_end` | null | string | Card timeline planned end |
+| `comment_last_added_at` | null \| string | Date when last comment added |
+| `properties` | null \| object | Card custom properties. Format: id_{propertyId}:value |
+| - `id_{propertyId}` | string \| integer | null \| object | Card custom property. Format id_{propertyId}:value |
+| `planned_start` | null \| string | Card timeline planned start |
+| `planned_end` | null \| string | Card timeline planned end |
 | `counters_recalculated_at` | string | Date of recalculating counters |
 | `sd_new_comment` | boolean | Has unseen service desk request author comments |
 | `public` | boolean | Is card public |
-| `share_settings` | null | object | Public share settings |
+| `share_settings` | null \| object | Public share settings |
 | - `fields` | object | List of shared card fields. Format fieldName: value |
-| - `share_due_date` | string | null | Share due date timestamp |
-| `share_id` | null | string | Public share id |
-| `external_user_emails` | null | string | External users emails |
+| - `share_due_date` | string \| null | Share due date timestamp |
+| `share_id` | null \| string | Public share id |
+| `external_user_emails` | null \| string | External users emails |
 | `description_filled` | boolean | Flag indicating that card has description |
 | `estimate_workload` | number | Estimate_workload |
 | `owner` | object | Card owner info |
@@ -4581,7 +5137,7 @@ Get all unarchived baselines of unarchived projects for this card
 | - `email` | string | User email |
 | - `activated` | boolean | User activated flag |
 | - `avatar_initials_url` | string | Default user avatar url |
-| - `avatar_uploaded_url` | string | null | User uploaded avatar url |
+| - `avatar_uploaded_url` | string \| null | User uploaded avatar url |
 | - `initials` | string | User initials |
 | - `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | - `lng` | string | Language |
@@ -4597,14 +5153,14 @@ Get all unarchived baselines of unarchived projects for this card
 | - `name` | string | Card type name |
 | - `color` | integer | Color number |
 | - `letter` | string | Card type letter |
-| - `description_template` | null | string | Card type escription_template |
+| - `description_template` | null \| string | Card type escription_template |
 | - `company_id` | integer | Company id |
-| - `properties` | null | object | Card type properties(preset and custom) |
+| - `properties` | null \| object | Card type properties(preset and custom) |
 | `board` | object | Board info |
 | - `id` | integer | Board id |
 | - `title` | string | Board title |
-| - `external_id` | null | string | External id |
-| - `card_properties` | null | array of objects | Properties of the board cards suggested for filling  |
+| - `external_id` | null \| string | External id |
+| - `card_properties` | null \| array of objects | Properties of the board cards suggested for filling  |
 | `column` | object | Column info |
 | - `id` | integer | Column id |
 | - `title` | string | Column title |
@@ -4613,15 +5169,15 @@ Get all unarchived baselines of unarchived projects for this card
 | - `type` | enum | 1 - queue, 2 – in progress, 3 – done |
 | - `board_id` | integer | Board id |
 | - `column_id` | null | Parent column id |
-| - `external_id` | null | string | External id |
-| - `parent` | null | object | Parent column |
+| - `external_id` | null \| string | External id |
+| - `parent` | null \| object | Parent column |
 | `lane` | object | Lane info |
 | - `id` | integer | Lane id |
 | - `title` | string | Lane title |
 | - `sort_order` | number | Position |
 | - `board_id` | integer | Board id |
 | - `condition` | enum | 1 - live, 2 - archived |
-| - `external_id` | null | string | External id |
+| - `external_id` | null \| string | External id |
 | `card_id` | integer | Parent card id |
 | `depends_on_card_id` | integer | Children card id |
 
@@ -4683,7 +5239,7 @@ Get all unarchived baselines of unarchived projects for this card
 | `email` | string | User email |
 | `username` | string | Username for mentions and login |
 | `avatar_initials_url` | string | Default user avatar |
-| `avatar_uploaded_url` | null | string | User uploaded avatar url |
+| `avatar_uploaded_url` | null \| string | User uploaded avatar url |
 | `initials` | string | User initials |
 | `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | `lng` | string | Language |
@@ -4729,7 +5285,7 @@ Get all unarchived baselines of unarchived projects for this card
 | `email` | string | User email |
 | `username` | string | Username for mentions and login |
 | `avatar_initials_url` | string | Default user avatar |
-| `avatar_uploaded_url` | null | string | User uploaded avatar url |
+| `avatar_uploaded_url` | null \| string | User uploaded avatar url |
 | `initials` | string | User initials |
 | `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | `lng` | string | Language |
@@ -4845,7 +5401,7 @@ Get all unarchived baselines of unarchived projects for this card
 | `updater_id` | integer | Last updater id |
 | `time_spent` | integer | Minutes to log |
 | `for_date` | string | Log date |
-| `comment` | null | string | Time log comment |
+| `comment` | null \| string | Time log comment |
 
 - **400** (error) - validation Error
 
@@ -4897,13 +5453,13 @@ Get all unarchived baselines of unarchived projects for this card
 | `updater_id` | integer | Last updater id |
 | `time_spent` | integer | Minutes to log |
 | `for_date` | string | Log date |
-| `comment` | null | string | Time log comment |
+| `comment` | null \| string | Time log comment |
 | `role` | object | Role info |
 | - `created` | string | Create date |
 | - `updated` | string | Last update timestamp |
 | - `id` | integer | Role id |
 | - `name` | string | Role name |
-| - `company_id` | null | integer | Role company id |
+| - `company_id` | null \| integer | Role company id |
 | `user` | object | User info |
 | - `id` | integer | User id |
 | - `full_name` | string | User full name |
@@ -4912,7 +5468,7 @@ Get all unarchived baselines of unarchived projects for this card
 | - `updated` | string | Last update timestamp |
 | - `created` | string | Create date |
 | - `avatar_initials_url` | string | Default user avatar |
-| - `avatar_uploaded_url` | null | string | User uploaded avatar url |
+| - `avatar_uploaded_url` | null \| string | User uploaded avatar url |
 | - `activated` | boolean | User activated flag |
 | - `initials` | string | User initials |
 | - `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
@@ -4928,7 +5484,7 @@ Get all unarchived baselines of unarchived projects for this card
 | - `updated` | string | Last update timestamp |
 | - `created` | string | Create date |
 | - `avatar_initials_url` | string | Default user avatar |
-| - `avatar_uploaded_url` | null | string | User uploaded avatar url |
+| - `avatar_uploaded_url` | null \| string | User uploaded avatar url |
 | - `activated` | boolean | User activated flag |
 | - `initials` | string | User initials |
 | - `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
@@ -4972,7 +5528,7 @@ Get all unarchived baselines of unarchived projects for this card
 | `updater_id` | integer | Last updater id |
 | `time_spent` | integer | Minutes to log |
 | `for_date` | string | Log date |
-| `comment` | null | string | Time log comment |
+| `comment` | null \| string | Time log comment |
 
 - **400** (error) - validation Error
 
@@ -5055,7 +5611,7 @@ Get all unarchived baselines of unarchived projects for this card
 | `created` | string | Create date |
 | `id` | integer | Card checklist id |
 | `name` | string | Checklist name |
-| `policy_id` | null | integer | Template checklist id |
+| `policy_id` | null \| integer | Template checklist id |
 | `checklist_id` | string | Card checklist id |
 | `sort_order` | number | Position |
 | `deleted` | boolean | Flag indicating that checklist deleted  |
@@ -5066,12 +5622,12 @@ Get all unarchived baselines of unarchived projects for this card
 | - `text` | string | Checklist item text |
 | - `sort_order` | number | Position |
 | - `checked` | boolean | Flag indicating that checklist item checked |
-| - `checker_id` | null | integer | User id who checked checklist item |
+| - `checker_id` | null \| integer | User id who checked checklist item |
 | - `user_id` | index | Current user id |
-| - `checked_at` | null | string | Date of check |
-| - `responsible_id` | null | integer | User id who is responsible for checklist item |
+| - `checked_at` | null \| string | Date of check |
+| - `responsible_id` | null \| integer | User id who is responsible for checklist item |
 | - `deleted` | boolean | Flag indicating that checklist item deleted |
-| - `due_date` | null | string | checklist item deadline |
+| - `due_date` | null \| string | checklist item deadline |
 
 - **400** (error) - validation Error
 
@@ -5110,7 +5666,7 @@ Get all unarchived baselines of unarchived projects for this card
 | `created` | string | Create date |
 | `id` | integer | Card checklist id |
 | `name` | string | Checklist name |
-| `policy_id` | null | integer | Template checklist id |
+| `policy_id` | null \| integer | Template checklist id |
 | `items` | array | Checklist items |
 | - `updated` | string | Last update timestamp |
 | - `created` | string | Create date |
@@ -5118,12 +5674,12 @@ Get all unarchived baselines of unarchived projects for this card
 | - `text` | string | Checklist item text |
 | - `sort_order` | number | Position |
 | - `checked` | boolean | Flag indicating that checklist item checked |
-| - `checker_id` | null | integer | User id who checked checklist item |
+| - `checker_id` | null \| integer | User id who checked checklist item |
 | - `user_id` | index | Current user id |
-| - `checked_at` | null | string | Date of check |
-| - `responsible_id` | null | integer | User id who is responsible for checklist item |
+| - `checked_at` | null \| string | Date of check |
+| - `responsible_id` | null \| integer | User id who is responsible for checklist item |
 | - `deleted` | boolean | Flag indicating that checklist item deleted |
-| - `due_date` | null | string | checklist item deadline |
+| - `due_date` | null \| string | checklist item deadline |
 
 - **401** (error) - Invalid token
 - **403** (error) - Forbidden
@@ -5154,7 +5710,7 @@ Get all unarchived baselines of unarchived projects for this card
 | `created` | string | Create date |
 | `id` | integer | Card checklist id |
 | `name` | string | Checklist name |
-| `policy_id` | null | integer | Template checklist id |
+| `policy_id` | null \| integer | Template checklist id |
 
 - **400** (error) - validation Error
 
@@ -5224,12 +5780,12 @@ Get all unarchived baselines of unarchived projects for this card
 | `text` | string | Checklist item text |
 | `sort_order` | number | Position |
 | `checked` | boolean | Flag indicating that checklist item checked |
-| `checker_id` | null | integer | User id who checked checklist item |
+| `checker_id` | null \| integer | User id who checked checklist item |
 | `user_id` | index | Current user id |
-| `checked_at` | null | string | Date of check |
-| `responsible_id` | null | integer | User id who is responsible for checklist item |
+| `checked_at` | null \| string | Date of check |
+| `responsible_id` | null \| integer | User id who is responsible for checklist item |
 | `deleted` | boolean | Flag indicating that checklist item deleted |
-| `due_date` | null | string | checklist item deadline |
+| `due_date` | null \| string | checklist item deadline |
 
 - **400** (error) - validation Error
 
@@ -5271,12 +5827,12 @@ Get all unarchived baselines of unarchived projects for this card
 | `text` | string | Checklist item text |
 | `sort_order` | number | Position |
 | `checked` | boolean | Flag indicating that checklist item checked |
-| `checker_id` | null | integer | User id who checked checklist item |
+| `checker_id` | null \| integer | User id who checked checklist item |
 | `user_id` | index | Current user id |
-| `checked_at` | null | string | Date of check |
-| `responsible_id` | null | integer | User id who is responsible for checklist item |
+| `checked_at` | null \| string | Date of check |
+| `responsible_id` | null \| integer | User id who is responsible for checklist item |
 | `deleted` | boolean | Flag indicating that checklist item deleted |
-| `due_date` | null | string | checklist item deadline |
+| `due_date` | null \| string | checklist item deadline |
 
 - **400** (error) - validation Error
 
@@ -5341,8 +5897,8 @@ Get all unarchived baselines of unarchived projects for this card
 | `updated` | string | Last update timestamp |
 | `created` | string | Create date |
 | `id` | integer | Card type id |
-| `description_template` | null | string | Card type escription_template |
-| `properties` | null | object | Card type properties(preset and custom). Will be removed after 31.01.2026. |
+| `description_template` | null \| string | Card type escription_template |
+| `properties` | null \| object | Card type properties(preset and custom). Will be removed after 31.01.2026. |
 | - `id_{propertyId}` | boolean | Custom property required flag |
 | - `size` | boolean | Size required flag |
 | - `tags` | boolean | Tags required flag |
@@ -5350,8 +5906,8 @@ Get all unarchived baselines of unarchived projects for this card
 | - `timeline` | boolean | Timeline required flag |
 | - `description` | boolean | Description required flag |
 | `card_properties` | array | Array of card properties that will be suggested for filling in cards of this type |
-| - `regular_property` | string | null | Key of the regular property (size, due_date, tags, timeline, description) or null for custom property |
-| - `property_uid` | string | null | UID of the custom property or null for regular property |
+| - `regular_property` | string \| null | Key of the regular property (size, due_date, tags, timeline, description) or null for custom property |
+| - `property_uid` | string \| null | UID of the custom property or null for regular property |
 | - `sort_order` | number | Order of the property in the card |
 | - `required` | boolean | If true, this property will be required to fill in the card |
 | `suggest_fields` | boolean | If true, cards of this type will be offered to display additional fields based on statistics |
@@ -5389,7 +5945,7 @@ Get all unarchived baselines of unarchived projects for this card
 | `created` | string | Create date |
 | `id` | integer | Card type id |
 | `archived` | boolean | Archived flag |
-| `properties` | null | object | Card type properties(preset and custom). Will be removed after 31.01.2026. |
+| `properties` | null \| object | Card type properties(preset and custom). Will be removed after 31.01.2026. |
 | - `id_{propertyId}` | boolean | Custom property required flag |
 | - `size` | boolean | Size required flag |
 | - `tags` | boolean | Tags required flag |
@@ -5397,8 +5953,8 @@ Get all unarchived baselines of unarchived projects for this card
 | - `timeline` | boolean | Timeline required flag |
 | - `description` | boolean | Description required flag |
 | `card_properties` | array | Array of card properties that will be suggested for filling in cards of this type |
-| - `regular_property` | string | null | Key of the regular property (size, due_date, tags, timeline, description) or null for custom property |
-| - `property_uid` | string | null | UID of the custom property or null for regular property |
+| - `regular_property` | string \| null | Key of the regular property (size, due_date, tags, timeline, description) or null for custom property |
+| - `property_uid` | string \| null | UID of the custom property or null for regular property |
 | - `sort_order` | number | Order of the property in the card |
 | - `required` | boolean | If true, this property will be required to fill in the card |
 | `suggest_fields` | boolean | If true, cards of this type will be offered to display additional fields based on statistics |
@@ -5433,9 +5989,9 @@ Get all unarchived baselines of unarchived projects for this card
 | `updated` | string | Last update timestamp |
 | `created` | string | Create date |
 | `id` | integer | Card type id |
-| `description_template` | null | string | Card type escription_template |
+| `description_template` | null \| string | Card type escription_template |
 | `archived` | boolean | Archived flag |
-| `properties` | null | object | Card type properties(preset and custom). Will be removed after 31.01.2026. |
+| `properties` | null \| object | Card type properties(preset and custom). Will be removed after 31.01.2026. |
 | - `id_{propertyId}` | boolean | Custom property required flag |
 | - `size` | boolean | Size required flag |
 | - `tags` | boolean | Tags required flag |
@@ -5443,8 +5999,8 @@ Get all unarchived baselines of unarchived projects for this card
 | - `timeline` | boolean | Timeline required flag |
 | - `description` | boolean | Description required flag |
 | `card_properties` | array | Array of card properties that will be suggested for filling in cards of this type |
-| - `regular_property` | string | null | Key of the regular property (size, due_date, tags, timeline, description) or null for custom property |
-| - `property_uid` | string | null | UID of the custom property or null for regular property |
+| - `regular_property` | string \| null | Key of the regular property (size, due_date, tags, timeline, description) or null for custom property |
+| - `property_uid` | string \| null | UID of the custom property or null for regular property |
 | - `sort_order` | number | Order of the property in the card |
 | - `required` | boolean | If true, this property will be required to fill in the card |
 | `suggest_fields` | boolean | If true, cards of this type will be offered to display additional fields based on statistics |
@@ -5480,8 +6036,8 @@ Get all unarchived baselines of unarchived projects for this card
 | `updated` | string | Last update timestamp |
 | `created` | string | Create date |
 | `id` | integer | Card type id |
-| `description_template` | null | string | Card type escription_template |
-| `properties` | null | object | Card type properties(preset and custom). Will be removed after 31.01.2026. |
+| `description_template` | null \| string | Card type escription_template |
+| `properties` | null \| object | Card type properties(preset and custom). Will be removed after 31.01.2026. |
 | - `id_{propertyId}` | boolean | Custom property required flag |
 | - `size` | boolean | Size required flag |
 | - `tags` | boolean | Tags required flag |
@@ -5489,8 +6045,8 @@ Get all unarchived baselines of unarchived projects for this card
 | - `timeline` | boolean | Timeline required flag |
 | - `description` | boolean | Description required flag |
 | `card_properties` | array | Array of card properties that will be suggested for filling in cards of this type |
-| - `regular_property` | string | null | Key of the regular property (size, due_date, tags, timeline, description) or null for custom property |
-| - `property_uid` | string | null | UID of the custom property or null for regular property |
+| - `regular_property` | string \| null | Key of the regular property (size, due_date, tags, timeline, description) or null for custom property |
+| - `property_uid` | string \| null | UID of the custom property or null for regular property |
 | - `sort_order` | number | Order of the property in the card |
 | - `required` | boolean | If true, this property will be required to fill in the card |
 | `suggest_fields` | boolean | If true, cards of this type will be offered to display additional fields based on statistics |
@@ -5534,8 +6090,8 @@ Get all unarchived baselines of unarchived projects for this card
 | `updated` | string | Last update timestamp |
 | `created` | string | Create date |
 | `id` | integer | Card type id |
-| `description_template` | null | string | Card type escription_template |
-| `properties` | null | object | Card type properties(preset and custom). Will be removed after 31.01.2026. |
+| `description_template` | null \| string | Card type escription_template |
+| `properties` | null \| object | Card type properties(preset and custom). Will be removed after 31.01.2026. |
 | - `id_{propertyId}` | boolean | Custom property required flag |
 | - `size` | boolean | Size required flag |
 | - `tags` | boolean | Tags required flag |
@@ -5543,8 +6099,8 @@ Get all unarchived baselines of unarchived projects for this card
 | - `timeline` | boolean | Timeline required flag |
 | - `description` | boolean | Description required flag |
 | `card_properties` | array | Array of card properties that will be suggested for filling in cards of this type |
-| - `regular_property` | string | null | Key of the regular property (size, due_date, tags, timeline, description) or null for custom property |
-| - `property_uid` | string | null | UID of the custom property or null for regular property |
+| - `regular_property` | string \| null | Key of the regular property (size, due_date, tags, timeline, description) or null for custom property |
+| - `property_uid` | string \| null | UID of the custom property or null for regular property |
 | - `sort_order` | number | Order of the property in the card |
 | - `required` | boolean | If true, this property will be required to fill in the card |
 | `suggest_fields` | boolean | If true, cards of this type will be offered to display additional fields based on statistics |
@@ -5687,7 +6243,7 @@ Returns a list of users with access to card
 | `email` | string | User email |
 | `username` | string | Username for mentions and login |
 | `avatar_initials_url` | string | Default user avatar |
-| `avatar_uploaded_url` | null | string | User uploaded avatar url |
+| `avatar_uploaded_url` | null \| string | User uploaded avatar url |
 | `initials` | string | User initials |
 | `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | `lng` | string | Language |
@@ -5847,7 +6403,7 @@ Returns a list of blocker categories
 | `email` | string | User email |
 | `username` | string | Username for mentions and login |
 | `avatar_initials_url` | string | Default user avatar |
-| `avatar_uploaded_url` | null | string | User uploaded avatar url |
+| `avatar_uploaded_url` | null \| string | User uploaded avatar url |
 | `initials` | string | User initials |
 | `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | `lng` | string | Language |
@@ -5858,9 +6414,9 @@ Returns a list of blocker categories
 | `activated` | boolean | User activated flag |
 | `ui_version` | enum | 1 - old ui. 2 - new ui |
 | `virtual` | boolean | Whether the user is virtual |
-| `email_blocked` | string | null | If blocked, email block timestamp |
-| `email_blocked_reason` | null | string | Reason of blocking |
-| `delete_requested_at` | null | string | Delete date |
+| `email_blocked` | string \| null | If blocked, email block timestamp |
+| `email_blocked_reason` | null \| string | Reason of blocking |
+| `delete_requested_at` | null \| string | Delete date |
 
 - **401** (error) - Invalid token
 
@@ -5889,7 +6445,7 @@ Returns a list of blocker categories
 | `email` | string | User email |
 | `username` | string | Username for mentions and login |
 | `avatar_initials_url` | string | Default user avatar |
-| `avatar_uploaded_url` | null | string | User uploaded avatar url |
+| `avatar_uploaded_url` | null \| string | User uploaded avatar url |
 | `initials` | string | User initials |
 | `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | `lng` | string | Language |
@@ -5900,18 +6456,18 @@ Returns a list of blocker categories
 | `activated` | boolean | User activated flag |
 | `ui_version` | enum | 1 - old ui. 2 - new ui |
 | `virtual` | boolean | Whether the user is virtual |
-| `email_blocked` | string | null | If blocked, email block timestamp |
-| `email_blocked_reason` | null | string | Reason of blocking |
-| `delete_requested_at` | null | string | Delete date |
+| `email_blocked` | string \| null | If blocked, email block timestamp |
+| `email_blocked_reason` | null \| string | Reason of blocking |
+| `delete_requested_at` | null \| string | Delete date |
 | `show_tour` | boolean | Whether to show tour to user |
 | `chat_enabled` | boolean | Chat enabled flag |
-| `sd_telegram_id` | null | string | Telegram ID |
+| `sd_telegram_id` | null \| string | Telegram ID |
 | `news_subscription` | boolean | News subscription status |
 | `uid` | string | User unique identifier |
-| `delete_confirmation_sent_at` | null | string | Delete confirmation sent timestamp |
-| `eula_accepted_at` | null | string | EULA acceptance timestamp |
-| `terms_of_service_accepted_at` | null | string | Terms of service acceptance timestamp |
-| `privacy_policy_accepted_at` | null | string | Privacy policy acceptance timestamp |
+| `delete_confirmation_sent_at` | null \| string | Delete confirmation sent timestamp |
+| `eula_accepted_at` | null \| string | EULA acceptance timestamp |
+| `terms_of_service_accepted_at` | null \| string | Terms of service acceptance timestamp |
+| `privacy_policy_accepted_at` | null \| string | Privacy policy acceptance timestamp |
 | `block_uid` | string | Block unique identifier |
 | `user_uid` | string | User unique identifier (duplicate) |
 
@@ -5935,7 +6491,7 @@ Returns a list of blocker categories
 | - `card_id` | Integer | Card identifier |
 | - `card_title` | String | Card title |
 | - `blocked_by` | Object | Blocker information |
-| - `block_reason` | string | null | Block reason |
+| - `block_reason` | string \| null | Block reason |
 | - `categories` | Array of objects | Blocker categories information |
 | - `block_created` | integer | When block was created |
 | - `updated` | string | Last update timestamp |
@@ -5997,7 +6553,7 @@ Returns a list of blocker categories
 | `updated` | string | Last update timestamp |
 | `created` | string | Create date |
 | `card_id` | integer | Card id |
-| `user_id` | null | integer | Recipient id |
+| `user_id` | null \| integer | Recipient id |
 | `email` | string | Recipient email |
 | `unsubscribed` | boolean | Is unsubscribed from service desk request |
 | `updater_id` | integer | Updater id |
@@ -6046,7 +6602,7 @@ Returns a list of blocker categories
 | `updated` | string | Last update timestamp |
 | `created` | string | Create date |
 | `card_id` | integer | Card id |
-| `user_id` | null | integer | Recipient id |
+| `user_id` | null \| integer | Recipient id |
 | `email` | string | Recipient email |
 | `unsubscribed` | boolean | Is unsubscribed from service desk request |
 | `updater_id` | integer | Updater id |
@@ -6184,7 +6740,7 @@ Get users list filtered by query parameters. The main difference between this ro
 | `email` | string | User email |
 | `username` | string | Username for mentions and login |
 | `avatar_initials_url` | string | Default user avatar |
-| `avatar_uploaded_url` | null | string | User uploaded avatar url |
+| `avatar_uploaded_url` | null \| string | User uploaded avatar url |
 | `initials` | string | User initials |
 | `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | `lng` | string | Language |
@@ -6196,7 +6752,7 @@ Get users list filtered by query parameters. The main difference between this ro
 | `ui_version` | enum | 1 - old ui. 2 - new ui |
 | `company_id` | integer | Company id |
 | `user_id` | integer | User id |
-| `default_space_id` | null | integer | Default space |
+| `default_space_id` | null \| integer | Default space |
 | `permissions` | integer | User company permissions |
 | `role` | enum | User role: 1 - owner, 2 - user, 3 - deactivated |
 | `email_frequency` | enum | 1 - never, 2 – instantly |
@@ -6220,13 +6776,13 @@ Get users list filtered by query parameters. The main difference between this ro
 | - `card_member_become_responsible` | array | Notification enabled on card change set responsible |
 | - `checklist_item_responsible_add` | array | Notification enabled on card set responsible for checklist item |
 | `notification_enabled_channels` | array | List of enabled channels for notifications |
-| `slack_private_channel_id` | null | integer | User slack private channel id |
+| `slack_private_channel_id` | null \| integer | User slack private channel id |
 | `telegram_sd_bot_enabled` | boolean | Telegram bot enable flag |
 | `invite_last_sent_at` | string | Last invite date |
 | `apps_permissions` | string | 0 - no access, 1 - full access (service desk denied), 2 - guest access (service desk denied), 4 - service desk only, 5 - full access + service desk, 6 - guest access + service desk |
 | `external` | boolean | Is user external |
-| `last_request_date` | null | string | Date of last request |
-| `last_request_method` | null | string | Type of last request |
+| `last_request_date` | null \| string | Date of last request |
+| `last_request_method` | null \| string | Type of last request |
 | `include_inactive` | boolean | Includes in the list of deactivated users |
 
 - **400** (error) - validation Error
@@ -6259,7 +6815,7 @@ Get users list filtered by query parameters. The main difference between this ro
 | `email` | string | User email |
 | `username` | string | Username for mentions and login |
 | `avatar_initials_url` | string | Default user avatar |
-| `avatar_uploaded_url` | null | string | User uploaded avatar url |
+| `avatar_uploaded_url` | null \| string | User uploaded avatar url |
 | `initials` | string | User initials |
 | `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | `lng` | string | Language |
@@ -6273,7 +6829,7 @@ Get users list filtered by query parameters. The main difference between this ro
 | `telegram_id` | integer | Telegram id |
 | `telegram_settings` | object | Telegram settings |
 | `user_id` | integer | User id |
-| `default_space_id` | null | integer | Default space |
+| `default_space_id` | null \| integer | Default space |
 | `permissions` | integer | User company permissions |
 | `role` | enum | User role: 1 - owner, 2 - user, 3 - deactivated |
 | `email_frequency` | enum | 1 - never, 2 – instantly |
@@ -6297,13 +6853,13 @@ Get users list filtered by query parameters. The main difference between this ro
 | - `card_member_become_responsible` | array | Notification enabled on card change set responsible |
 | - `checklist_item_responsible_add` | array | Notification enabled on card set responsible for checklist item |
 | `notification_enabled_channels` | array | List of enabled channels for notifications |
-| `slack_private_channel_id` | null | integer | User slack private channel id |
+| `slack_private_channel_id` | null \| integer | User slack private channel id |
 | `telegram_sd_bot_enabled` | boolean | Telegram bot enable flag |
 | `invite_last_sent_at` | string | Last invite date |
 | `apps_permissions` | string | 0 - no access, 1 - full access (service desk denied), 2 - guest access (service desk denied), 4 - service desk only, 5 - full access + service desk, 6 - guest access + service desk |
 | `external` | boolean | Is user external |
-| `last_request_date` | null | string | Date of last request |
-| `last_request_method` | null | string | Type of last request |
+| `last_request_date` | null \| string | Date of last request |
+| `last_request_method` | null \| string | Type of last request |
 | `has_password` | boolean | Has user password flag |
 
 - **401** (error) - Invalid token
@@ -6337,7 +6893,7 @@ Get users list filtered by query parameters. The main difference between this ro
 | `updated` | string | Last update timestamp |
 | `created` | string | Create date |
 | `avatar_initials_url` | string | Default user avatar |
-| `avatar_uploaded_url` | null | string | User uploaded avatar url |
+| `avatar_uploaded_url` | null \| string | User uploaded avatar url |
 | `activated` | boolean | User activated flag |
 | `initials` | string | User initials |
 | `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
@@ -6347,7 +6903,7 @@ Get users list filtered by query parameters. The main difference between this ro
 | `news_subscription` | boolean | news subscription flag |
 | `theme` | enum | light - light color theme, dark - dark color theme, auto - color theme based on OS settings |
 | `ui_version` | enum | 1 - old ui. 2 - new ui |
-| `default_space_id` | null | integer | Default space |
+| `default_space_id` | null \| integer | Default space |
 | `email_frequency` | enum | 1 - never, 2 – instantly |
 | `email_settings` | object | Email settings |
 | - `deadlines` | boolean | Daily due dates digest flag |
@@ -6398,7 +6954,7 @@ Get users list filtered by query parameters. The main difference between this ro
 | `email` | string | User email |
 | `username` | string | Username for mentions and login |
 | `avatar_initials_url` | string | Default user avatar |
-| `avatar_uploaded_url` | null | string | User uploaded avatar url |
+| `avatar_uploaded_url` | null \| string | User uploaded avatar url |
 | `initials` | string | User initials |
 | `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | `lng` | string | Language |
@@ -6409,9 +6965,9 @@ Get users list filtered by query parameters. The main difference between this ro
 | `activated` | boolean | User activated flag |
 | `ui_version` | enum | 1 - old ui. 2 - new ui |
 | `virtual` | boolean | Is user virtual |
-| `email_blocked` | null | string | Email blocked timestamp |
-| `email_blocked_reason` | null | string | Email blocked reason |
-| `delete_requested_at` | null | string | Timestamp of delete request |
+| `email_blocked` | null \| string | Email blocked timestamp |
+| `email_blocked_reason` | null \| string | Email blocked reason |
+| `delete_requested_at` | null \| string | Timestamp of delete request |
 
 - **400** (error) - validation Error
 
@@ -6458,7 +7014,7 @@ Get users list filtered by query parameters. The main difference between this ro
 | `email` | string | User email |
 | `username` | string | Username for mentions and login |
 | `avatar_initials_url` | string | Default user avatar |
-| `avatar_uploaded_url` | null | string | User uploaded avatar url |
+| `avatar_uploaded_url` | null \| string | User uploaded avatar url |
 | `initials` | string | User initials |
 | `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | `lng` | string | Language |
@@ -6469,10 +7025,10 @@ Get users list filtered by query parameters. The main difference between this ro
 | `activated` | boolean | User activated flag |
 | `ui_version` | enum | 1 - old ui. 2 - new ui |
 | `virtual` | boolean | Is user virtual |
-| `email_blocked` | null | string | Email blocked timestamp |
-| `email_blocked_reason` | null | string | Email blocked reason |
-| `delete_requested_at` | null | string | Timestamp of delete request |
-| `delete_confirmation_sent_at` | null | string | Timestamp of sending confirmation of deletion |
+| `email_blocked` | null \| string | Email blocked timestamp |
+| `email_blocked_reason` | null \| string | Email blocked reason |
+| `delete_requested_at` | null \| string | Timestamp of delete request |
+| `delete_confirmation_sent_at` | null \| string | Timestamp of sending confirmation of deletion |
 | `sd_telegram_id` | integer | Service desk telegram id |
 | `news_subscription` | boolean | news subscription flag |
 
@@ -6506,7 +7062,7 @@ Get users list filtered by query parameters. The main difference between this ro
 | `email` | string | User email |
 | `username` | string | Username for mentions and login |
 | `avatar_initials_url` | string | Default user avatar |
-| `avatar_uploaded_url` | null | string | User uploaded avatar url |
+| `avatar_uploaded_url` | null \| string | User uploaded avatar url |
 | `initials` | string | User initials |
 | `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | `lng` | string | Language |
@@ -6517,9 +7073,9 @@ Get users list filtered by query parameters. The main difference between this ro
 | `activated` | boolean | User activated flag |
 | `ui_version` | enum | 1 - old ui. 2 - new ui |
 | `virtual` | boolean | Is user virtual |
-| `email_blocked` | null | string | Email blocked timestamp |
-| `email_blocked_reason` | null | string | Email blocked reason |
-| `delete_requested_at` | null | string | Timestamp of delete request |
+| `email_blocked` | null \| string | Email blocked timestamp |
+| `email_blocked_reason` | null \| string | Email blocked reason |
+| `delete_requested_at` | null \| string | Timestamp of delete request |
 
 - **401** (error) - Invalid token
 - **402** (error) - feature is not supported by tariff
@@ -6560,7 +7116,7 @@ Get users list filtered by query parameters. The main difference between this ro
 | `email` | string | User email |
 | `username` | string | Username for mentions and login |
 | `avatar_initials_url` | string | Default user avatar |
-| `avatar_uploaded_url` | null | string | User uploaded avatar url |
+| `avatar_uploaded_url` | null \| string | User uploaded avatar url |
 | `initials` | string | User initials |
 | `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | `lng` | string | Language |
@@ -6571,9 +7127,9 @@ Get users list filtered by query parameters. The main difference between this ro
 | `activated` | boolean | User activated flag |
 | `ui_version` | enum | 1 - old ui. 2 - new ui |
 | `virtual` | boolean | Is user virtual |
-| `email_blocked` | null | string | Email blocked timestamp |
-| `email_blocked_reason` | null | string | Email blocked reason |
-| `delete_requested_at` | null | string | Timestamp of delete request |
+| `email_blocked` | null \| string | Email blocked timestamp |
+| `email_blocked_reason` | null \| string | Email blocked reason |
+| `delete_requested_at` | null \| string | Timestamp of delete request |
 
 - **400** (error) - validation Error
 
@@ -6620,7 +7176,7 @@ Get users list filtered by query parameters. The main difference between this ro
 | `email` | string | User email |
 | `username` | string | Username for mentions and login |
 | `avatar_initials_url` | string | Default user avatar |
-| `avatar_uploaded_url` | null | string | User uploaded avatar url |
+| `avatar_uploaded_url` | null \| string | User uploaded avatar url |
 | `initials` | string | User initials |
 | `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | `lng` | string | Language |
@@ -6631,10 +7187,10 @@ Get users list filtered by query parameters. The main difference between this ro
 | `activated` | boolean | User activated flag |
 | `ui_version` | enum | 1 - old ui. 2 - new ui |
 | `virtual` | boolean | Is user virtual |
-| `email_blocked` | null | string | Email blocked timestamp |
-| `email_blocked_reason` | null | string | Email blocked reason |
-| `delete_requested_at` | null | string | Timestamp of delete request |
-| `delete_confirmation_sent_at` | null | string | Timestamp of sending confirmation of deletion |
+| `email_blocked` | null \| string | Email blocked timestamp |
+| `email_blocked_reason` | null \| string | Email blocked reason |
+| `delete_requested_at` | null \| string | Timestamp of delete request |
+| `delete_confirmation_sent_at` | null \| string | Timestamp of sending confirmation of deletion |
 | `sd_telegram_id` | integer | Service desk telegram id |
 | `news_subscription` | boolean | news subscription flag |
 
@@ -6668,7 +7224,7 @@ Get users list filtered by query parameters. The main difference between this ro
 | `email` | string | User email |
 | `username` | string | Username for mentions and login |
 | `avatar_initials_url` | string | Default user avatar |
-| `avatar_uploaded_url` | null | string | User uploaded avatar url |
+| `avatar_uploaded_url` | null \| string | User uploaded avatar url |
 | `initials` | string | User initials |
 | `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | `lng` | string | Language |
@@ -6679,9 +7235,9 @@ Get users list filtered by query parameters. The main difference between this ro
 | `activated` | boolean | User activated flag |
 | `ui_version` | enum | 1 - old ui. 2 - new ui |
 | `virtual` | boolean | Is user virtual |
-| `email_blocked` | null | string | Email blocked timestamp |
-| `email_blocked_reason` | null | string | Email blocked reason |
-| `delete_requested_at` | null | string | Timestamp of delete request |
+| `email_blocked` | null \| string | Email blocked timestamp |
+| `email_blocked_reason` | null \| string | Email blocked reason |
+| `delete_requested_at` | null \| string | Timestamp of delete request |
 
 - **401** (error) - Invalid token
 - **402** (error) - feature is not supported by tariff
@@ -6878,7 +7434,7 @@ Get Company Users list filtered by query parameters. To use this route you need 
 | `full_name` | string | User full name |
 | `email` | string | User email |
 | `avatar_initials_url` | string | Default user avatar url |
-| `avatar_uploaded_url` | string | null | User uploaded avatar url |
+| `avatar_uploaded_url` | string \| null | User uploaded avatar url |
 | `initials` | string | User initials |
 | `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | `lng` | string | Language |
@@ -6889,14 +7445,14 @@ Get Company Users list filtered by query parameters. To use this route you need 
 | `activated` | boolean | User activated flag |
 | `ui_version` | enum | 1 - old ui. 2 - new ui |
 | `virtual` | boolean | Is user virtual |
-| `email_blocked` | null | string | Email blocked timestamp |
-| `email_blocked_reason` | null | string | Email blocked reason |
-| `delete_requested_at` | null | string | Timestamp of delete request |
+| `email_blocked` | null \| string | Email blocked timestamp |
+| `email_blocked_reason` | null \| string | Email blocked reason |
+| `delete_requested_at` | null \| string | Timestamp of delete request |
 | `permissions` | integer | User company permissions(with inherited permissions through groups) |
 | `own_permissions` | integer | User personal company permissions |
 | `user_id` | integer | User id |
 | `company_id` | integer | Company id |
-| `default_space_id` | null | integer | Default space |
+| `default_space_id` | null \| integer | Default space |
 | `role` | enum | User role: 1 - owner, 2 - user, 3 - deactivated |
 | `email_frequency` | enum | 1 - never, 2 – instantly |
 | `email_settings` | object | Email settings |
@@ -6919,13 +7475,13 @@ Get Company Users list filtered by query parameters. To use this route you need 
 | - `card_member_become_responsible` | array | Notification enabled on card change set responsible |
 | - `checklist_item_responsible_add` | array | Notification enabled on card set responsible for checklist item |
 | `notification_enabled_channels` | array | List of enabled channels for notifications |
-| `slack_private_channel_id` | null | integer | User slack private channel id |
+| `slack_private_channel_id` | null \| integer | User slack private channel id |
 | `telegram_sd_bot_enabled` | boolean | Telegram bot enable flag |
 | `apps_permissions` | string | 0 - no access, 1 - full access (service desk denied), 2 - guest access (service desk denied), 4 - service desk only, 5 - full access + service desk, 6 - guest access + service desk |
 | `invite_last_sent_at` | string | Last invite date |
 | `external` | boolean | Is user external |
-| `last_request_date` | null | string | Date of last request |
-| `last_request_method` | null | string | Type of last request |
+| `last_request_date` | null \| string | Date of last request |
+| `last_request_method` | null \| string | Type of last request |
 | `work_time_settings` | object | Work time settings |
 | - `work_days` | array | Work days |
 | - `hours_count` | integer | Work time hours count |
@@ -6937,11 +7493,11 @@ Get Company Users list filtered by query parameters. To use this route you need 
 | - `id` | integer | Space id |
 | - `uid` | string | Space uid |
 | - `title` | string | Space title |
-| - `external_id` | null | string | External id |
+| - `external_id` | null \| string | External id |
 | - `company_id` | integer | Company id |
 | - `path` | string | Inner path to entity |
 | - `sort_order` | number | Space sort order |
-| - `parent_entity_uid` | null | string | Parent entity uid |
+| - `parent_entity_uid` | null \| string | Parent entity uid |
 | - `archived` | boolean | Space archived flag |
 | - `access` | string | Space access |
 | - `for_everyone_access_role_id` | string | Role id for everyone access |
@@ -6994,7 +7550,7 @@ To use this route you need access to the Administrative section "Members"
 | `email` | string | User email |
 | `username` | string | Username for mentions and login |
 | `avatar_initials_url` | string | Default user avatar url |
-| `avatar_uploaded_url` | string | null | User uploaded avatar url |
+| `avatar_uploaded_url` | string \| null | User uploaded avatar url |
 | `initials` | string | User initials |
 | `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | `lng` | string | Language |
@@ -7010,7 +7566,7 @@ To use this route you need access to the Administrative section "Members"
 | `delete_requested_at` | string | Timestamp of delete request |
 | `user_id` | integer | User id |
 | `company_id` | integer | Company id |
-| `default_space_id` | null | integer | Default space |
+| `default_space_id` | null \| integer | Default space |
 | `role` | enum | User role: 1 - owner, 2 - user, 3 - deactivated |
 | `permissions` | integer | User company permissions |
 | `apps_permissions` | string | 0 - no access, 1 - full access (service desk denied), 2 - guest access (service desk denied), 4 - service desk only, 5 - full access + service desk, 6 - guest access + service desk |
@@ -7020,7 +7576,7 @@ To use this route you need access to the Administrative section "Members"
 | - `subject_by` | enum | Subject. 1-id and title, 2-action |
 | `slack_id` | null || integer | User slack id |
 | `slack_settings` | null || object | Slack settings |
-| `slack_private_channel_id` | null | integer | User slack private channel id |
+| `slack_private_channel_id` | null \| integer | User slack private channel id |
 | `telegram_sd_bot_enabled` | boolean | Telegram bot enable flag |
 | `external` | boolean | Is user external |
 | `notification_settings` | object | Notification settings |
@@ -7041,8 +7597,8 @@ To use this route you need access to the Administrative section "Members"
 | - `work_days` | array | Work days |
 | - `hours_count` | integer | Work time hours count |
 | `invite_last_sent_at` | string | Last invite date |
-| `last_request_date` | null | string | Date of last request |
-| `last_request_method` | null | string | Type of last request |
+| `last_request_date` | null \| string | Date of last request |
+| `last_request_method` | null \| string | Type of last request |
 | `notification_enabled_channels` | array | List of enabled channels for notifications |
 | `personal_settings` | object | Personal settings |
 | - `current_card_view_id` | string | current card view uid |
@@ -7296,7 +7852,7 @@ Get groups list filtered by query params. The result of the request is displayed
 |---|---|---|
 | `group_id` | integer | Group id |
 | `entity_uid` | string | Entity uid |
-| `access_mod` | string | null | Access modifier with inheritable access modifiers |
+| `access_mod` | string \| null | Access modifier with inheritable access modifiers |
 | `own_access_mod` | string| null | Own access modifier |
 | `role_ids` | array of strings | Entity roles ids with inherited roles |
 | `own_role_ids` | array of strings | Entity role ids |
@@ -7384,7 +7940,7 @@ Get groups list filtered by query params. The result of the request is displayed
 |---|---|---|
 | `group_id` | integer | Group id |
 | `entity_uid` | string | Entity uid |
-| `access_mod` | string | null | Access modifier with inheritable access modifiers |
+| `access_mod` | string \| null | Access modifier with inheritable access modifiers |
 | `own_access_mod` | string| null | Own access modifier |
 | `role_ids` | array of strings | Entity roles ids with inherited roles |
 | `own_role_ids` | array of strings | Entity roles ids |
@@ -7438,7 +7994,7 @@ Get groups list filtered by query params. The result of the request is displayed
 |---|---|---|
 | `group_id` | integer | Group id |
 | `entity_uid` | string | Entity uid |
-| `access_mod` | string | null | Access modifier with inheritable access modifiers |
+| `access_mod` | string \| null | Access modifier with inheritable access modifiers |
 | `own_access_mod` | string| null | Own access modifier |
 | `role_ids` | array of strings | Entity roles ids with inherited roles |
 | `own_role_ids` | array of strings| null | Entity roles ids |
@@ -7502,7 +8058,7 @@ Get groups list filtered by query params. The result of the request is displayed
 | `type` | string | Custom property type |
 | `show_on_facade` | string | Should show property on card's facade |
 | `multiline` | string | Should render multiline text field |
-| `fields_settings` | null | object | Field settings for catalog type |
+| `fields_settings` | null \| object | Field settings for catalog type |
 | - `{custom_properties_catalog_fiels_uid}` | object | Field settings |
 | `author_id` | integer | Author_id |
 | `company_id` | integer | Company_id |
@@ -7513,12 +8069,12 @@ Get groups list filtered by query params. The result of the request is displayed
 | `colorful` | boolean | Used for select properties. Determines should select color when creating new select value. |
 | `multi_select` | boolean | Used for select properties. Determines is select property used as multi select |
 | `values_creatable_by_users` | boolean | Used for select properties. Determines if users with writer role are able to create new select property values. |
-| `data` | null | object | Additional custom property data |
-| `values_type` | null | string | Type of values |
-| `vote_variant` | null | string | Type of vote or collective vote custom properties |
+| `data` | null \| object | Additional custom property data |
+| `values_type` | null \| string | Type of values |
+| `vote_variant` | null \| string | Type of vote or collective vote custom properties |
 | `protected` | boolean | Protected flag |
-| `color` | null | integer | Color of catalog custom property |
-| `external_id` | null | string | External id |
+| `color` | null \| integer | Color of catalog custom property |
+| `external_id` | null \| string | External id |
 
 - **400** (error) - validation Error
 
@@ -7559,7 +8115,7 @@ Get custom property list. The result of the request is displayed page by page if
 | `type` | string | Custom property type |
 | `show_on_facade` | string | Should show property on card's facade |
 | `multiline` | string | Should render multiline text field |
-| `fields_settings` | null | object | Field settings for catalog type |
+| `fields_settings` | null \| object | Field settings for catalog type |
 | - `{custom_properties_catalog_fiels_uid}` | object | Field settings |
 | `author_id` | integer | Author_id |
 | `company_id` | integer | Company_id |
@@ -7570,12 +8126,12 @@ Get custom property list. The result of the request is displayed page by page if
 | `colorful` | boolean | Used for select properties. Determines should select color when creating new select value. |
 | `multi_select` | boolean | Used for select properties. Determines is select property used as multi select |
 | `values_creatable_by_users` | boolean | Used for select properties. Determines if users with writer role are able to create new select property values. |
-| `data` | null | object | Additional custom property data |
-| `values_type` | null | string | Type of values |
-| `vote_variant` | null | string | Type of vote or collective vote custom properties |
+| `data` | null \| object | Additional custom property data |
+| `values_type` | null \| string | Type of values |
+| `vote_variant` | null \| string | Type of vote or collective vote custom properties |
 | `protected` | boolean | Protected flag |
-| `color` | null | integer | Color of catalog custom property |
-| `external_id` | null | string | External id |
+| `color` | null \| integer | Color of catalog custom property |
+| `external_id` | null \| string | External id |
 
 - **401** (error) - Invalid token
 - **403** (error) - Forbiden
@@ -7604,7 +8160,7 @@ Get custom property list. The result of the request is displayed page by page if
 | `type` | string | Custom property type |
 | `show_on_facade` | string | Should show property on card's facade |
 | `multiline` | string | Should render multiline text field |
-| `fields_settings` | null | object | Field settings for catalog type |
+| `fields_settings` | null \| object | Field settings for catalog type |
 | - `{custom_properties_catalog_fiels_uid}` | object | Field settings |
 | `author_id` | integer | Author_id |
 | `company_id` | integer | Company_id |
@@ -7615,12 +8171,12 @@ Get custom property list. The result of the request is displayed page by page if
 | `colorful` | boolean | Used for select properties. Determines should select color when creating new select value. |
 | `multi_select` | boolean | Used for select properties. Determines is select property used as multi select |
 | `values_creatable_by_users` | boolean | Used for select properties. Determines if users with writer role are able to create new select property values. |
-| `data` | null | object | Additional custom property data |
-| `values_type` | null | string | Type of values |
-| `vote_variant` | null | string | Type of vote or collective vote custom properties |
+| `data` | null \| object | Additional custom property data |
+| `values_type` | null \| string | Type of values |
+| `vote_variant` | null \| string | Type of vote or collective vote custom properties |
 | `protected` | boolean | Protected flag |
-| `color` | null | integer | Color of catalog custom property |
-| `external_id` | null | string | External id |
+| `color` | null \| integer | Color of catalog custom property |
+| `external_id` | null \| string | External id |
 
 - **401** (error) - Invalid token
 - **403** (error) - Forbiden
@@ -7650,7 +8206,7 @@ Get custom property list. The result of the request is displayed page by page if
 | `type` | string | Custom property type |
 | `show_on_facade` | string | Should show property on card's facade |
 | `multiline` | string | Should render multiline text field |
-| `fields_settings` | null | object | Field settings for catalog type |
+| `fields_settings` | null \| object | Field settings for catalog type |
 | - `{custom_properties_catalog_fiels_uid}` | object | Field settings |
 | `author_id` | integer | Author_id |
 | `company_id` | integer | Company_id |
@@ -7661,12 +8217,12 @@ Get custom property list. The result of the request is displayed page by page if
 | `colorful` | boolean | Used for select properties. Determines should select color when creating new select value. |
 | `multi_select` | boolean | Used for select properties. Determines is select property used as multi select |
 | `values_creatable_by_users` | boolean | Used for select properties. Determines if users with writer role are able to create new select property values. |
-| `data` | null | object | Additional custom property data |
-| `values_type` | null | string | Type of values |
-| `vote_variant` | null | string | Type of vote or collective vote custom properties |
+| `data` | null \| object | Additional custom property data |
+| `values_type` | null \| string | Type of values |
+| `vote_variant` | null \| string | Type of vote or collective vote custom properties |
 | `protected` | boolean | Protected flag |
-| `color` | null | integer | Color of catalog custom property |
-| `external_id` | null | string | External id |
+| `color` | null \| integer | Color of catalog custom property |
+| `external_id` | null \| string | External id |
 
 - **400** (error) - validation Error
 
@@ -7712,7 +8268,7 @@ Get custom property list. The result of the request is displayed page by page if
 | `type` | string | Custom property type |
 | `show_on_facade` | string | Should show property on card's facade |
 | `multiline` | string | Should render multiline text field |
-| `fields_settings` | null | object | Field settings for catalog type |
+| `fields_settings` | null \| object | Field settings for catalog type |
 | - `{custom_properties_catalog_fiels_uid}` | object | Field settings |
 | `author_id` | integer | Author_id |
 | `company_id` | integer | Company_id |
@@ -7723,12 +8279,12 @@ Get custom property list. The result of the request is displayed page by page if
 | `colorful` | boolean | Used for select properties. Determines should select color when creating new select value. |
 | `multi_select` | boolean | Used for select properties. Determines is select property used as multi select |
 | `values_creatable_by_users` | boolean | Used for select properties. Determines if users with writer role are able to create new select property values. |
-| `data` | null | object | Additional custom property data |
-| `values_type` | null | string | Type of values |
-| `vote_variant` | null | string | Type of vote or collective vote custom properties |
+| `data` | null \| object | Additional custom property data |
+| `values_type` | null \| string | Type of values |
+| `vote_variant` | null \| string | Type of vote or collective vote custom properties |
 | `protected` | boolean | Protected flag |
-| `color` | null | integer | Color of catalog custom property |
-| `external_id` | null | string | External id |
+| `color` | null \| integer | Color of catalog custom property |
+| `external_id` | null \| string | External id |
 
 - **400** (error) - validation Error
 
@@ -7774,7 +8330,7 @@ Get custom property list. The result of the request is displayed page by page if
 | `company_id` | integer | Company id |
 | `condition` | enum | Custom property select value condition |
 | `sort_order` | number | Position |
-| `external_id` | null | string | External id |
+| `external_id` | null \| string | External id |
 
 - **400** (error) - validation Error
 
@@ -7823,7 +8379,7 @@ Get custom property select values list. The result of the request is displayed p
 | `color` | integer | Color number |
 | `condition` | string | Custom property select value condition |
 | `sort_order` | number | Position |
-| `external_id` | null | string | External id |
+| `external_id` | null \| string | External id |
 | `updated` | string | Last update timestamp |
 
 - **401** (error) - Invalid token
@@ -7868,7 +8424,7 @@ Get custom property select values list. The result of the request is displayed p
 | `company_id` | integer | Company id |
 | `condition` | string | Custom property select value condition |
 | `sort_order` | number | Position |
-| `external_id` | null | string | External id |
+| `external_id` | null \| string | External id |
 
 - **401** (error) - Invalid token
 - **403** (error) - Forbiden
@@ -7912,7 +8468,7 @@ Get custom property select values list. The result of the request is displayed p
 | `company_id` | integer | Company id |
 | `condition` | string | Custom property select value condition |
 | `sort_order` | number | Position |
-| `external_id` | null | string | External id |
+| `external_id` | null \| string | External id |
 
 - **400** (error) - validation Error
 
@@ -7963,7 +8519,7 @@ Get custom property select values list. The result of the request is displayed p
 | `author_id` | integer | Author id |
 | `company_id` | integer | Company id |
 | `sort_order` | number | Position |
-| `external_id` | null | string | External id |
+| `external_id` | null \| string | External id |
 | `condition` | string | Custom property select value condition |
 
 - **401** (error) - Invalid token
@@ -8520,20 +9076,20 @@ Get time logs list filtered by query parameters. The result of the request is di
 | `updater_id` | integer | Last updater id |
 | `time_spent` | integer | Minutes to log |
 | `for_date` | string | Log date |
-| `comment` | null | string | Time log comment |
+| `comment` | null \| string | Time log comment |
 | `role` | object | Company user role info |
 | - `updated` | string | Last update timestamp |
 | - `created` | string | Create date |
 | - `id` | integer | Role id |
 | - `name` | string | Role name |
-| - `company_id` | null | integer | Company id |
+| - `company_id` | null \| integer | Company id |
 | `user` | object | User info |
 | - `id` | integer | User id |
 | - `full_name` | string | User full name |
 | - `email` | string | User email |
 | - `username` | string | Username for mentions and login |
 | - `avatar_initials_url` | string | Default user avatar |
-| - `avatar_uploaded_url` | null | string | User uploaded avatar url |
+| - `avatar_uploaded_url` | null \| string | User uploaded avatar url |
 | - `initials` | string | User initials |
 | - `avatar_type` | enum | 1 – gravatar, 2 – initials, 3 - uploaded |
 | - `lng` | string | Language |
@@ -8609,7 +9165,7 @@ Returns a detailed summary of a sprint, including cards, their relationships, pa
 | - `id` | integer | Card id |
 | - `title` | string | Card title |
 | - `asap` | boolean | Card asap flag |
-| - `due_date` | null | string | Card deadline |
+| - `due_date` | null \| string | Card deadline |
 | - `sort_order` | number | Position |
 | - `fifo_order` | integer | Number of card in the cell when fifo rule applied to cards column |
 | - `state` | enum | 1-queued, 2-inProgresss, 3-done |
@@ -8623,14 +9179,14 @@ Returns a detailed summary of a sprint, including cards, their relationships, pa
 | - `goals_done` | integer | Number of card done goals |
 | - `time_spent_sum` | integer | Amount of time spent(in minutes) |
 | - `time_blocked_sum` | integer | Amount of blocked time(in minutes) |
-| - `children_number_properties_sum` | null | object | Sum according to numerical data of child cards |
-| - `calculated_planned_start` | null | string | Calculated planned start |
-| - `calculated_planned_end` | null | string | Calculated planned end |
+| - `children_number_properties_sum` | null \| object | Sum according to numerical data of child cards |
+| - `calculated_planned_start` | null \| string | Calculated planned start |
+| - `calculated_planned_end` | null \| string | Calculated planned end |
 | - `blocking_card` | boolean | Is card blocking another card |
 | - `blocked` | boolean | Is card blocked |
-| - `size` | null | number | Numerical part of size |
-| - `size_unit` | null | string | Text part of size |
-| - `size_text` | null | string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
+| - `size` | null \| number | Numerical part of size |
+| - `size_unit` | null \| string | Text part of size |
+| - `size_text` | null \| string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
 | - `due_date_time_present` | boolean | Flag indicating that deadline is specified up to hours and minutes |
 | - `board_id` | integer | Board id |
 | - `column_id` | integer | Column id |
@@ -8639,43 +9195,73 @@ Returns a detailed summary of a sprint, including cards, their relationships, pa
 | - `type_id` | integer | Card type id |
 | - `version` | integer | Card version |
 | - `updater_id` | integer | User id who last updated card |
-| - `completed_on_time` | null | boolean | Flag indicating that card completed on time when due date present |
-| - `completed_at` | null | string | Date when card moved to done type column |
-| - `last_moved_at` | null | string | Date when card last moved |
-| - `lane_changed_at` | null | string | Date when card changed lane |
-| - `column_changed_at` | null | string | Date when card changed column |
-| - `first_moved_to_in_progress_at` | null | string | Date when card first moved to inProgress type column |
-| - `last_moved_to_done_at` | null | string | Date when card last moved to done type column |
+| - `completed_on_time` | null \| boolean | Flag indicating that card completed on time when due date present |
+| - `completed_at` | null \| string | Date when card moved to done type column |
+| - `last_moved_at` | null \| string | Date when card last moved |
+| - `lane_changed_at` | null \| string | Date when card changed lane |
+| - `column_changed_at` | null \| string | Date when card changed column |
+| - `first_moved_to_in_progress_at` | null \| string | Date when card first moved to inProgress type column |
+| - `last_moved_to_done_at` | null \| string | Date when card last moved to done type column |
 | - `sprint_id` | integer | Sprint id |
-| - `external_id` | null | string  | External id |
+| - `external_id` | null \| string | External id |
 | - `comments_total` | integer | Total card comments |
-| - `comment_last_added_at` | null | string | Date when last comment added |
-| - `properties` | null | object | Card custom properties. Format: id_{propertyId}:value |
-| - `planned_start` | null | string | Card timeline planned start |
-| - `planned_end` | null | string | Card timeline planned end |
+| - `comment_last_added_at` | null \| string | Date when last comment added |
+| - `properties` | null \| object | Card custom properties. Format: id_{propertyId}:value |
+| - `planned_start` | null \| string | Card timeline planned start |
+| - `planned_end` | null \| string | Card timeline planned end |
 | - `service_id` | integer | Service id |
 | - `sd_new_comment` | boolean | Has unseen service desk request author comments |
 | - `public` | boolean | Is card public |
-| - `share_settings` | null | object | Public share settings |
-| - `share_id` | null | string | Public share id |
-| - `external_user_emails` | null | string | External users emails |
+| - `share_settings` | null \| object | Public share settings |
+| - `share_id` | null \| string | Public share id |
+| - `external_user_emails` | null \| string | External users emails |
 | - `description_filled` | boolean | Flag indicating that card has description |
 | - `estimate_workload` | number | Estimate_workload |
 | - `owner` | object | Card owner info |
+| - - `id` | integer | User id |
+| - - `uid` | string | User uid |
+| - - `full_name` | string | User full name |
+| - - `email` | string | User email |
+| - - `username` | string | Username |
+| - - `avatar_initials_url` | string | Default user avatar |
+| - - `avatar_uploaded_url` | null \| string | Uploaded avatar url |
+| - - `initials` | string | User initials |
+| - - `avatar_type` | enum | 1 - gravatar, 2 - initials, 3 - uploaded |
+| - - `lng` | string | Language |
+| - - `timezone` | string | Time zone |
+| - - `theme` | enum | light, dark, auto |
+| - - `created` | string | Create date |
+| - - `updated` | string | Last update timestamp |
+| - - `activated` | boolean | User activated flag |
+| - - `ui_version` | enum | 1 - old ui, 2 - new ui |
+| - - `virtual` | boolean | Is user virtual |
+| - - `email_blocked` | null \| string | Email blocked status |
+| - - `email_blocked_reason` | null \| string | Email blocked reason |
+| - - `delete_requested_at` | null \| string | Delete request date |
 | - `type` | object | Card type info |
-| - `source` | enum | null | app, api, email, telegram, slack,
- webhook, import, schedule, automation |
+| - - `id` | integer | Card type id |
+| - - `uid` | string | Card type uid |
+| - - `name` | string | Card type name |
+| - - `color` | integer | Color number |
+| - - `letter` | string | Card type letter |
+| - - `company_id` | null \| integer | Company id |
+| - - `archived` | boolean | Archived flag |
+| - - `properties` | null \| object | Card type properties |
+| - - `suggest_fields` | boolean | Suggest fields flag |
+| - - `author_uid` | null \| string | Author uid |
+| - - `description_template` | null \| string | Description template |
+| - `source` | enum | null \| app, api, email, telegram, slack, webhook, import, schedule, automation |
 | `cardUpdates` | array of objects | Card versions and states over time |
 | - `id` | integer |  |
 | - `sprint_id` | integer |  |
 | - `created` | string |  |
 | - `updated` | string |  |
-| - `size` | number | null |  |
-| - `size_unit` | string | null |  |
-| - `size_text` | string | null |  |
-| - `properties` | object | null |  |
-| - `tag_ids` | array | null |  |
-| - `description` | string | null |  |
+| - `size` | number \| null |  |
+| - `size_unit` | string \| null |  |
+| - `size_text` | string \| null |  |
+| - `properties` | object \| null |  |
+| - `tag_ids` | array \| null |  |
+| - `description` | string \| null |  |
 | - `board_id` | integer |  |
 | - `column_id` | integer |  |
 | - `lane_id` | integer |  |
@@ -8723,7 +9309,7 @@ Returns a list of sprints for the company. The result of the request is displaye
 | `updater_id` | integer | User ID who last updated the sprint |
 | `start_date` | string | Sprint start date |
 | `finish_date` | string | Sprint planned finish date |
-| `actual_finish_date` | string | null | Sprint actual finish date |
+| `actual_finish_date` | string \| null | Sprint actual finish date |
 | `created` | string | Sprint creation timestamp |
 | `updated` | string | Sprint last update timestamp |
 | `archived` | boolean | Sprint archived flag |
@@ -8751,7 +9337,7 @@ Returns a list of sprints for the company. The result of the request is displaye
 |---|---|---|
 | `id` | integer | Service id |
 | `name` | string | Service name |
-| `fields_settings` | null | object | Service fields |
+| `fields_settings` | null \| object | Service fields |
 | - `commentDescription` | object | Comment setting |
 | - `size` | object | Size field setting |
 | - `dueDate` | object | Due date Comment setting |
@@ -8759,7 +9345,7 @@ Returns a list of sprints for the company. The result of the request is displaye
 | `archived` | boolean | Archived flag |
 | `lng` | string | Language |
 | `email_settings` | integer | Bitmap of email settings |
-| `type_id` | null | integer | Request (card) type ID |
+| `type_id` | null \| integer | Request (card) type ID |
 | `email_key` | integer | Email key |
 | `board_id` | integer | Board id |
 | `column_id` | integer | Column id |
@@ -8777,20 +9363,20 @@ Returns a list of sprints for the company. The result of the request is displaye
 | - `type` | enum | 1 - queue, 2 – in progress, 3 – done |
 | - `board_id` | integer | Board id |
 | - `column_id` | null | Parent column id |
-| - `external_id` | null | string | External id |
+| - `external_id` | null \| string | External id |
 | - `rules` | integer | Bit mask for column rules. Rules: 1 - checklists must be checked, 2 - display FIFO order |
 | `board` | object | Board info |
 | - `id` | integer | Board id |
 | - `title` | string | Board title |
-| - `external_id` | null | string | External id |
-| - `card_properties` | null | array of objects | Properties of the board cards suggested for filling  |
+| - `external_id` | null \| string | External id |
+| - `card_properties` | null \| array of objects | Properties of the board cards suggested for filling  |
 | `lane` | object | Lane info |
 | - `id` | integer | Lane id |
 | - `title` | string | Lane title |
 | - `sort_order` | number | Position |
 | - `board_id` | integer | Board id |
 | - `condition` | enum | 1 - live, 2 - archived, 3 - deleted |
-| - `external_id` | null | string | External id |
+| - `external_id` | null \| string | External id |
 | `voteCustomProperty` | object | Vote custom property info |
 | - `updated` | string | Last update timestamp |
 | - `created` | string | Create date |
@@ -8827,7 +9413,7 @@ Create automation
 
 | Name | Type | Description |
 |---|---|---|
-| `name` | string | null | AutomationName |
+| `name` | string \| null | AutomationName |
 | `sort_order` | number | Automation sort order |
 | `space_uid` | string | Space uid |
 | `updater_id` | integer | User id, who created automation |
@@ -8921,7 +9507,7 @@ Create automation
 
 | Name | Type | Description |
 |---|---|---|
-| `name` | string | null | AutomationName |
+| `name` | string \| null | AutomationName |
 | `sort_order` | number | Automation sort order |
 | `space_uid` | string | Space uid |
 | `updater_id` | integer | User id, who created automation |
@@ -9016,7 +9602,7 @@ Update automation
 
 | Name | Type | Description |
 |---|---|---|
-| `name` | string | null | AutomationName |
+| `name` | string \| null | AutomationName |
 | `sort_order` | number | Automation sort order |
 | `space_uid` | string | Space uid |
 | `updater_id` | integer | User id, who created automation |
@@ -9233,9 +9819,9 @@ Get tags list filtered by query parameters. The result of the request is display
 | `archived` | boolean | Card archived flag |
 | `id` | integer | Card id |
 | `title` | string | Card title |
-| `description` | null | string | Card description |
+| `description` | null \| string | Card description |
 | `asap` | boolean | Card asap flag |
-| `due_date` | null | string | Card deadline |
+| `due_date` | null \| string | Card deadline |
 | `fifo_order` | integer | Number of card in the cell when fifo rule applied to cards column |
 | `state` | enum | 1-queued, 2-inProgresss, 3-done |
 | `condition` | enum | 1 - live, 2 - archived, 3 - deleted |
@@ -9247,15 +9833,15 @@ Get tags list filtered by query parameters. The result of the request is display
 | `goals_done` | integer | Number of card done goals |
 | `time_spent_sum` | integer | Amount of time spent(in minutes) |
 | `time_blocked_sum` | integer | Amount of blocked time(in minutes) |
-| `children_number_properties_sum` | null | object | Sum according to numerical data of child cards |
-| `parent_checklist_ids` | null | array | Array of card parent checklist ids |
-| `parents_ids` | null | array | Array of card parent ids |
-| `children_ids` | null | array | Array of card children ids |
+| `children_number_properties_sum` | null \| object | Sum according to numerical data of child cards |
+| `parent_checklist_ids` | null \| array | Array of card parent checklist ids |
+| `parents_ids` | null \| array | Array of card parent ids |
+| `children_ids` | null \| array | Array of card children ids |
 | `blocking_card` | boolean | Is card blocking another card |
 | `blocked` | boolean | Is card blocked |
-| `size` | null | number | Numerical part of size |
-| `size_unit` | null | string | Text part of size |
-| `size_text` | null | string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
+| `size` | null \| number | Numerical part of size |
+| `size_unit` | null \| string | Text part of size |
+| `size_text` | null \| string | Size. Example of acceptable values: '1', '23.45', '.5', 'S', '3 M', 'L', 'XL', etc... |
 | `due_date_time_present` | boolean | Flag indicating that deadline is specified up to hours and minutes |
 | `board_id` | integer | Board id |
 | `column_id` | integer | Column id |
@@ -9264,39 +9850,64 @@ Get tags list filtered by query parameters. The result of the request is display
 | `type_id` | integer | Card type id |
 | `version` | integer | Card version |
 | `updater_id` | integer | User id who last updated card |
-| `completed_on_time` | null | boolean | Flag indicating that card completed on time when due date present |
-| `completed_at` | null | string | Date when card moved to done type column |
-| `last_moved_at` | null | string | Date when card last moved |
-| `lane_changed_at` | null | string | Date when card changed lane |
-| `column_changed_at` | null | string | Date when card changed column |
-| `first_moved_to_in_progress_at` | null | string | Date when card first moved to inProgress type column |
-| `last_moved_to_done_at` | null | string | Date when card last moved to done type column |
+| `completed_on_time` | null \| boolean | Flag indicating that card completed on time when due date present |
+| `completed_at` | null \| string | Date when card moved to done type column |
+| `last_moved_at` | null \| string | Date when card last moved |
+| `lane_changed_at` | null \| string | Date when card changed lane |
+| `column_changed_at` | null \| string | Date when card changed column |
+| `first_moved_to_in_progress_at` | null \| string | Date when card first moved to inProgress type column |
+| `last_moved_to_done_at` | null \| string | Date when card last moved to done type column |
 | `sprint_id` | integer | Sprint id |
-| `external_id` | null | string | External id |
+| `external_id` | null \| string | External id |
 | `service_id` | integer | Service id |
 | `comments_total` | integer | Total card comments |
-| `comment_last_added_at` | null | string | Date when last comment added |
-| `properties` | null | object | Card custom properties. Format: id_{propertyId}:value |
-| `planned_start` | null | string | Card timeline planned start |
-| `planned_end` | null | string | Card timeline planned end |
+| `comment_last_added_at` | null \| string | Date when last comment added |
+| `properties` | null \| object | Card custom properties. Format: id_{propertyId}:value |
+| `planned_start` | null \| string | Card timeline planned start |
+| `planned_end` | null \| string | Card timeline planned end |
 | `counters_recalculated_at` | string | Date of recalculating counters |
 | `sd_new_comment` | boolean | Has unseen service desk request author comments |
-| `import_id` | null | integer | Import id |
+| `import_id` | null \| integer | Import id |
 | `public` | boolean | Is card public |
-| `share_settings` | null | object | Public share settings |
+| `share_settings` | null \| object | Public share settings |
 | - `fields` | object | Visible card fields |
 | - `share_due_date` | string | Share until |
 | - `open_unauthorized_allowed` | boolean | Allow to open unauthorized to view the card in the read only mode |
-| `share_id` | null | string | Public share id |
-| `external_user_emails` | null | string | External users emails |
+| `share_id` | null \| string | Public share id |
+| `external_user_emails` | null \| string | External users emails |
 | `description_filled` | boolean | Flag indicating that card has description |
 | `tags_ids` | array | Array of card tags ids |
 | `has_access_to_space` | boolean | Flag indicating that user who made request has aceess to space |
 | `path_data` | object | Card path info (space, board, column, lane, etc) |
 | - `lane` | object | Card lane info |
+| - - `id` | integer | Lane id |
+| - - `uid` | string | Lane uid |
+| - - `title` | string | Lane title |
+| - - `sort_order` | number | Position |
+| - - `board_id` | integer | Board id |
+| - - `condition` | enum | 1 - live, 2 - archived, 3 - deleted |
+| - - `external_id` | null \| string | External id |
+| - - `default_card_type_id` | null \| integer | Default card type id |
 | - `board` | object | Card board info |
+| - - `id` | integer | Board id |
+| - - `uid` | string | Board uid |
+| - - `title` | string | Board title |
+| - - `external_id` | null \| string | External id |
+| - - `card_properties` | null \| array | Board card properties |
+| - - `settings` | null \| object | Board settings |
 | - `space` | object | Card space info |
 | - `column` | object | Card column info |
+| - - `id` | integer | Column id |
+| - - `uid` | string | Column uid |
+| - - `title` | string | Column title |
+| - - `sort_order` | number | Position |
+| - - `col_count` | integer | Width |
+| - - `type` | enum | 1 - queue, 2 - in progress, 3 - done |
+| - - `board_id` | integer | Board id |
+| - - `column_id` | null \| integer | Parent column id |
+| - - `external_id` | null \| string | External id |
+| - - `rules` | integer | Column rules bitmask |
+| - - `pause_sla` | boolean | Pause SLA timer in this column |
 | - `subcolumn` | object | Card subcolumn info |
 | `space_id` | integer | Space id |
 
@@ -9340,12 +9951,12 @@ Get tags list filtered by query parameters. The result of the request is display
 | `text` | string | Checklist item text |
 | `sort_order` | number | Position |
 | `checked` | boolean | Flag indicating that checklist item checked |
-| `checker_id` | null | integer | User id who checked checklist item |
+| `checker_id` | null \| integer | User id who checked checklist item |
 | `user_id` | index | Current user id |
-| `checked_at` | null | string | Date of check |
-| `responsible_id` | null | integer | User id who is responsible for checklist item |
+| `checked_at` | null \| string | Date of check |
+| `responsible_id` | null \| integer | User id who is responsible for checklist item |
 | `deleted` | boolean | Flag indicating that checklist item deleted |
-| `due_date` | null | string | checklist item deadline |
+| `due_date` | null \| string | checklist item deadline |
 
 - **400** (error) - validation Error
 
@@ -9386,12 +9997,12 @@ Get tags list filtered by query parameters. The result of the request is display
 | `text` | string | Checklist item text |
 | `sort_order` | number | Position |
 | `checked` | boolean | Flag indicating that checklist item checked |
-| `checker_id` | null | integer | User id who checked checklist item |
+| `checker_id` | null \| integer | User id who checked checklist item |
 | `user_id` | integer | Current user id |
-| `checked_at` | null | string | Date of check |
-| `responsible_id` | null | integer | User id who is responsible for checklist item |
+| `checked_at` | null \| string | Date of check |
+| `responsible_id` | null \| integer | User id who is responsible for checklist item |
 | `deleted` | boolean | Flag indicating that checklist item deleted |
-| `due_date` | null | string | checklist item deadline |
+| `due_date` | null \| string | checklist item deadline |
 
 - **400** (error) - validation Error
 
@@ -9524,9 +10135,9 @@ To perform the import, you need to have a meta-data.json file, which serves as t
 
 | Property | Type | Description |
 |---|---|---|
-| `id` | string | number | Unique identifier of the board. |
+| `id` | string \| number | Unique identifier of the board. |
 | `title` | string | Name of the board. |
-| `author_id` | string | number | null | Unique identifier of author of board. |
+| `author_id` | string \| number \| null | Unique identifier of author of board. |
 | `created` | any | Date of creation of board. |
 | `space_id` | any | Unique space identifier for the board. |
 
@@ -9534,9 +10145,9 @@ To perform the import, you need to have a meta-data.json file, which serves as t
 
 | Property | Type | Description |
 |---|---|---|
-| `id` | string | number | Unique identifier of card. |
-| `column_id` | string | number | Unique identifier of column in board. |
-| `type_name` | string | null | Type name of card. |
+| `id` | string \| number | Unique identifier of card. |
+| `column_id` | string \| number | Unique identifier of column in board. |
+| `type_name` | string \| null | Type name of card. |
 | `title` | string | Title of card. |
 | `archived` | boolean | Archived status of card. |
 | `blocked_by_card_ids` | any | IDs of cards which are blocking current card. |
@@ -9554,13 +10165,13 @@ To perform the import, you need to have a meta-data.json file, which serves as t
 | `history` | any | Defines the card actions history. |
 | `links` | any | Defines the links attached to card. |
 | `member_ids` | any | IDs of card members. |
-| `owner_id` | string | number | null | Unique identifier of owner of card. |
+| `owner_id` | string \| number \| null | Unique identifier of owner of card. |
 | `parent_card_ids` | any | IDs of parent cards. |
 | `planned_end` | any | Planned end date of card. |
 | `planned_start` | any | Planned start date of card. |
 | `planned_predecessors` | any | Planned predecessors cards. |
 | `properties` | any | Array of custom properties of card. |
-| `responsible_id` | string | number | null | Unique identifier of responsible of card. |
+| `responsible_id` | string \| number \| null | Unique identifier of responsible of card. |
 | `tags` | any | Defines the tags of card. |
 | `key` | any | Unique key identifier for the card. |
 
@@ -9568,9 +10179,9 @@ To perform the import, you need to have a meta-data.json file, which serves as t
 
 | Property | Type | Description |
 |---|---|---|
-| `id` | string | number | Unique identifier for the timer. |
-| `author_id` | string | number | Unique user identifier. |
-| `card_id` | string | number | Unique identifier of card. |
+| `id` | string \| number | Unique identifier for the timer. |
+| `author_id` | string \| number | Unique user identifier. |
+| `card_id` | string \| number | Unique identifier of card. |
 | `started_at` | string | Start date of the timer. |
 | `finished_at` | string | Finish date of the timer. |
 | `comment` | any | Comment for the timer. |
@@ -9579,31 +10190,31 @@ To perform the import, you need to have a meta-data.json file, which serves as t
 
 | Property | Type | Description |
 |---|---|---|
-| `id` | string | number | Unique identifier of column in board. |
+| `id` | string \| number | Unique identifier of column in board. |
 | `title` | string | Name of column. |
-| `board_id` | string | number | Unique identifier of board. |
-| `created` | string | null | Date of creation of column. |
+| `board_id` | string \| number | Unique identifier of board. |
+| `created` | string \| null | Date of creation of column. |
 | `type` | any | Sets up column type. Available values are queued (1), in progress (2), done (3). |
-| `sort_order` | number | null | Order sequence number. |
+| `sort_order` | number \| null | Order sequence number. |
 
 ### Schema: Comments data
 
 | Property | Type | Description |
 |---|---|---|
-| `id` | string | number | Unique identifier of comment. |
-| `card_id` | string | number | Unique identifier of card under which the comment is written. |
+| `id` | string \| number | Unique identifier of comment. |
+| `card_id` | string \| number | Unique identifier of card under which the comment is written. |
 | `text` | string | The main content of the comment, supporting both Markdown and HTML formats. |
-| `author_id` | string | number | null | Unique identifier of comment author. |
-| `author_name` | string | null | Full name of comment author. |
+| `author_id` | string \| number \| null | Unique identifier of comment author. |
+| `author_name` | string \| null | Full name of comment author. |
 | `created` | any | Date of creation of comment. |
-| `parent_id` | string | number | null | ID of parent comment. |
+| `parent_id` | string \| number \| null | ID of parent comment. |
 | `type` | any | Specifies the format of the comment content. Accepted values are 'html' and 'markdown'. |
 
 ### Schema: Custom fields data
 
 | Property | Type | Description |
 |---|---|---|
-| `id` | string | number | Unique identifier of custom field |
+| `id` | string \| number | Unique identifier of custom field |
 | `type` | string | Defines the allowed types of custom field |
 | `name` | string | Defines the name of custom field |
 | `catalog_fields` | array | Field settings for the 'catalog' custom field type. |
@@ -9619,14 +10230,14 @@ To perform the import, you need to have a meta-data.json file, which serves as t
 | `id` | string | Unique identifier for the card file. |
 | `card_id` | string | Unique identifier of card. |
 | `name` | string | Name of card file. |
-| `author_id` | string | number | null | Unique identifier of author of file. |
+| `author_id` | string \| number \| null | Unique identifier of author of file. |
 | `created` | any | Date of upload of card file |
-| `custom_field_id` | string | number | null | ID of linked custom field |
-| `external` | boolean | null | Boolean value which specifying if the storage is external or not |
+| `custom_field_id` | string \| number \| null | ID of linked custom field |
+| `external` | boolean \| null | Boolean value which specifying if the storage is external or not |
 | `external_type` | any | String which represents external storage type |
 | `external_url` | any | URL of external storage file |
-| `path` | string | null | Relative path to the file |
-| `size` | number | null | Size of card file |
+| `path` | string \| null | Relative path to the file |
+| `size` | number \| null | Size of card file |
 
 ### Schema: Properties mapping
 
@@ -9640,15 +10251,15 @@ properties_mapping is an object that links the IDs of imported custom fields wit
 
 | Property | Type | Description |
 |---|---|---|
-| `id` | string | number | Unique identifier for the user. |
+| `id` | string \| number | Unique identifier for the user. |
 | `email` | string | Email address of the user. Must be valid. |
-| `full_name` | string | null | Full name of the user. |
+| `full_name` | string \| null | Full name of the user. |
 
 ### Schema: Spaces data
 
 | Property | Type | Description |
 |---|---|---|
-| `id` | string | number | Unique space identifier. |
+| `id` | string \| number | Unique space identifier. |
 | `title` | string | Name of the space. |
 | `created` | any | Date of creation of space. |
 | `parent_entity_id` | any | Identifier of parent entity. |
@@ -9660,7 +10271,7 @@ properties_mapping is an object that links the IDs of imported custom fields wit
 
 | Property | Type | Description |
 |---|---|---|
-| `id` | string | number | Unique folder identifier. |
+| `id` | string \| number | Unique folder identifier. |
 | `title` | string | Name of the folder. |
 | `created` | any | Date of creation of folder. |
 | `parent_entity_id` | any | Identifier of parent entity. |
@@ -9672,11 +10283,11 @@ properties_mapping is an object that links the IDs of imported custom fields wit
 
 | Property | Type | Description |
 |---|---|---|
-| `id` | string | number | Unique document identifier. |
+| `id` | string \| number | Unique document identifier. |
 | `title` | string | Name of the document. |
 | `created` | any | Date of creation of document. |
 | `parent_entity_id` | any | Identifier of parent entity. |
-| `path` | string | null | Path to content of the document. |
+| `path` | string \| null | Path to content of the document. |
 | `sort_order` | any | The positive numeric value which defines the sort order |
 | `type` | any | Specifies the format of the document content file. Accepted values are 'html' and 'markdown'. |
 
@@ -9684,10 +10295,10 @@ properties_mapping is an object that links the IDs of imported custom fields wit
 
 | Property | Type | Description |
 |---|---|---|
-| `id` | string | number | Unique document file identifier. |
-| `document_id` | string | number | Unique document identifier. |
+| `id` | string \| number | Unique document file identifier. |
+| `document_id` | string \| number | Unique document identifier. |
 | `path` | string | Path to the file. |
-| `name` | string | null | Name of the file. |
+| `name` | string \| null | Name of the file. |
 
 ## SCIM API
 
