@@ -4,6 +4,7 @@ description: "Полная документация Kaiten REST API v1: эндп
 date: 2026-02-12
 lastmod: 2026-02-12
 toc: true
+api_docs: true
 ---
 
 # Kaiten API Documentation
