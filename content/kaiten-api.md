@@ -3,6 +3,7 @@ title: "Kaiten API Documentation"
 description: "Полная документация Kaiten REST API v1: эндпоинты, аутентификация, карточки, доски, пространства, пользователи, автоматизации, вебхуки."
 date: 2026-02-12
 lastmod: 2026-02-12
+toc: true
 ---
 
 # Kaiten API Documentation
@@ -35,73 +36,6 @@ The API includes a `broken_api` parameter:
 - **Default (true until 2026-04-01):** Returns user UID as strings for custom properties
 - **New behavior (false):** Returns user ID as integers
 - **Recommendation:** Use `broken_api=false` for new integrations
-
----
-
-## Table of Contents
-
-1. [Spaces & Boards](#spaces-boards)
-   - [Spaces](#spaces)
-   - [Space Boards](#space-boards)
-   - [Columns](#columns)
-   - [Subcolumn](#subcolumn)
-   - [Lanes](#lanes)
-   - [Space users](#space-users)
-   - [Space template checklist](#space-template-checklist)
-   - [Space template checklist Items](#space-template-checklist-items)
-   - [Boards](#boards)
-2. [Cards](#cards)
-   - [Cards](#cards)
-3. [Card Components](#card-components)
-   - [Card blockers](#card-blockers)
-   - [Card tags](#card-tags)
-   - [Card comments](#card-comments)
-   - [Card external links](#card-external-links)
-   - [Card children](#card-children)
-   - [Card Members](#card-members)
-   - [Card time logs](#card-time-logs)
-   - [Card checklists](#card-checklists)
-   - [Card Checklist items](#card-checklist-items)
-   - [Card types](#card-types)
-   - [Card files](#card-files)
-   - [Card allowed users](#card-allowed-users)
-   - [Card SLA](#card-sla)
-   - [Card blocker categories](#card-blocker-categories)
-   - [Card blocker users](#card-blocker-users)
-   - [Card service desk external recipients](#card-service-desk-external-recipients)
-4. [Users & Access](#users-access)
-   - [Users](#users)
-   - [Groups](#groups)
-   - [Users](#users)
-   - [Group users (BETA)](#group-users)
-   - [Group admins (BETA)](#group-admins)
-   - [User Roles](#user-roles)
-   - [Company users](#company-users)
-   - [Groups (BETA)](#groups)
-   - [Group Entities (BETA)](#group-entities)
-   - [Tree entity roles (BETA)](#tree-entity-roles)
-5. [Custom Properties](#custom-properties)
-   - [Custom properties](#custom-properties)
-   - [Custom property select values](#custom-property-select-values)
-   - [Custom property catalog values](#custom-property-catalog-values)
-   - [Custom property collective score values](#custom-property-collective-score-values)
-   - [Custom property collective vote values](#custom-property-collective-vote-values)
-6. [Time Tracking](#time-tracking)
-   - [Timesheet](#timesheet)
-   - [Sprints](#sprints)
-7. [Service Desk](#service-desk)
-   - [Service desk services](#service-desk-services)
-8. [Automations & Groups](#automations-groups)
-   - [Automations](#automations)
-   - [Tree entities (BETA)](#tree-entities)
-9. [Other](#other)
-   - [Tags](#tags)
-   - [Checklists](#checklists)
-   - [Checklist items](#checklist-items)
-10. [Webhooks](#webhooks)
-11. [Import API Schemas](#import-api-schemas)
-12. [SCIM API](#scim-api)
-13. [Appendix: Colors](#appendix-colors)
 
 ---
 

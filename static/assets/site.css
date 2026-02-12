@@ -89,6 +89,83 @@ body {
     width: 100%;
 }
 
+.container--wide {
+    max-width: 1000px;
+}
+
+/* Two-column layout with TOC sidebar */
+.post-with-toc {
+    display: flex;
+    gap: 3rem;
+    align-items: flex-start;
+}
+
+.post-with-toc .post {
+    flex: 1;
+    min-width: 0;
+}
+
+.toc-sidebar {
+    position: sticky;
+    top: 2rem;
+    width: 220px;
+    flex-shrink: 0;
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.toc-nav li {
+    margin-bottom: 0;
+}
+
+.toc-nav a {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    display: block;
+    padding: 0.2rem 0;
+    border-left: 2px solid transparent;
+    padding-left: 0.75rem;
+    transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.toc-nav a:hover {
+    color: var(--text-color);
+}
+
+.toc-nav a.active {
+    color: var(--text-color);
+    border-left-color: var(--text-color);
+}
+
+.toc-nav ul ul {
+    padding-left: 0.75rem;
+}
+
+.toc-nav ul ul a {
+    font-size: 0.75rem;
+}
+
+@media (max-width: 1024px) {
+    .container--wide {
+        max-width: 700px;
+    }
+
+    .toc-sidebar {
+        display: none;
+    }
+
+    .post-with-toc {
+        display: block;
+    }
+}
+
 header {
     display: flex;
     justify-content: space-between;

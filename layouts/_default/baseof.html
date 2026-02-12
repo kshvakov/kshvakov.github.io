@@ -45,7 +45,7 @@
         <span class="scroll-to-top__icon">↑</span>
     </button>
     {{ end }}
-    <div class="container">
+    <div class="container{{ if .Params.toc }} container--wide{{ end }}">
         <header>
             <h1>
                 <a href="{{ if eq .Language.Lang "ru" }}{{ .Site.BaseURL }}{{ else }}{{ .Site.BaseURL }}{{ .Language.Lang }}/{{ end }}" style="text-decoration: none; color: inherit;">

@@ -1,4 +1,58 @@
 {{ define "main" }}
+{{ if .Params.toc }}
+<div class="post-with-toc">
+    <aside class="toc-sidebar">
+        <nav class="toc-nav">
+            {{ .TableOfContents }}
+        </nav>
+    </aside>
+    <article class="post">
+        <header class="post-header">
+            <h1 class="post-title">{{ .Title }}</h1>
+        </header>
+
+        <div class="post-content">
+            {{ if .Content }}
+            <div class="post-body">
+                {{ .Content }}
+            </div>
+            {{ end }}
+        </div>
+
+        <footer class="post-footer">
+            <a href="{{ if eq .Language.Lang "ru" }}{{ .Site.BaseURL }}{{ else }}{{ .Site.BaseURL }}{{ .Language.Lang }}/{{ end }}" class="back-link">← {{ if eq .Language.Lang "ru" }}Назад на главную{{ else }}Back to Home{{ end }}</a>
+        </footer>
+    </article>
+</div>
+<script>
+(function() {
+    var tocNav = document.querySelector('.toc-nav');
+    if (!tocNav) return;
+
+    var headings = document.querySelectorAll('.post-body h2, .post-body h3');
+    var tocLinks = tocNav.querySelectorAll('a');
+    if (!headings.length || !tocLinks.length) return;
+
+    var currentActive = null;
+
+    var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                if (currentActive) currentActive.classList.remove('active');
+                var link = tocNav.querySelector('a[href="#' + entry.target.id + '"]');
+                if (link) {
+                    link.classList.add('active');
+                    currentActive = link;
+                    link.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                }
+            }
+        });
+    }, { rootMargin: '0px 0px -80% 0px' });
+
+    headings.forEach(function(h) { observer.observe(h); });
+})();
+</script>
+{{ else }}
 <article class="post">
     <header class="post-header">
         <h1 class="post-title">{{ .Title }}</h1>
@@ -25,6 +79,7 @@
         <a href="{{ if eq .Language.Lang "ru" }}{{ .Site.BaseURL }}{{ else }}{{ .Site.BaseURL }}{{ .Language.Lang }}/{{ end }}" class="back-link">← {{ if eq .Language.Lang "ru" }}Назад на главную{{ else }}Back to Home{{ end }}</a>
     </footer>
 </article>
+{{ end }}
 {{ end }}
 
 {{ define "head" }}
