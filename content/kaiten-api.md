@@ -1,6 +1,6 @@
 ---
 title: "Kaiten API Documentation"
-description: "Полная документация Kaiten REST API v1: эндпоинты, аутентификация, карточки, доски, пространства, пользователи, автоматизации, вебхуки."
+description: "Полная документация Kaiten REST API v1, OpenAPI/Swagger: эндпоинты, аутентификация, карточки, доски, пространства, пользователи, автоматизации, вебхуки."
 date: 2026-02-12
 lastmod: 2026-02-12
 toc: true
@@ -21,6 +21,7 @@ api_docs: true
 | Authentication | `Authorization: Bearer <token>` |
 | Content Type | `application/json` |
 | Rate Limit | 5 requests per second |
+| OpenAPI / Swagger | [openapi.json](/kaiten-api/openapi.json) |
 
 ### Rate Limit Headers
 
@@ -2129,6 +2130,10 @@ To create a card at the beginning of the cell send position: 1 and position: 2 t
 | - `sort_order` | number | Position |
 | - `type` | enum | 1 - attachment, 2 - googleDrive, 3 - dropBox, 4 - box, 5 -oneDrive, 6 - yandex disc, 7 - comment email, 8 - commentAttachment |
 | - `url` | string | Uploaded url |
+| - `mime_type` | null \| string | File MIME type |
+| - `uid` | string | File uid |
+| - `custom_property_id` | null \| integer | Custom property id |
+| - `thumbnail_url` | null \| string | Thumbnail url |
 | - `author` | object | Author info |
 | - - `id` | integer | User id |
 | - - `uid` | string | User uid |
@@ -2331,7 +2336,14 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `theme` | enum | light - light color theme, dark - dark color theme, auto - color theme based on OS settings |
 | - `ui_version` | enum | 1 - old ui. 2 - new ui |
 | - `apps_permissions` | string | 0 - no access, 1 - full access (service desk denied), 2 - guest access (service desk denied), 4 - service desk only, 5 - full access + service desk, 6 - guest access + service desk |
-| - `type` | integer | 1 - member, 2- responsible |
+| - `type` | integer | 1 - member, 2 - responsible |
+| - `uid` | string | User uid |
+| - `virtual` | boolean | Is user virtual |
+| - `email_blocked` | null \| string | Email blocked status |
+| - `email_blocked_reason` | null \| string | Email blocked reason |
+| - `delete_requested_at` | null \| string | Delete request date |
+| - `card_id` | integer | Card id |
+| - `user_id` | integer | User id |
 | `column` | object | Card column |
 | - `updated` | string | Last update timestamp |
 | - `created` | string | Create date |
@@ -2614,6 +2626,29 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `depends_on_card_id` | integer | Children card id |
 | `path_data` | object | Card path info (space, board, column, lane, etc) |
 | - `space` | object | Card path space |
+| - - `id` | integer | Space id |
+| - - `uid` | string | Space uid |
+| - - `title` | string | Space title |
+| - - `external_id` | null \| string | External id |
+| - - `company_id` | integer | Company id |
+| - - `sort_order` | number | Position |
+| - - `path` | string | Space path |
+| - - `parent_entity_uid` | null \| string | Parent entity uid |
+| - - `entity_type` | string | Entity type |
+| - - `access` | string | Access level |
+| - - `archived` | boolean | Archived flag |
+| - - `for_everyone_access_role_id` | string | Default access role id |
+| - - `work_calendar_id` | null \| integer | Work calendar id |
+| - - `icon_type` | null \| string | Icon type |
+| - - `icon_value` | null \| string | Icon value |
+| - - `icon_color` | null \| string | Icon color |
+| - - `board_id` | integer | Board id |
+| - - `space_id` | integer | Space id |
+| - - `top` | integer | Y coordinate |
+| - - `left` | integer | X coordinate |
+| - - `type` | integer | Space type |
+| - - `primary_path` | boolean | Primary path flag |
+| - - `key` | null \| string | Space key |
 | - `board` | object | Card path board |
 | - - `id` | integer | Board id |
 | - - `uid` | string | Board uid |
@@ -2643,6 +2678,17 @@ Get Card list filtered by query parameters. The result of the request is display
 | - - `external_id` | null \| string | External id |
 | - - `default_card_type_id` | null \| integer | Default card type id |
 | - `subcolumn` | object | Card subcolumn info |
+| - - `id` | integer | Column id |
+| - - `uid` | string | Column uid |
+| - - `title` | string | Column title |
+| - - `sort_order` | number | Position |
+| - - `col_count` | integer | Width |
+| - - `type` | enum | 1 - queue, 2 - in progress, 3 - done |
+| - - `board_id` | integer | Board id |
+| - - `column_id` | null \| integer | Parent column id |
+| - - `external_id` | null \| string | External id |
+| - - `rules` | integer | Column rules bitmask |
+| - - `pause_sla` | boolean | Pause SLA timer in this column |
 | `source` | enum | null \| app, api, email, telegram, slack, webhook, import, schedule, automation |
 
 - **401** (error) - Invalid token
@@ -2829,7 +2875,14 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `theme` | enum | light - light color theme, dark - dark color theme, auto - color theme based on OS settings |
 | - `ui_version` | enum | 1 - old ui. 2 - new ui |
 | - `apps_permissions` | string | 0 - no access, 1 - full access (service desk denied), 2 - guest access (service desk denied), 4 - service desk only, 5 - full access + service desk, 6 - guest access + service desk |
-| - `type` | integer | 1 - member, 2- responsible |
+| - `type` | integer | 1 - member, 2 - responsible |
+| - `uid` | string | User uid |
+| - `virtual` | boolean | Is user virtual |
+| - `email_blocked` | null \| string | Email blocked status |
+| - `email_blocked_reason` | null \| string | Email blocked reason |
+| - `delete_requested_at` | null \| string | Delete request date |
+| - `card_id` | integer | Card id |
+| - `user_id` | integer | User id |
 | `slas` | array of objects | SLAs attached to the card  |
 | - `created` | string | SLA creation date |
 | - `updated` | string | SLA last update date |
@@ -3167,6 +3220,10 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `sort_order` | number | Position |
 | - `type` | enum | 1 - attachment, 2 - googleDrive, 3 - dropBox, 4 - box, 5 -oneDrive, 6 - yandex disc, 7 - comment email, 8 - commentAttachment |
 | - `url` | string | Uploaded url |
+| - `mime_type` | null \| string | File MIME type |
+| - `uid` | string | File uid |
+| - `custom_property_id` | null \| integer | Custom property id |
+| - `thumbnail_url` | null \| string | Thumbnail url |
 | - `author` | object | Author info |
 | - - `id` | integer | User id |
 | - - `uid` | string | User uid |
@@ -3196,6 +3253,8 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `name` | string | Card tag name |
 | - `company_id` | integer | Company id |
 | - `color` | integer | Card tag color number |
+| - `card_id` | integer | Card id |
+| - `tag_id` | integer | Tag id |
 | `cardRole` | integer | User card role who made the request. 1-reader, 2-writer, 3-admin |
 | `email` | string | Card email for email comment |
 | `source` | enum | null \| app, api, email, telegram, slack, webhook, import, schedule, automation |
@@ -3326,7 +3385,14 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `theme` | enum | light - light color theme, dark - dark color theme, auto - color theme based on OS settings |
 | - `ui_version` | enum | 1 - old ui. 2 - new ui |
 | - `apps_permissions` | string | 0 - no access, 1 - full access (service desk denied), 2 - guest access (service desk denied), 4 - service desk only, 5 - full access + service desk, 6 - guest access + service desk |
-| - `type` | integer | 1 - member, 2- responsible |
+| - `type` | integer | 1 - member, 2 - responsible |
+| - `uid` | string | User uid |
+| - `virtual` | boolean | Is user virtual |
+| - `email_blocked` | null \| string | Email blocked status |
+| - `email_blocked_reason` | null \| string | Email blocked reason |
+| - `delete_requested_at` | null \| string | Delete request date |
+| - `card_id` | integer | Card id |
+| - `user_id` | integer | User id |
 | `tags` | array | Card tags |
 | - `updated` | string | Last update timestamp |
 | - `created` | string | Create date |
@@ -3335,6 +3401,8 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `name` | string | Card tag name |
 | - `company_id` | integer | Company id |
 | - `color` | integer | Card tag color number |
+| - `card_id` | integer | Card id |
+| - `tag_id` | integer | Tag id |
 | `source` | enum | null \| app, api, email, telegram, slack, webhook, import, schedule, automation |
 
 - **400** (error) - validation Error
@@ -3518,7 +3586,14 @@ Update multiple cards by criteria. Runs in the background and returns a job ID.
 | - `theme` | enum | light - light color theme, dark - dark color theme, auto - color theme based on OS settings |
 | - `ui_version` | enum | 1 - old ui. 2 - new ui |
 | - `apps_permissions` | string | 0 - no access, 1 - full access (service desk denied), 2 - guest access (service desk denied), 4 - service desk only, 5 - full access + service desk, 6 - guest access + service desk |
-| - `type` | integer | 1 - member, 2- responsible |
+| - `type` | integer | 1 - member, 2 - responsible |
+| - `uid` | string | User uid |
+| - `virtual` | boolean | Is user virtual |
+| - `email_blocked` | null \| string | Email blocked status |
+| - `email_blocked_reason` | null \| string | Email blocked reason |
+| - `delete_requested_at` | null \| string | Delete request date |
+| - `card_id` | integer | Card id |
+| - `user_id` | integer | User id |
 | `source` | enum | null \| app, api, email, telegram, slack, webhook, import, schedule, automation |
 
 - **400** (error) - validation Error
@@ -5013,6 +5088,29 @@ Get all unarchived baselines of unarchived projects for this card
 | - - `card_properties` | null \| array | Board card properties |
 | - - `settings` | null \| object | Board settings |
 | - `space` | object | Card space info |
+| - - `id` | integer | Space id |
+| - - `uid` | string | Space uid |
+| - - `title` | string | Space title |
+| - - `external_id` | null \| string | External id |
+| - - `company_id` | integer | Company id |
+| - - `sort_order` | number | Position |
+| - - `path` | string | Space path |
+| - - `parent_entity_uid` | null \| string | Parent entity uid |
+| - - `entity_type` | string | Entity type |
+| - - `access` | string | Access level |
+| - - `archived` | boolean | Archived flag |
+| - - `for_everyone_access_role_id` | string | Default access role id |
+| - - `work_calendar_id` | null \| integer | Work calendar id |
+| - - `icon_type` | null \| string | Icon type |
+| - - `icon_value` | null \| string | Icon value |
+| - - `icon_color` | null \| string | Icon color |
+| - - `board_id` | integer | Board id |
+| - - `space_id` | integer | Space id |
+| - - `top` | integer | Y coordinate |
+| - - `left` | integer | X coordinate |
+| - - `type` | integer | Space type |
+| - - `primary_path` | boolean | Primary path flag |
+| - - `key` | null \| string | Space key |
 | - `column` | object | Card column info |
 | - - `id` | integer | Column id |
 | - - `uid` | string | Column uid |
@@ -5026,6 +5124,17 @@ Get all unarchived baselines of unarchived projects for this card
 | - - `rules` | integer | Column rules bitmask |
 | - - `pause_sla` | boolean | Pause SLA timer in this column |
 | - `subcolumn` | object | Card subcolumn info |
+| - - `id` | integer | Column id |
+| - - `uid` | string | Column uid |
+| - - `title` | string | Column title |
+| - - `sort_order` | number | Position |
+| - - `col_count` | integer | Width |
+| - - `type` | enum | 1 - queue, 2 - in progress, 3 - done |
+| - - `board_id` | integer | Board id |
+| - - `column_id` | null \| integer | Parent column id |
+| - - `external_id` | null \| string | External id |
+| - - `rules` | integer | Column rules bitmask |
+| - - `pause_sla` | boolean | Pause SLA timer in this column |
 | `space_id` | integer | Space id |
 
 - **400** (error) - validation Error
@@ -9897,6 +10006,29 @@ Get tags list filtered by query parameters. The result of the request is display
 | - - `card_properties` | null \| array | Board card properties |
 | - - `settings` | null \| object | Board settings |
 | - `space` | object | Card space info |
+| - - `id` | integer | Space id |
+| - - `uid` | string | Space uid |
+| - - `title` | string | Space title |
+| - - `external_id` | null \| string | External id |
+| - - `company_id` | integer | Company id |
+| - - `sort_order` | number | Position |
+| - - `path` | string | Space path |
+| - - `parent_entity_uid` | null \| string | Parent entity uid |
+| - - `entity_type` | string | Entity type |
+| - - `access` | string | Access level |
+| - - `archived` | boolean | Archived flag |
+| - - `for_everyone_access_role_id` | string | Default access role id |
+| - - `work_calendar_id` | null \| integer | Work calendar id |
+| - - `icon_type` | null \| string | Icon type |
+| - - `icon_value` | null \| string | Icon value |
+| - - `icon_color` | null \| string | Icon color |
+| - - `board_id` | integer | Board id |
+| - - `space_id` | integer | Space id |
+| - - `top` | integer | Y coordinate |
+| - - `left` | integer | X coordinate |
+| - - `type` | integer | Space type |
+| - - `primary_path` | boolean | Primary path flag |
+| - - `key` | null \| string | Space key |
 | - `column` | object | Card column info |
 | - - `id` | integer | Column id |
 | - - `uid` | string | Column uid |
@@ -9910,6 +10042,17 @@ Get tags list filtered by query parameters. The result of the request is display
 | - - `rules` | integer | Column rules bitmask |
 | - - `pause_sla` | boolean | Pause SLA timer in this column |
 | - `subcolumn` | object | Card subcolumn info |
+| - - `id` | integer | Column id |
+| - - `uid` | string | Column uid |
+| - - `title` | string | Column title |
+| - - `sort_order` | number | Position |
+| - - `col_count` | integer | Width |
+| - - `type` | enum | 1 - queue, 2 - in progress, 3 - done |
+| - - `board_id` | integer | Board id |
+| - - `column_id` | null \| integer | Parent column id |
+| - - `external_id` | null \| string | External id |
+| - - `rules` | integer | Column rules bitmask |
+| - - `pause_sla` | boolean | Pause SLA timer in this column |
 | `space_id` | integer | Space id |
 
 - **400** (error) - validation Error

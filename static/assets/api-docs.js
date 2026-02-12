@@ -67,7 +67,7 @@
 
             if (depth === 0) {
                 fields.push(field);
-                parentStack = isObjectType(rawType) ? [field] : [];
+                parentStack = [field];
             } else {
                 hasNesting = true;
                 // Find parent at depth-1
@@ -80,12 +80,9 @@
                         if (parentStack[d]) { parentStack[d].children.push(field); break; }
                     }
                 }
-                // This field can be a parent for deeper levels
-                if (isObjectType(rawType)) {
-                    parentStack[depth] = field;
-                    // Clear deeper levels
-                    parentStack.length = depth + 1;
-                }
+                // Any field can be a parent for deeper levels
+                parentStack[depth] = field;
+                parentStack.length = depth + 1;
             }
         }
         return { fields: fields, hasNesting: hasNesting };
