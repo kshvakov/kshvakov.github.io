@@ -92,6 +92,15 @@
       ]
     }
     </script>
+    <script>
+    document.querySelectorAll('.post-body table').forEach(function(table) {
+        var wrapper = document.createElement('div');
+        wrapper.style.overflowX = 'auto';
+        wrapper.style.webkitOverflowScrolling = 'touch';
+        table.parentNode.insertBefore(wrapper, table);
+        wrapper.appendChild(table);
+    });
+    </script>
     <script src="/assets/site.js"></script>
     {{ if .Site.Params.metrika_id }}
     <!-- Yandex.Metrika counter -->

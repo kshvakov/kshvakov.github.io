@@ -591,6 +591,38 @@ h1 {
     color: var(--text-color);
 }
 
+/* Tables */
+.post-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 0.875rem;
+    line-height: 1.6;
+}
+
+.post-body th,
+.post-body td {
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+    text-align: left;
+    vertical-align: top;
+}
+
+.post-body th {
+    font-weight: 500;
+    color: var(--text-color);
+    background: var(--inline-code-bg);
+    white-space: nowrap;
+}
+
+.post-body td {
+    color: var(--text-color);
+}
+
+.post-body tr:last-child td {
+    border-bottom: none;
+}
+
 .raw-transcript-section {
     margin-top: 4rem;
     padding-top: 3rem;
