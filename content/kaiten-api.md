@@ -72,6 +72,11 @@ The API includes a `broken_api` parameter:
 | `external_id` | null | string | External id |
 | `settings` | object | Space settings |
 | - `timeline` | object | Space timeline settings |
+| - - `startHour` | integer | Start hour |
+| - - `endHour` | integer | End work hour |
+| - - `workDays` | array | Work days |
+| - - `planningUnits` | enum | 1 - hours, 2 - days |
+| - - `calculateResourcesBy` | enum | 1 - fixed resources, 2 - fixed duration, 3 - fixed duration and duration |
 | `users` | array of objects | Space users |
 | - `id` | integer | User id |
 | - `full_name` | string | User full name |
@@ -89,12 +94,7 @@ The API includes a `broken_api` parameter:
 | - `activated` | boolean | User activated flag |
 | - `ui_version` | enum | 1 - old ui. 2 - new ui |
 | - `virtual` | boolean | Is user virtual |
-| - `apps_permissions` | string | 0 - no access,
- 1 - full access to {{projectName}}, access to service desk denied.
- 2 - guest access to {{projectName}}, access to service desk denied.
- 4 - access only to service desk.
- 5 - full access to {{projectName}} and service desk.
- 6 - guest access to {{projectName}}, access to service desk |
+| - `apps_permissions` | string | 0 - no access, 1 - full access (service desk denied), 2 - guest access (service desk denied), 4 - service desk only, 5 - full access + service desk, 6 - guest access + service desk |
 | - `access_mod` | string | Access modifier with inheritable access modifiers |
 | - `own_access_mod` | string | Own access modifier |
 | - `own_role_ids` | array | User role ids |
@@ -150,6 +150,11 @@ The API includes a `broken_api` parameter:
 | `external_id` | null | string | External id |
 | `settings` | object | Space settings |
 | - `timeline` | object | Space timeline settings |
+| - - `startHour` | integer | Start hour |
+| - - `endHour` | integer | End work hour |
+| - - `workDays` | array | Work days |
+| - - `planningUnits` | enum | 1 - hours, 2 - days |
+| - - `calculateResourcesBy` | enum | 1 - fixed resources, 2 - fixed duration, 3 - fixed duration and duration |
 | `boards` | array of objects | Space boards |
 | - `created` | string | Create date |
 | - `updated` | string | Last update timestamp |
@@ -219,6 +224,11 @@ The API includes a `broken_api` parameter:
 | `external_id` | null | string | External id |
 | `settings` | object | Space settings |
 | - `timeline` | object | Space timeline settings |
+| - - `startHour` | integer | Start hour |
+| - - `endHour` | integer | End work hour |
+| - - `workDays` | array | Work days |
+| - - `planningUnits` | enum | 1 - hours, 2 - days |
+| - - `calculateResourcesBy` | enum | 1 - fixed resources, 2 - fixed duration, 3 - fixed duration and duration |
 
 - **401** (error) - Invalid token
 - **403** (error) - Forbiden
@@ -1436,12 +1446,7 @@ The API includes a `broken_api` parameter:
 | `activated` | boolean | User activated flag |
 | `ui_version` | enum | 1 - old ui. 2 - new ui |
 | `virtual` | boolean | Is user virtual |
-| `apps_permissions` | string | 0 - no access,
- 1 - full access to {{projectName}}, access to service desk denied.
- 2 - guest access to {{projectName}}, access to service desk denied.
- 4 - access only to service desk.
- 5 - full access to {{projectName}} and service desk.
- 6 - guest access to {{projectName}}, access to service desk |
+| `apps_permissions` | string | 0 - no access, 1 - full access (service desk denied), 2 - guest access (service desk denied), 4 - service desk only, 5 - full access + service desk, 6 - guest access + service desk |
 | `access_mod` | string | Access modifier with inheritable access modifiers |
 | `own_access_mod` | string | Own access modifier |
 | `own_role_ids` | array | User role ids |
@@ -2019,12 +2024,7 @@ To create a card at the beginning of the cell send position: 1 and position: 2 t
 | - `timezone` | string | Time zone |
 | - `theme` | enum | light - light color theme, dark - dark color theme, auto - color theme based on OS settings |
 | - `ui_version` | enum | 1 - old ui. 2 - new ui |
-| - `apps_permissions` | string | 0 - no access,
- 1 - full access to {{projectName}}, access to service desk denied.
- 2 - guest access to {{projectName}}, access to service desk denied.
- 4 - access only to service desk.
- 5 - full access to {{projectName}} and service desk.
- 6 - guest access to {{projectName}}, access to service desk |
+| - `apps_permissions` | string | 0 - no access, 1 - full access (service desk denied), 2 - guest access (service desk denied), 4 - service desk only, 5 - full access + service desk, 6 - guest access + service desk |
 | `type` | object | Card type info |
 | - `created` | string | Create date |
 | - `updated` | string | Last update timestamp |
@@ -2192,12 +2192,7 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `timezone` | string | Time zone |
 | - `theme` | enum | light - light color theme, dark - dark color theme, auto - color theme based on OS settings |
 | - `ui_version` | enum | 1 - old ui. 2 - new ui |
-| - `apps_permissions` | string | 0 - no access,
- 1 - full access to {{projectName}}, access to service desk denied.
- 2 - guest access to {{projectName}}, access to service desk denied.
- 4 - access only to service desk.
- 5 - full access to {{projectName}} and service desk.
- 6 - guest access to {{projectName}}, access to service desk |
+| - `apps_permissions` | string | 0 - no access, 1 - full access (service desk denied), 2 - guest access (service desk denied), 4 - service desk only, 5 - full access + service desk, 6 - guest access + service desk |
 | `type` | object | Card type info |
 | - `created` | string | Create date |
 | - `updated` | string | Last update timestamp |
@@ -2248,12 +2243,7 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `timezone` | string | Time zone |
 | - `theme` | enum | light - light color theme, dark - dark color theme, auto - color theme based on OS settings |
 | - `ui_version` | enum | 1 - old ui. 2 - new ui |
-| - `apps_permissions` | string | 0 - no access,
- 1 - full access to {{projectName}}, access to service desk denied.
- 2 - guest access to {{projectName}}, access to service desk denied.
- 4 - access only to service desk.
- 5 - full access to {{projectName}} and service desk.
- 6 - guest access to {{projectName}}, access to service desk |
+| - `apps_permissions` | string | 0 - no access, 1 - full access (service desk denied), 2 - guest access (service desk denied), 4 - service desk only, 5 - full access + service desk, 6 - guest access + service desk |
 | - `type` | integer | 1 - member, 2- responsible |
 | `column` | object | Card column |
 | - `updated` | string | Last update timestamp |
@@ -2547,12 +2537,7 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `timezone` | string | Time zone |
 | - `theme` | enum | light - light color theme, dark - dark color theme, auto - color theme based on OS settings |
 | - `ui_version` | enum | 1 - old ui. 2 - new ui |
-| - `apps_permissions` | string | 0 - no access,
- 1 - full access to {{projectName}}, access to service desk denied.
- 2 - guest access to {{projectName}}, access to service desk denied.
- 4 - access only to service desk.
- 5 - full access to {{projectName}} and service desk.
- 6 - guest access to {{projectName}}, access to service desk |
+| - `apps_permissions` | string | 0 - no access, 1 - full access (service desk denied), 2 - guest access (service desk denied), 4 - service desk only, 5 - full access + service desk, 6 - guest access + service desk |
 | `type` | object | Card type info |
 | - `created` | string | Create date |
 | - `updated` | string | Last update timestamp |
@@ -2603,12 +2588,7 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `timezone` | string | Time zone |
 | - `theme` | enum | light - light color theme, dark - dark color theme, auto - color theme based on OS settings |
 | - `ui_version` | enum | 1 - old ui. 2 - new ui |
-| - `apps_permissions` | string | 0 - no access,
- 1 - full access to {{projectName}}, access to service desk denied.
- 2 - guest access to {{projectName}}, access to service desk denied.
- 4 - access only to service desk.
- 5 - full access to {{projectName}} and service desk.
- 6 - guest access to {{projectName}}, access to service desk |
+| - `apps_permissions` | string | 0 - no access, 1 - full access (service desk denied), 2 - guest access (service desk denied), 4 - service desk only, 5 - full access + service desk, 6 - guest access + service desk |
 | `members` | array | Card members |
 | - `created` | string | Create date |
 | - `updated` | string | Last update timestamp |
@@ -2625,12 +2605,7 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `timezone` | string | Time zone |
 | - `theme` | enum | light - light color theme, dark - dark color theme, auto - color theme based on OS settings |
 | - `ui_version` | enum | 1 - old ui. 2 - new ui |
-| - `apps_permissions` | string | 0 - no access,
- 1 - full access to {{projectName}}, access to service desk denied.
- 2 - guest access to {{projectName}}, access to service desk denied.
- 4 - access only to service desk.
- 5 - full access to {{projectName}} and service desk.
- 6 - guest access to {{projectName}}, access to service desk |
+| - `apps_permissions` | string | 0 - no access, 1 - full access (service desk denied), 2 - guest access (service desk denied), 4 - service desk only, 5 - full access + service desk, 6 - guest access + service desk |
 | - `type` | integer | 1 - member, 2- responsible |
 | `slas` | array of objects | SLAs attached to the card  |
 | - `created` | string | SLA creation date |
@@ -2700,12 +2675,7 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `timezone` | string | Time zone |
 | - `theme` | enum | light - light color theme, dark - dark color theme, auto - color theme based on OS settings |
 | - `ui_version` | enum | 1 - old ui. 2 - new ui |
-| - `apps_permissions` | string | 0 - no access,
- 1 - full access to {{projectName}}, access to service desk denied.
- 2 - guest access to {{projectName}}, access to service desk denied.
- 4 - access only to service desk.
- 5 - full access to {{projectName}} and service desk.
- 6 - guest access to {{projectName}}, access to service desk |
+| - `apps_permissions` | string | 0 - no access, 1 - full access (service desk denied), 2 - guest access (service desk denied), 4 - service desk only, 5 - full access + service desk, 6 - guest access + service desk |
 | `block_reason` | string | Block reason |
 | `children` | array of objects | Card childrens |
 | - `updated` | string | Last update timestamp |
@@ -2984,12 +2954,7 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `timezone` | string | Time zone |
 | - `theme` | enum | light - light color theme, dark - dark color theme, auto - color theme based on OS settings |
 | - `ui_version` | enum | 1 - old ui. 2 - new ui |
-| - `apps_permissions` | string | 0 - no access,
- 1 - full access to {{projectName}}, access to service desk denied.
- 2 - guest access to {{projectName}}, access to service desk denied.
- 4 - access only to service desk.
- 5 - full access to {{projectName}} and service desk.
- 6 - guest access to {{projectName}}, access to service desk |
+| - `apps_permissions` | string | 0 - no access, 1 - full access (service desk denied), 2 - guest access (service desk denied), 4 - service desk only, 5 - full access + service desk, 6 - guest access + service desk |
 | `members` | array of objects | Card members |
 | - `created` | string | Create date |
 | - `updated` | string | Last update timestamp |
@@ -3006,12 +2971,7 @@ Get Card list filtered by query parameters. The result of the request is display
 | - `timezone` | string | Time zone |
 | - `theme` | enum | light - light color theme, dark - dark color theme, auto - color theme based on OS settings |
 | - `ui_version` | enum | 1 - old ui. 2 - new ui |
-| - `apps_permissions` | string | 0 - no access,
- 1 - full access to {{projectName}}, access to service desk denied.
- 2 - guest access to {{projectName}}, access to service desk denied.
- 4 - access only to service desk.
- 5 - full access to {{projectName}} and service desk.
- 6 - guest access to {{projectName}}, access to service desk |
+| - `apps_permissions` | string | 0 - no access, 1 - full access (service desk denied), 2 - guest access (service desk denied), 4 - service desk only, 5 - full access + service desk, 6 - guest access + service desk |
 | - `type` | integer | 1 - member, 2- responsible |
 | `tags` | array | Card tags |
 | - `updated` | string | Last update timestamp |
@@ -3187,12 +3147,7 @@ Update multiple cards by criteria. Runs in the background and returns a job ID.
 | - `timezone` | string | Time zone |
 | - `theme` | enum | light - light color theme, dark - dark color theme, auto - color theme based on OS settings |
 | - `ui_version` | enum | 1 - old ui. 2 - new ui |
-| - `apps_permissions` | string | 0 - no access,
- 1 - full access to {{projectName}}, access to service desk denied.
- 2 - guest access to {{projectName}}, access to service desk denied.
- 4 - access only to service desk.
- 5 - full access to {{projectName}} and service desk.
- 6 - guest access to {{projectName}}, access to service desk |
+| - `apps_permissions` | string | 0 - no access, 1 - full access (service desk denied), 2 - guest access (service desk denied), 4 - service desk only, 5 - full access + service desk, 6 - guest access + service desk |
 | `members` | array | Card members |
 | - `created` | string | Create date |
 | - `updated` | string | Last update timestamp |
@@ -3209,12 +3164,7 @@ Update multiple cards by criteria. Runs in the background and returns a job ID.
 | - `timezone` | string | Time zone |
 | - `theme` | enum | light - light color theme, dark - dark color theme, auto - color theme based on OS settings |
 | - `ui_version` | enum | 1 - old ui. 2 - new ui |
-| - `apps_permissions` | string | 0 - no access,
- 1 - full access to {{projectName}}, access to service desk denied.
- 2 - guest access to {{projectName}}, access to service desk denied.
- 4 - access only to service desk.
- 5 - full access to {{projectName}} and service desk.
- 6 - guest access to {{projectName}}, access to service desk |
+| - `apps_permissions` | string | 0 - no access, 1 - full access (service desk denied), 2 - guest access (service desk denied), 4 - service desk only, 5 - full access + service desk, 6 - guest access + service desk |
 | - `type` | integer | 1 - member, 2- responsible |
 | `source` | enum | null | app, api, email, telegram, slack,
  webhook, import, schedule, automation |
@@ -3439,12 +3389,7 @@ Get all unarchived baselines of unarchived projects for this card
 | - `timezone` | string | Time zone |
 | - `theme` | enum | light - light color theme, dark - dark color theme, auto - color theme based on OS settings |
 | - `ui_version` | enum | 1 - old ui. 2 - new ui |
-| - `apps_permissions` | string | 0 - no access,
- 1 - full access to {{projectName}}, access to service desk denied.
- 2 - guest access to {{projectName}}, access to service desk denied.
- 4 - access only to service desk.
- 5 - full access to {{projectName}} and service desk.
- 6 - guest access to {{projectName}}, access to service desk |
+| - `apps_permissions` | string | 0 - no access, 1 - full access (service desk denied), 2 - guest access (service desk denied), 4 - service desk only, 5 - full access + service desk, 6 - guest access + service desk |
 | `card` | object | Blocking card info |
 | - `updated` | string | Last update timestamp |
 | - `created` | string | Create date |
@@ -3646,12 +3591,7 @@ Get all unarchived baselines of unarchived projects for this card
 | - `timezone` | string | Time zone |
 | - `theme` | enum | light - light color theme, dark - dark color theme, auto - color theme based on OS settings |
 | - `ui_version` | enum | 1 - old ui. 2 - new ui |
-| - `apps_permissions` | string | 0 - no access,
- 1 - full access to {{projectName}}, access to service desk denied.
- 2 - guest access to {{projectName}}, access to service desk denied.
- 4 - access only to service desk.
- 5 - full access to {{projectName}} and service desk.
- 6 - guest access to {{projectName}}, access to service desk |
+| - `apps_permissions` | string | 0 - no access, 1 - full access (service desk denied), 2 - guest access (service desk denied), 4 - service desk only, 5 - full access + service desk, 6 - guest access + service desk |
 | `card` | object | Blocking card info |
 | - `updated` | string | Last update timestamp |
 | - `created` | string | Create date |
@@ -3886,12 +3826,7 @@ Get all unarchived baselines of unarchived projects for this card
 | - `timezone` | string | Time zone |
 | - `theme` | enum | light - light color theme, dark - dark color theme, auto - color theme based on OS settings |
 | - `ui_version` | enum | 1 - old ui. 2 - new ui |
-| - `apps_permissions` | string | 0 - no access,
- 1 - full access to {{projectName}}, access to service desk denied.
- 2 - guest access to {{projectName}}, access to service desk denied.
- 4 - access only to service desk.
- 5 - full access to {{projectName}} and service desk.
- 6 - guest access to {{projectName}}, access to service desk |
+| - `apps_permissions` | string | 0 - no access, 1 - full access (service desk denied), 2 - guest access (service desk denied), 4 - service desk only, 5 - full access + service desk, 6 - guest access + service desk |
 | `card` | object | Blocking card info |
 | - `updated` | string | Last update timestamp |
 | - `created` | string | Create date |
@@ -4515,12 +4450,7 @@ Get all unarchived baselines of unarchived projects for this card
 | - `timezone` | string | Time zone |
 | - `theme` | enum | light - light color theme, dark - dark color theme, auto - color theme based on OS settings |
 | - `ui_version` | enum | 1 - old ui. 2 - new ui |
-| - `apps_permissions` | string | 0 - no access,
- 1 - full access to {{projectName}}, access to service desk denied.
- 2 - guest access to {{projectName}}, access to service desk denied.
- 4 - access only to service desk.
- 5 - full access to {{projectName}} and service desk.
- 6 - guest access to {{projectName}}, access to service desk |
+| - `apps_permissions` | string | 0 - no access, 1 - full access (service desk denied), 2 - guest access (service desk denied), 4 - service desk only, 5 - full access + service desk, 6 - guest access + service desk |
 | `type` | object | Card type info |
 | - `created` | string | Create date |
 | - `updated` | string | Last update timestamp |
@@ -4658,12 +4588,7 @@ Get all unarchived baselines of unarchived projects for this card
 | - `timezone` | string | Time zone |
 | - `theme` | enum | light - light color theme, dark - dark color theme, auto - color theme based on OS settings |
 | - `ui_version` | enum | 1 - old ui. 2 - new ui |
-| - `apps_permissions` | string | 0 - no access,
- 1 - full access to {{projectName}}, access to service desk denied.
- 2 - guest access to {{projectName}}, access to service desk denied.
- 4 - access only to service desk.
- 5 - full access to {{projectName}} and service desk.
- 6 - guest access to {{projectName}}, access to service desk |
+| - `apps_permissions` | string | 0 - no access, 1 - full access (service desk denied), 2 - guest access (service desk denied), 4 - service desk only, 5 - full access + service desk, 6 - guest access + service desk |
 | `type` | object | Card type info |
 | - `created` | string | Create date |
 | - `updated` | string | Last update timestamp |
@@ -6273,10 +6198,7 @@ Get users list filtered by query parameters. The main difference between this ro
 | `user_id` | integer | User id |
 | `default_space_id` | null | integer | Default space |
 | `permissions` | integer | User company permissions |
-| `role` | enum | User role in company:
- 1 - owner,
- 2 - user,
- 3 - deactivated |
+| `role` | enum | User role: 1 - owner, 2 - user, 3 - deactivated |
 | `email_frequency` | enum | 1 - never, 2 – instantly |
 | `email_settings` | object | Email settings |
 | - `deadlines` | boolean | Daily due dates digest flag |
@@ -6301,12 +6223,7 @@ Get users list filtered by query parameters. The main difference between this ro
 | `slack_private_channel_id` | null | integer | User slack private channel id |
 | `telegram_sd_bot_enabled` | boolean | Telegram bot enable flag |
 | `invite_last_sent_at` | string | Last invite date |
-| `apps_permissions` | string | 0 - no access,
- 1 - full access to {{projectName}}, access to service desk denied.
- 2 - guest access to {{projectName}}, access to service desk denied.
- 4 - access only to service desk.
- 5 - full access to {{projectName}} and service desk.
- 6 - guest access to {{projectName}}, access to service desk |
+| `apps_permissions` | string | 0 - no access, 1 - full access (service desk denied), 2 - guest access (service desk denied), 4 - service desk only, 5 - full access + service desk, 6 - guest access + service desk |
 | `external` | boolean | Is user external |
 | `last_request_date` | null | string | Date of last request |
 | `last_request_method` | null | string | Type of last request |
@@ -6358,10 +6275,7 @@ Get users list filtered by query parameters. The main difference between this ro
 | `user_id` | integer | User id |
 | `default_space_id` | null | integer | Default space |
 | `permissions` | integer | User company permissions |
-| `role` | enum | User role in company:
- 1 - owner,
- 2 - user,
- 3 - deactivated |
+| `role` | enum | User role: 1 - owner, 2 - user, 3 - deactivated |
 | `email_frequency` | enum | 1 - never, 2 – instantly |
 | `email_settings` | object | Email settings |
 | - `deadlines` | boolean | Daily due dates digest flag |
@@ -6386,12 +6300,7 @@ Get users list filtered by query parameters. The main difference between this ro
 | `slack_private_channel_id` | null | integer | User slack private channel id |
 | `telegram_sd_bot_enabled` | boolean | Telegram bot enable flag |
 | `invite_last_sent_at` | string | Last invite date |
-| `apps_permissions` | string | 0 - no access,
- 1 - full access to {{projectName}}, access to service desk denied.
- 2 - guest access to {{projectName}}, access to service desk denied.
- 4 - access only to service desk.
- 5 - full access to {{projectName}} and service desk.
- 6 - guest access to {{projectName}}, access to service desk |
+| `apps_permissions` | string | 0 - no access, 1 - full access (service desk denied), 2 - guest access (service desk denied), 4 - service desk only, 5 - full access + service desk, 6 - guest access + service desk |
 | `external` | boolean | Is user external |
 | `last_request_date` | null | string | Date of last request |
 | `last_request_method` | null | string | Type of last request |
@@ -6988,10 +6897,7 @@ Get Company Users list filtered by query parameters. To use this route you need 
 | `user_id` | integer | User id |
 | `company_id` | integer | Company id |
 | `default_space_id` | null | integer | Default space |
-| `role` | enum | User role in company:
- 1 - owner,
- 2 - user,
- 3 - deactivated |
+| `role` | enum | User role: 1 - owner, 2 - user, 3 - deactivated |
 | `email_frequency` | enum | 1 - never, 2 – instantly |
 | `email_settings` | object | Email settings |
 | - `deadlines` | boolean | Daily due dates digest flag |
@@ -7015,12 +6921,7 @@ Get Company Users list filtered by query parameters. To use this route you need 
 | `notification_enabled_channels` | array | List of enabled channels for notifications |
 | `slack_private_channel_id` | null | integer | User slack private channel id |
 | `telegram_sd_bot_enabled` | boolean | Telegram bot enable flag |
-| `apps_permissions` | string | 0 - no access,
- 1 - full access to {{projectName}}, access to service desk denied.
- 2 - guest access to {{projectName}}, access to service desk denied.
- 4 - access only to service desk.
- 5 - full access to {{projectName}} and service desk.
- 6 - guest access to {{projectName}}, access to service desk |
+| `apps_permissions` | string | 0 - no access, 1 - full access (service desk denied), 2 - guest access (service desk denied), 4 - service desk only, 5 - full access + service desk, 6 - guest access + service desk |
 | `invite_last_sent_at` | string | Last invite date |
 | `external` | boolean | Is user external |
 | `last_request_date` | null | string | Date of last request |
@@ -7110,17 +7011,9 @@ To use this route you need access to the Administrative section "Members"
 | `user_id` | integer | User id |
 | `company_id` | integer | Company id |
 | `default_space_id` | null | integer | Default space |
-| `role` | enum | User role in company:
- 1 - owner,
- 2 - user,
- 3 - deactivated |
+| `role` | enum | User role: 1 - owner, 2 - user, 3 - deactivated |
 | `permissions` | integer | User company permissions |
-| `apps_permissions` | string | 0 - no access,
- 1 - full access to {{projectName}}, access to service desk denied.
- 2 - guest access to {{projectName}}, access to service desk denied.
- 4 - access only to service desk.
- 5 - full access to {{projectName}} and service desk.
- 6 - guest access to {{projectName}}, access to service desk |
+| `apps_permissions` | string | 0 - no access, 1 - full access (service desk denied), 2 - guest access (service desk denied), 4 - service desk only, 5 - full access + service desk, 6 - guest access + service desk |
 | `email_frequency` | enum | 1 - never, 2 – instantly |
 | `email_settings` | object | Email settings |
 | - `deadlines` | boolean | Daily due dates digest flag |
