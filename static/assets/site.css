@@ -669,12 +669,22 @@ h1 {
 }
 
 /* Tables */
+.post-body .table-scroll {
+    margin: 1.5rem 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
 .post-body table {
     width: 100%;
     border-collapse: collapse;
     margin: 1.5rem 0;
     font-size: 0.875rem;
     line-height: 1.6;
+}
+
+.post-body .table-scroll table {
+    margin: 0;
 }
 
 .post-body th,
