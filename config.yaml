@@ -16,6 +16,7 @@ languages:
     contentDir: content
     params:
       author: 'Кирилл Шваков'
+      description: 'Кирилл Шваков — CTO в Kinescope. Статьи и доклады о Go, высоконагруженных системах, инфраструктуре и AI-агентах.'
   en:
     languageName: 'English'
     weight: 2
@@ -23,6 +24,7 @@ languages:
     contentDir: content/en
     params:
       author: 'Kirill Shvakov'
+      description: 'Kirill Shvakov — CTO at Kinescope. Articles and talks on Go, high-performance systems, infrastructure, and AI agents.'
 
 params:
   author: 'Кирилл Шваков'

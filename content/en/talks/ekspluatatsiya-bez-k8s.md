@@ -1,4 +1,5 @@
 ---
+slug: operations-without-k8s
 title: "Operations Without K8s"
 date: 2022-06-14
 lastmod: 2026-01-07
@@ -752,7 +753,7 @@ In three years of operation, nothing has failed due to systemd or package manage
 
 It's important to understand: this doesn't mean Kubernetes is bad or shouldn't be used. It means that for our case (own hardware, specific requirements, small team) a simple solution turned out more efficient.
 
-Similar topic with a different focus (requirements, tool choice, economics) — see [Why We Didn't Choose K8s]({{< relref "why-we-didnt-choose-k8s.md" >}}).
+Similar topic with a different focus (requirements, tool choice, economics) — see [Why We Didn't Choose K8s]({{< relref "/talks/kak-my-ne-vybrali-k8s.md" >}}).
 
 ## Useful Resources
 
@@ -771,5 +772,5 @@ Similar topic with a different focus (requirements, tool choice, economics) — 
 
 ## Footnotes
 
-[^go-choice]: Go's single-binary deployment model and minimal dependencies make it ideal for our infrastructure approach. Similar topic with a different focus — see [Why We Didn't Choose K8s]({{< relref "why-we-didnt-choose-k8s.md" >}}).
+[^go-choice]: Go's single-binary deployment model and minimal dependencies make it ideal for our infrastructure approach. Similar topic with a different focus — see [Why We Didn't Choose K8s]({{< relref "/talks/kak-my-ne-vybrali-k8s.md" >}}).
 

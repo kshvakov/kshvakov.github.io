@@ -1,4 +1,5 @@
 ---
+slug: speeding-up-go-tls-to-100-gbps
 title: "Speeding Up Go TLS to 100 Gbps: kTLS, Zero-Copy, and Production Gotchas"
 date: 2024-12-02
 lastmod: 2026-01-11
@@ -138,7 +139,7 @@ Unix systems have system calls that let you "move" data **without lifting it int
 
 When zero-copy works, the application barely "participates": it tells the OS "here's a file descriptor, here's a socket, send N bytes there," and data flows along a shorter path.
 
-This is critical for us because serving isn't "a few kilobytes of HTML," but **megabytes and gigabytes**. (For more on practical zero-copy use in CDN, see [Serving Content from HDDs]({{< relref "serving-content-from-hdds.md" >}}).)
+This is critical for us because serving isn't "a few kilobytes of HTML," but **megabytes and gigabytes**. (For more on practical zero-copy use in CDN, see [Serving Content from HDDs]({{< relref "/talks/razdacha-kontenta-s-hdd.md" >}}).)
 
 ### Where Zero-Copy Breaks
 
@@ -891,9 +892,9 @@ If you generate content in userspace, kTLS isn't a silver bullet: first you need
 
 ## Footnotes
 
-[^cdn-background]: For more on how we built our own CDN and why it was necessary, see [Serving Content from HDDs]({{< relref "serving-content-from-hdds.md" >}}).
+[^cdn-background]: For more on how we built our own CDN and why it was necessary, see [Serving Content from HDDs]({{< relref "/talks/razdacha-kontenta-s-hdd.md" >}}).
 
-[^go-gc-problems]: On GC problems in Go when working with large data volumes and in-memory indexes, see [Serving Content from HDDs]({{< relref "serving-content-from-hdds.md" >}}).
+[^go-gc-problems]: On GC problems in Go when working with large data volumes and in-memory indexes, see [Serving Content from HDDs]({{< relref "/talks/razdacha-kontenta-s-hdd.md" >}}).
 
 [^zero-copy-syscalls]: For more on `sendfile` and `splice` system calls, see [man sendfile(2)](https://man7.org/linux/man-pages/man2/sendfile.2.html) and [man splice(2)](https://man7.org/linux/man-pages/man2/splice.2.html). Technical article on zero-copy mechanisms: [Zero-copy in Linux](https://www.kernel.org/doc/ols/2005/ols2005v1-pages-19-28.pdf).
 

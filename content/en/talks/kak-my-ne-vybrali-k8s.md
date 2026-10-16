@@ -1,4 +1,5 @@
 ---
+slug: why-we-didnt-choose-k8s
 title: "Why We Didn't Choose K8s: Staying Efficient and Improving Performance"
 date: 2024-06-28
 lastmod: 2026-01-07
@@ -8,7 +9,7 @@ tags: ["kubernetes", "devops", "infrastructure", "systemd", "ansible", "operatio
 
 I'll cover the requirements we formulated, why we ultimately didn't "install Kubernetes," and how we built operations on standard Linux tools.
 
-Similar topic, but with a different focus and for a different audience (DevOpsConf) — see [Operations Without K8s]({{< relref "operations-without-k8s.md" >}}).
+Similar topic, but with a different focus and for a different audience (DevOpsConf) — see [Operations Without K8s]({{< relref "/talks/ekspluatatsiya-bez-k8s.md" >}}).
 
 {{< youtube id="Xkam_SUWUE0" title="Why We Didn't Choose K8s: Staying Efficient and Improving Performance / Kirill Shvakov, Kinescope" >}}
 
@@ -174,7 +175,7 @@ Beyond application logs, we also collect logs and metrics from "external softwar
 
 Here's a real example: when we needed to analyze database queries, we did it without Kubernetes. We ran our own UDP server with a simple protocol, sent query information from the driver, stored it in ClickHouse, and viewed it in Grafana.
 
-For more on practical monitoring setup, typical problems and their solutions, see [Operations Without K8s]({{< relref "operations-without-k8s.md" >}}).
+For more on practical monitoring setup, typical problems and their solutions, see [Operations Without K8s]({{< relref "/talks/ekspluatatsiya-bez-k8s.md" >}}).
 
 ## Automation: Ansible and Reducing Human Error
 
@@ -230,7 +231,7 @@ service:
 
 If a developer forgot to specify limits — the utility can set defaults. The idea is simple: reduce the probability of accidental errors and make the deployment process more predictable.
 
-For more on the `spec.yml` format and practical examples, see [Operations Without K8s]({{< relref "operations-without-k8s.md" >}}).
+For more on the `spec.yml` format and practical examples, see [Operations Without K8s]({{< relref "/talks/ekspluatatsiya-bez-k8s.md" >}}).
 
 ## Scaling and Fault Tolerance
 

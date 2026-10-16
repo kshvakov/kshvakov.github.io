@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#111111"/>
+      <stop offset="1" stop-color="#050505"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#5b8dd6"/>
+      <stop offset="1" stop-color="#3aa676"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="0" y="0" width="1200" height="4" fill="url(#accent)"/>
+
+  <!-- favicon-like badge -->
+  <rect x="96" y="112" width="72" height="72" rx="14" fill="#2d2d2d"/>
+  <text x="132" y="163" font-family="Helvetica Neue, Helvetica, Arial, DejaVu Sans, sans-serif" font-size="42" font-weight="400" fill="#ffffff" text-anchor="middle">K</text>
+
+  <text x="96" y="300" font-family="Helvetica Neue, Helvetica, Arial, DejaVu Sans, sans-serif" font-size="88" font-weight="600" fill="#f0f0f0" letter-spacing="-1">Кирилл Шваков</text>
+
+  <text x="96" y="368" font-family="Helvetica Neue, Helvetica, Arial, DejaVu Sans, sans-serif" font-size="34" font-weight="400" fill="#a0a0a0">CTO Kinescope · Go · высоконагруженные системы · AI-агенты</text>
+
+  <text x="96" y="540" font-family="SF Mono, Menlo, DejaVu Sans Mono, monospace" font-size="28" fill="#6b6b6b">kshvakov.github.io</text>
+</svg>

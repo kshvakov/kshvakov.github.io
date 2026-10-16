@@ -8,7 +8,7 @@ tags: ["ansible", "go", "sre", "ci", "infrastructure", "templating", "kinescope"
 
 Here's how refactoring the vars layer of our Ansible setup ran head-first into a gating pipeline that took longer to run than it took the author to address review comments. Here's where that led: rendering 85 specs for two environments in Go in 3.5 seconds, byte-for-byte parity with Ansible, and a contribution upstream.
 
-I've written before about how this infrastructure works overall — one binary, systemd, packages, and Ansible instead of Kubernetes — in [Operations Without K8s]({{< relref "operations-without-k8s.md" >}}). This piece focuses on the config layer and its safety net.
+I've written before about how this infrastructure works overall — one binary, systemd, packages, and Ansible instead of Kubernetes — in [Operations Without K8s]({{< relref "/talks/ekspluatatsiya-bez-k8s.md" >}}). This piece focuses on the config layer and its safety net.
 
 ## TL;DR
 

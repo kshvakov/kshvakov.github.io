@@ -1,0 +1,34 @@
+# Кирилл Шваков
+
+> Персональный сайт Кирилла Швакова, CTO в Kinescope. Практические статьи и доклады о Go, высоконагруженных распределённых системах, эксплуатации инфраструктуры без Kubernetes, CDN, ClickHouse и AI-агентах в продакшене. Более 20 лет в ИТ, 7+ лет в Kinescope.
+
+## Статьи
+
+- [26 минут на инцидент и 40 карточек за 12 дней: как два агента стали членами команды](https://kshvakov.github.io/articles/autobots-ratchet-hoist/): Как автономные AI-агенты Ratchet и Hoist работают в рабочих чатах Kinescope: разработка и инфраструктура, гарды в коде, реальные инциденты с таймлайнами.
+- [Один undefined и 80 минут CI: почему мы перенесли рендер ansible на Go](https://kshvakov.github.io/articles/render-check-ansible-to-go/): Рендер 85 спеков двух сред на Go за 3,5 секунды вместо 80 минут CI, побайтовый паритет с ansible и вклад в upstream.
+- [Оптимизация запросов и доступа к данным (ClickHouse Meetup Exness, 2019)](https://kshvakov.github.io/articles/clickhouse-meetup-exness-2019/): Практические приёмы оптимизации ClickHouse: агрегации, Nested-срезы, словари и статистика.
+
+## Доклады
+
+- [Разгоняем Go TLS до 100 Gbps: kTLS, zero-copy и грабли продакшена](https://kshvakov.github.io/talks/razgonyaem-go-tls-do-100-gbps/): Почему TLS ломает zero-copy, как работает kTLS и что пришлось поменять в реальном продакшене.
+- [Нет времени объяснять, программируй!](https://kshvakov.github.io/talks/net-vremeni-obyasnyat-programmiruy/): Когда и почему стоит писать свой софт вместо готового: CDN, DNS, хранение данных.
+- [Как мы не выбрали K8s, остались эффективными и повысили производительность](https://kshvakov.github.io/talks/kak-my-ne-vybrali-k8s/): Почему мы не используем Kubernetes в продакшене: systemd, deb-пакеты и Ansible.
+- [Раздача контента с HDD: эволюция CDN edge](https://kshvakov.github.io/talks/razdacha-kontenta-s-hdd/): Миллиарды мелких файлов, append-only контейнеры, zero-copy и работа CDN edge на обычных HDD.
+- [Эксплуатация без K8s](https://kshvakov.github.io/talks/ekspluatatsiya-bez-k8s/): Эксплуатация 50+ серверов в 4 дата-центрах силами одного администратора на systemd и пакетных менеджерах.
+- [Профит для компании от Go](https://kshvakov.github.io/talks/profit-dlya-kompanii-ot-go/): Экономические преимущества Go: эксплуатация, найм, производительность.
+- [ClickHouse тормозит](https://kshvakov.github.io/talks/clickhouse-tormozit/): Масштабирование системы статистики на 70k RPS и 50 ТБ: от Vertica и Citus к ClickHouse.
+
+## Инструменты
+
+- [Jarvis — AI-помощник сотрудника](https://kshvakov.github.io/jarvis/): AI-ассистент в Cursor/Claude: управление задачами Kaiten, GitLab и Пачка через обычный русский язык.
+- [Kaiten API Documentation](https://kshvakov.github.io/kaiten-api/): Полная документация Kaiten REST API v1 с OpenAPI-спекой.
+
+## English
+
+- [26 minutes per incident and 40 cards in 12 days: how two agents became team members](https://kshvakov.github.io/en/articles/autobots-ratchet-hoist/): Autonomous AI agents in production chats at Kinescope.
+- [One undefined and 80 minutes of CI: why we moved ansible rendering to Go](https://kshvakov.github.io/en/articles/render-check-ansible-to-go/): Rendering 85 specs in 3.5 seconds with byte parity with ansible.
+- [Speeding up Go TLS to 100 Gbps](https://kshvakov.github.io/en/talks/speeding-up-go-tls-to-100-gbps/): kTLS, zero-copy and production pitfalls.
+- [Why we didn't choose K8s](https://kshvakov.github.io/en/talks/why-we-didnt-choose-k8s/): Running production on systemd, deb packages and Ansible.
+- [Serving content from HDDs](https://kshvakov.github.io/en/talks/serving-content-from-hdds/): Billions of small files, append-only containers, zero-copy CDN edge.
+- [Operations without K8s](https://kshvakov.github.io/en/talks/operations-without-k8s/): 50+ servers in 4 data centers, one administrator.
+- [ClickHouse is slow](https://kshvakov.github.io/en/talks/clickhouse-is-slow/): Scaling a 70k RPS / 50 TB statistics system.

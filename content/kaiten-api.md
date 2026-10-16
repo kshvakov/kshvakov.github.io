@@ -7,8 +7,6 @@ toc: true
 api_docs: true
 ---
 
-# Kaiten API Documentation
-
 > Extracted from [developers.kaiten.ru](https://developers.kaiten.ru) on 2026-02-12
 
 ## General Information

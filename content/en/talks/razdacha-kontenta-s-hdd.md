@@ -1,4 +1,5 @@
 ---
+slug: serving-content-from-hdds
 title: "Serving Content from HDDs: CDN Edge Evolution from File Chaos to Simple Storage"
 date: 2021-09-20
 lastmod: 2026-01-08
@@ -17,7 +18,7 @@ When we faced the problem of billions of small files and hit a performance limit
 - **HDDs can be effective** — with proper data organization (sequential writes, batch operations), good performance can be achieved
 - **Architecture evolution**: from a system with merge and complex background processes (2020) to a simpler architecture without merge, where tiering (RAM/SSD/HDD) is just a placement rule, not a separate pipeline
 - **Zero-copy is critical for performance** — using `sendfile` and optimized read paths avoids copying data into user space
-- **TLS in Go is slow** — built-in TLS doesn't support zero-copy, so at large traffic volumes this noticeably hurts performance (solution: [kTLS]({{< relref "speeding-up-go-tls-to-100-gbps.md" >}}))
+- **TLS in Go is slow** — built-in TLS doesn't support zero-copy, so at large traffic volumes this noticeably hurts performance (solution: [kTLS]({{< relref "/talks/razgonyaem-go-tls-do-100-gbps.md" >}}))
 - **GC creates problems** — when working with large in-memory indexes (tens of millions of objects), the garbage collector becomes a bottleneck
 - **Metrics and profiling are essential** — without them, it's impossible to understand what's happening in the system and where the real problems are
 
@@ -311,7 +312,7 @@ Next, an important detail about proxying: if between two connections we can use 
 
 But if we hit classic `read`/`write` (e.g., on Unix socket), data starts moving through user space—and this is noticeably more expensive.
 
-A separate hope—**kTLS**: the kernel can take on part of TLS work. In Linux, this appeared relatively recently (around 5.3), and this potentially can noticeably speed up termination[^ktls-details]. For more on how we solved this problem, see [Speeding Up Go TLS to 100 Gbps]({{< relref "speeding-up-go-tls-to-100-gbps.md" >}}).
+A separate hope—**kTLS**: the kernel can take on part of TLS work. In Linux, this appeared relatively recently (around 5.3), and this potentially can noticeably speed up termination[^ktls-details]. For more on how we solved this problem, see [Speeding Up Go TLS to 100 Gbps]({{< relref "/talks/razgonyaem-go-tls-do-100-gbps.md" >}}).
 
 ### Problem Number Two: Garbage Collector
 
@@ -733,7 +734,7 @@ Initially, we considered moving to Rust due to wanting strict memory control and
 
 **What helped solve problems on Go**:
 
-- **kTLS** — kernel TLS integration allowed solving TLS performance problems and restoring zero-copy on serve (for more, see [Speeding Up Go TLS to 100 Gbps]({{< relref "speeding-up-go-tls-to-100-gbps.md" >}}))
+- **kTLS** — kernel TLS integration allowed solving TLS performance problems and restoring zero-copy on serve (for more, see [Speeding Up Go TLS to 100 Gbps]({{< relref "/talks/razgonyaem-go-tls-do-100-gbps.md" >}}))
 - **Architecture simplification** — abandoning merge and other complex background processes made the system more predictable and reduced GC load
 - **Index optimization** — moving to mmap and simple data structures reduced GC pressure
 
@@ -811,7 +812,7 @@ If you want to build a similar system, here's a practical checklist:
 
 **Diagnosis**:
 - Check CPU profile (how much time goes to `crypto/tls`)
-- Check if kTLS is used (see [kTLS article]({{< relref "speeding-up-go-tls-to-100-gbps.md" >}}))
+- Check if kTLS is used (see [kTLS article]({{< relref "/talks/razgonyaem-go-tls-do-100-gbps.md" >}}))
 - Look at handshake metrics (count, time)
 
 ### Testing for Degradations
@@ -861,15 +862,15 @@ Almost always, reality will differ from description. And experience here is unde
 - [Page Cache in Linux: How It Works](https://www.kernel.org/doc/html/latest/admin-guide/mm/page_migration.html) — documentation on page cache and its effect on I/O performance
 - [HDD vs SSD: When to Use What](https://www.backblaze.com/blog/hdd-vs-ssd/) — practical comparison of HDD and SSD for different usage scenarios
 - [kTLS: Kernel TLS for Linux](https://www.kernel.org/doc/html/latest/networking/tls.html) — documentation on kTLS, which helps solve TLS performance problems in Go
-- [Speeding Up Go TLS to 100 Gbps]({{< relref "speeding-up-go-tls-to-100-gbps.md" >}}) — detailed breakdown of kTLS integration in Go for achieving high HTTPS serving speeds
+- [Speeding Up Go TLS to 100 Gbps]({{< relref "/talks/razgonyaem-go-tls-do-100-gbps.md" >}}) — detailed breakdown of kTLS integration in Go for achieving high HTTPS serving speeds
 
 > **Practical Note.** When working with large volumes of small files (billions of objects), classic filesystems quickly become a bottleneck. Solution via packing into containers (append-only log) with fixed metadata and in-memory index avoids problems with open file cache and fragmentation. Source: experience building a CDN on HDDs and system evolution from version with merge to simpler architecture without background processes.
 
 ## Footnotes
 
-[^ktls-details]: For more on kTLS, how it works and how to use it in Go to achieve high speeds, see [Speeding Up Go TLS to 100 Gbps]({{< relref "speeding-up-go-tls-to-100-gbps.md" >}}).
+[^ktls-details]: For more on kTLS, how it works and how to use it in Go to achieve high speeds, see [Speeding Up Go TLS to 100 Gbps]({{< relref "/talks/razgonyaem-go-tls-do-100-gbps.md" >}}).
 
-[^zero-copy-splice]: On zero-copy mechanisms (`sendfile`, `splice`) and their application for serving content, see [Speeding Up Go TLS to 100 Gbps]({{< relref "speeding-up-go-tls-to-100-gbps.md" >}}).
+[^zero-copy-splice]: On zero-copy mechanisms (`sendfile`, `splice`) and their application for serving content, see [Speeding Up Go TLS to 100 Gbps]({{< relref "/talks/razgonyaem-go-tls-do-100-gbps.md" >}}).
 
 [^http-1-1-choice]: HTTP/1.1 for serving video is often preferable to HTTP/2 because it doesn't require multiplexing and stream prioritization. For large files, HTTP/1.1 simplicity can be an advantage. For more on protocol choice, see [HTTP/2 Prioritization with NGINX](https://blog.cloudflare.com/http-2-prioritization-with-nginx/).
 

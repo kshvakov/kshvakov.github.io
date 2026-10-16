@@ -1,4 +1,5 @@
 ---
+slug: clickhouse-is-slow
 title: "ClickHouse is Slow"
 date: 2018-11-09
 lastmod: 2026-01-07

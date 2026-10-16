@@ -183,6 +183,14 @@ h1 {
     line-height: 1.2;
 }
 
+.site-title {
+    font-size: 1.75rem;
+    font-weight: 400;
+    color: var(--text-color);
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+}
+
 .header-controls {
     display: flex;
     align-items: center;
@@ -425,6 +433,10 @@ h1 {
     }
 
     h1 {
+        font-size: 1.5rem;
+    }
+
+    .site-title {
         font-size: 1.5rem;
     }
 

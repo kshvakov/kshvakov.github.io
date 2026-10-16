@@ -4,7 +4,7 @@
   {{- $allPages := slice -}}
   {{- $seen := dict -}}
   {{- range . -}}
-    {{- $langPages := where (where (where (where .AllPages "Kind" "ne" "taxonomy") "Kind" "ne" "term") "Sitemap.Disable" "ne" true) "IsPage" true -}}
+    {{- $langPages := where (where (where (where .AllPages "Kind" "ne" "taxonomy") "Kind" "ne" "term") "Sitemap.Disable" "ne" true) "Kind" "in" (slice "home" "page") -}}
     {{- range $langPages -}}
       {{- if not (isset $seen .Permalink) -}}
         {{- $seen = merge $seen (dict .Permalink true) -}}

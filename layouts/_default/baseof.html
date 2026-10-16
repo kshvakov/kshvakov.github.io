@@ -22,12 +22,25 @@
     </script>
     <title>{{ if and .Title (not .IsHome) }}{{ .Title }} — {{ end }}{{ if or (eq .Site.Language.Lang "en") (hasPrefix .RelPermalink "/en/") }}Kirill Shvakov{{ else }}{{ .Site.Title }}{{ end }}</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="stylesheet" href="/assets/site.css">
     <link rel="canonical" href="{{ .Permalink }}">
-    {{ range .Site.Languages }}
-    <link rel="alternate" hreflang="{{ .Lang }}" href="{{ if eq .Lang "ru" }}{{ $.Site.BaseURL }}{{ else }}{{ $.Site.BaseURL }}{{ .Lang }}/{{ end }}">
+    {{ if .IsTranslated }}
+    {{ range .AllTranslations }}
+    <link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}">
     {{ end }}
-    <link rel="alternate" hreflang="x-default" href="{{ .Site.BaseURL }}">
+    <link rel="alternate" hreflang="x-default" href="{{ (index .AllTranslations 0).Permalink }}">
+    {{ end }}
+
+    {{ $ogImage := "og-image.png" | absURL }}
+    <meta property="og:site_name" content="{{ .Site.Title }}">
+    <meta property="og:locale" content="{{ if eq .Language.Lang "en" }}en_US{{ else }}ru_RU{{ end }}">
+    <meta property="og:image" content="{{ $ogImage }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="{{ .Site.Title }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="{{ $ogImage }}">
 
     <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
     <meta property="og:title" content="{{ if and .Title (not .IsHome) }}{{ .Title }} — {{ end }}{{ if or (eq .Site.Language.Lang "en") (hasPrefix .RelPermalink "/en/") }}Kirill Shvakov{{ else }}{{ .Site.Title }}{{ end }}">
@@ -37,6 +50,18 @@
     {{ block "head" . }}{{ end }}
 </head>
 <body>
+    <script>
+        // Apply theme before first paint; site.js (deferred) later syncs the icon.
+        (function() {
+            try {
+                var t = localStorage.getItem('preferred-theme');
+                if (t !== 'dark' && t !== 'light') {
+                    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.body.classList.add(t);
+            } catch (e) {}
+        })();
+    </script>
     {{ if .IsPage }}
     <div class="reading-progress">
         <div class="reading-progress__bar"></div>
@@ -47,11 +72,19 @@
     {{ end }}
     <div class="container{{ if .Params.toc }} container--wide{{ end }}">
         <header>
-            <h1>
+            {{ if .IsHome }}
+            <h1 class="site-title">
                 <a href="{{ if eq .Language.Lang "ru" }}{{ .Site.BaseURL }}{{ else }}{{ .Site.BaseURL }}{{ .Language.Lang }}/{{ end }}" style="text-decoration: none; color: inherit;">
                     <span>{{ if or (eq .Site.Language.Lang "en") (hasPrefix .RelPermalink "/en/") }}Kirill Shvakov{{ else }}{{ .Site.Title }}{{ end }}</span>
                 </a>
             </h1>
+            {{ else }}
+            <p class="site-title">
+                <a href="{{ if eq .Language.Lang "ru" }}{{ .Site.BaseURL }}{{ else }}{{ .Site.BaseURL }}{{ .Language.Lang }}/{{ end }}" style="text-decoration: none; color: inherit;">
+                    <span>{{ if or (eq .Site.Language.Lang "en") (hasPrefix .RelPermalink "/en/") }}Kirill Shvakov{{ else }}{{ .Site.Title }}{{ end }}</span>
+                </a>
+            </p>
+            {{ end }}
             <div class="header-controls">
                 <button id="theme-toggle" class="theme-btn" aria-label="Toggle theme">
                     <span class="theme-icon">☀</span>
@@ -93,9 +126,9 @@
     }
     </script>
     {{ if .Params.api_docs }}
-    <script src="/assets/api-docs.js"></script>
+    <script src="/assets/api-docs.js" defer></script>
     {{ end }}
-    <script src="/assets/site.js"></script>
+    <script src="/assets/site.js" defer></script>
     {{ if .Site.Params.metrika_id }}
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript">
